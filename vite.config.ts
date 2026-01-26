@@ -1,0 +1,24 @@
+import Vue from '@vitejs/plugin-vue'
+
+import VueJsx from '@vitejs/plugin-vue-jsx'
+import { defineConfig } from 'vite'
+import Dts from 'vite-plugin-dts'
+
+export default defineConfig({
+  build: {
+    lib: {
+      entry: 'src/index.ts',
+      fileName: 'index',
+      formats: ['es']
+    },
+    minify: false,
+    rollupOptions: {
+      external: ['element-plus', 'vue']
+    }
+  },
+  plugins: [
+    Vue(),
+    VueJsx(),
+    Dts({ tsconfigPath: './tsconfig.app.json' })
+  ]
+})

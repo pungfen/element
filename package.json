@@ -1,0 +1,39 @@
+{
+  "name": "@fp/element",
+  "type": "module",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "lint": "eslint .",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.13.1",
+    "vue": "^3.5.27"
+  },
+  "dependencies": {
+    "@vueuse/components": "^14.1.0",
+    "@vueuse/core": "^14.1.0",
+    "element-plus": "^2.13.1",
+    "vue": "^3.5.27"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^7.2.0",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue-jsx": "^5.1.3",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-format": "^1.3.1",
+    "jiti": "^2.6.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vue-tsc": "^3.2.4"
+  }
+}

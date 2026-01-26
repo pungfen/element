@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+
+    "target": "esnext",
+    "moduleDetection": "force",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "strictNullChecks": true,
+    "isolatedModules": true
+  },
+  "include": ["eslint.config.*", "vite.config.*", "scripts"]
+}
