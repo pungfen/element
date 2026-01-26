@@ -5,6 +5,7 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
+  "editor.tabSize": 2,
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off", "fixable": true },
     { "rule": "format/*", "severity": "off", "fixable": true },
@@ -22,7 +23,7 @@
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "vue"
+    "vue",
   ],
   "eslint.ignoreUntitled": true,
   "files.associations": {
