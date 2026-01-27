@@ -62,7 +62,7 @@
     "access": "public"
   },
   "simple-git-hooks": {
-    "pre-commit": "echo 'Hello'"
+    "pre-commit": "npm run eslint"
   },
   "lint-staged": {
     "*": "eslint --fix"
