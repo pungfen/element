@@ -23,7 +23,7 @@
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "vue",
+    "vue"
   ],
   "eslint.ignoreUntitled": true,
   "files.associations": {
