@@ -23,7 +23,7 @@ const names = [
   'XUpload'
 ]
 
-export const resolver = () => {
+export default () => {
   return {
     type: 'component',
     resolve: (name) => {

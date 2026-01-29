@@ -7,11 +7,11 @@ import Dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
-      fileName: 'index',
+      entry: ['src/index.ts', 'src/resolver.ts'],
+      fileName: (_, name) => `${name}.js`,
       formats: ['es']
     },
-    minify: false,
+    minify: true,
     rollupOptions: {
       external: ['element-plus', 'vue']
     }
