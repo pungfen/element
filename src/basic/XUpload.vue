@@ -1,5 +1,5 @@
 <script setup lang="tsx" generic="V extends string | string[]">
-import type { UploadFile, UploadFiles, UploadRawFile } from 'element-plus'
+import type { UploadFile, UploadFiles, UploadProps, UploadRawFile } from 'element-plus'
 
 import { ElMessage, ElUpload } from 'element-plus'
 import { computed, inject } from 'vue'
@@ -8,7 +8,7 @@ import { X_FORM_ITEM_VALIDATION } from '../constants'
 
 export interface XUploadProps {
   action?: string
-  data?: () => Record<string, unknown>
+  data?: UploadProps['data']
   disabled?: boolean
   limit?: number
   multiple?: boolean
