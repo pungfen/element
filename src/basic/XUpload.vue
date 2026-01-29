@@ -1,6 +1,5 @@
 <script setup lang="tsx" generic="V extends string | string[]">
 import type { UploadFile, UploadFiles, UploadRawFile } from 'element-plus'
-import type { Component } from 'vue'
 
 import { ElMessage, ElUpload } from 'element-plus'
 import { computed, inject } from 'vue'
@@ -25,11 +24,6 @@ const {
   maxSize = Infinity,
   showFileList = true
 } = defineProps<XUploadProps>()
-
-defineSlots<{
-  default: () => Component
-  file: (scope: { file: UploadFile }) => Component
-}>()
 
 const model = defineModel<V>()
 

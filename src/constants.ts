@@ -2,8 +2,8 @@ import type { EventHook } from '@vueuse/core'
 
 import type { InjectionKey } from 'vue'
 
-import type { XFormItemValidation } from '../basic/XForm.vue'
-import type { XTabPaneInstance } from '../basic/XTabs.vue'
+import type { XFormItemValidation } from './basic/XForm.vue'
+import type { XTabPaneInstance } from './basic/XTabs.vue'
 
 export const X_FORM_ITEM_LABEL = Symbol('X_FORM_ITEM_LABEL') as InjectionKey<
   string | undefined
