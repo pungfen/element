@@ -1,7 +1,7 @@
 {
   "name": "@pungfe/element",
   "type": "module",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "description": "Element Plus Components",
   "author": "pungfen <fp94214@gmail.com> (https://github.com/pungfen/)",
   "license": "MIT",
@@ -22,6 +22,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "import": "./dist/resolver.js"
     },
     "./package.json": "./package.json"
   },
