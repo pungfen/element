@@ -22,8 +22,11 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
+  "typings": "./dist/index.d.ts",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
@@ -42,6 +45,7 @@
     "@vueuse/components": "^14.1.0",
     "@vueuse/core": "^14.1.0",
     "element-plus": "^2.13.1",
+    "unplugin-vue-components": "^31.0.0",
     "vue": "^3.5.27"
   },
   "devDependencies": {

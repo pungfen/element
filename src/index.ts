@@ -18,3 +18,6 @@ export { default as XTable } from './basic/XTable.vue'
 export { default as XTabs } from './basic/XTabs.vue'
 export { default as XText } from './basic/XText.vue'
 export { default as XUpload } from './basic/XUpload.vue'
+
+export * from './constants'
+export * from './resolver'
