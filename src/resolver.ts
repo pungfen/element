@@ -9,6 +9,7 @@ const names = [
   'XDialog',
   'XDivider',
   'XForm',
+  'XFormItem',
   'XImage',
   'XInput',
   'XInputNumber',
@@ -18,6 +19,7 @@ const names = [
   'XSpace',
   'XTable',
   'XTabs',
+  'XTabPane',
   'XTag',
   'XText',
   'XUpload'
