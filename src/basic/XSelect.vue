@@ -3,6 +3,8 @@ import type { SelectProps } from 'element-plus'
 
 import type { Ref } from 'vue'
 import { useArrayMap } from '@vueuse/core'
+import { ElOption, ElSelect } from 'element-plus'
+
 import { computed, inject, ref, watch } from 'vue'
 
 import {

@@ -1,7 +1,8 @@
 <script setup lang="tsx" generic="V extends string | string[]">
-import type { UploadFile, UploadFiles, UploadProps, UploadRawFile } from 'element-plus'
+import type { UploadProps } from 'element-plus'
 
-import { ElMessage, ElUpload } from 'element-plus'
+import type { Component } from 'vue'
+import { ElUpload } from 'element-plus'
 import { computed, inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION } from '../constants'
@@ -16,14 +17,13 @@ export interface XUploadProps {
   drag?: boolean
   accept?: string
   listType?: 'picture' | 'picture-card' | 'text'
-  maxSize?: number
+  beforeUpload?: UploadProps['beforeUpload']
+  onSuccess?: UploadProps['onSuccess']
+  onPreview?: UploadProps['onPreview']
 }
-const {
-  limit,
-  disabled = undefined,
-  maxSize = Infinity,
-  showFileList = true
-} = defineProps<XUploadProps>()
+const props = withDefaults(defineProps<XUploadProps>(), { disabled: undefined, maxSize: Infinity, showFileList: true })
+
+defineSlots<{ default?: Component, file?: Component, tip?: Component }>()
 
 const model = defineModel<V>()
 
@@ -56,39 +56,20 @@ if (formItemValidation?.required) {
     return validator?.()
   }
 }
-
-const beforeUpload = (rawFile: UploadRawFile) => {
-  if (rawFile.size > maxSize) {
-    ElMessage.warning('文件过大,请重新选择')
-  }
-  return rawFile.size < maxSize
-}
-const preview = (uploadFile: UploadFile) => window.open(uploadFile.url)
-const remove = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
-  model.value = (
-    Array.isArray(model.value) ? uploadFiles.map(it => it.url) : undefined
-  ) as V
-}
 </script>
 
 <template>
   <ElUpload
-    v-bind="{
-      limit,
-      disabled,
-      data,
-      maxSize,
-      showFileList,
-      fileList,
-      beforeUpload,
-      onPreview: preview,
-      onRemove: remove,
-    }"
+    v-bind="{ ...props, fileList }"
   >
     <template #file="{ file }">
       <slot name="file" :file="file"></slot>
     </template>
 
     <slot></slot>
+
+    <template #tip>
+      <slot name="tip"></slot>
+    </template>
   </ElUpload>
 </template>

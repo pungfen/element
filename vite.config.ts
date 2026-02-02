@@ -9,7 +9,8 @@ export default defineConfig({
     lib: {
       entry: ['src/index.ts', 'src/resolver.ts'],
       fileName: (_, name) => `${name}.js`,
-      formats: ['es']
+      formats: ['es'],
+      cssFileName: 'style'
     },
     minify: true,
     rollupOptions: {

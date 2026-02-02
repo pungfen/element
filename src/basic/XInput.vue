@@ -17,6 +17,7 @@ export interface XInputProps {
   size?: InputProps['size']
   type?: InputProps['type']
   showPassword?: boolean
+  autocomplete?: 'username' | 'current-password'
   autosize?: InputProps['autosize']
 }
 

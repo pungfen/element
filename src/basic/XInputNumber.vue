@@ -1,7 +1,8 @@
 <script setup lang="tsx" generic="V extends number">
 import type { InputNumberProps } from 'element-plus'
+import type { Component } from 'vue'
+import { ElInputNumber } from 'element-plus'
 import { inject } from 'vue'
-
 import { X_FORM_ITEM_VALIDATION } from '../constants'
 
 export interface XInputNumberProps {
@@ -23,6 +24,8 @@ const props = withDefaults(defineProps<XInputNumberProps>(), {
   placeholder: '请输入'
 })
 const emit = defineEmits<{ blur: [] }>()
+defineSlots<{ prefix?: Component, suffix?: Component }>()
+
 const model = defineModel<V>()
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
@@ -43,5 +46,12 @@ const blur = () => {
 </script>
 
 <template>
-  <ElInputNumber v-bind="props" v-model="model" @blur="blur" />
+  <ElInputNumber v-bind="props" v-model="model" @blur="blur">
+    <template v-if="$slots.prefix" #prefix>
+      <slot name="prefix"></slot>
+    </template>
+    <template v-if="$slots.suffix" #suffix>
+      <slot name="suffix"></slot>
+    </template>
+  </ElInputNumber>
 </template>
