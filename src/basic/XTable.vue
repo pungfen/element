@@ -86,6 +86,10 @@ const X = () => (
       ))}
   </ElTable>
 )
+
+defineExpose({
+  toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => el.value?.toggleRowSelection(row, selected, ignoreSelectable)
+})
 </script>
 
 <template>
