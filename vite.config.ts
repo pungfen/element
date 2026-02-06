@@ -7,14 +7,19 @@ import Dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     lib: {
-      entry: ['src/index.ts', 'src/resolver.ts'],
-      fileName: (_, name) => `${name}.js`,
-      formats: ['es'],
-      cssFileName: 'style'
+      entry: ['src/index.ts', './src/resolver.ts'],
+      fileName: (_, name) => `${name}.mjs`,
+      formats: ['es']
     },
-    minify: true,
     rollupOptions: {
-      external: ['element-plus', 'vue']
+      external: ['element-plus', 'vue'],
+      output: {
+        manualChunks(id) {
+          if (/node_modules/.test(id)) {
+            return 'vendor'
+          }
+        }
+      }
     }
   },
   plugins: [

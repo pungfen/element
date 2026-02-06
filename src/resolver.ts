@@ -35,7 +35,10 @@ export default () => {
         return {
           name,
           from: '@pungfe/element',
-          sideEffects: ['element-plus/es/components/base/style/css', `element-plus/es/components/${kebabCase(names.find(it => it[0] === name)![1]!.slice(2))}/style/css`]
+          sideEffects: [
+            'element-plus/es/components/base/style/css',
+            `element-plus/es/components/${kebabCase(names.find(it => it[0] === name)![1]!.slice(2))}/style/css`
+          ]
         }
       }
     }
