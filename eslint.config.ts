@@ -2,11 +2,7 @@ import config from '@antfu/eslint-config'
 
 export default config(
   {
-    typescript: true,
-    vue: true,
-    lessOpinionated: true,
-    stylistic: true,
-    formatters: true
+    lessOpinionated: true
   }
 ).overrideRules(
   {
@@ -14,6 +10,7 @@ export default config(
     'curly': 'off',
     'no-console': 'off',
     'ts/no-use-before-define': 'off',
+    'vue/valid-v-for': 'off',
     'vue/html-self-closing': 'off',
     'vue/return-in-computed-property': 'off',
     'style/comma-dangle': 'error'

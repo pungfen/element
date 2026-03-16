@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { XButtonProps } from './Button.vue'
 import { ElPopconfirm } from 'element-plus'
+import XButton from './Button.vue'
 
-export interface XReconfirmProps {
+export interface XButtonPopconfirmProps extends XButtonProps {
   title?: string
 }
 
-const { title = '是否执行?' } = defineProps<XReconfirmProps>()
+const { title = '是否执行?' } = defineProps<XButtonPopconfirmProps>()
 
 const emit = defineEmits<{
   cancel: []
@@ -20,7 +22,9 @@ const emit = defineEmits<{
     @confirm="() => emit('confirm')"
   >
     <template #reference>
-      <slot></slot>
+      <XButton v-bind="{ disabled, type, text, size, link }">
+        <slot></slot>
+      </XButton>
     </template>
     <template #actions="{ confirm, cancel }">
       <XButton size="small" @click="cancel">
