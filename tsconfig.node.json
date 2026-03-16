@@ -10,6 +10,6 @@
     "strictNullChecks": true,
     "isolatedModules": true
   },
-  "include": ["eslint.config.*", "vite.config.*", "src/**/*.ts"],
+  "include": ["eslint.config.*", "vite.config.*"],
   "exclude": ["node_modules"]
 }
