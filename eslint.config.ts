@@ -3,6 +3,17 @@ import config from '@antfu/eslint-config'
 export default config(
   {
     lessOpinionated: true
+  },
+  {
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [
+            ['@', './src']
+          ]
+        }
+      }
+    }
   }
 ).overrideRules(
   {

@@ -24,7 +24,7 @@
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./cjs/index.js"
+      "require": "./cjs/index.cjs"
     },
     "./resolver": {
       "import": "./es/resolver.js",
@@ -55,11 +55,13 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.2",
+    "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
     "@vue/tsconfig": "^0.9.0",
     "bumpp": "^11.0.1",
     "eslint": "^10.0.3",
+    "fast-glob": "^3.3.3",
     "jiti": "^2.6.1",
     "lint-staged": "^16.4.0",
     "simple-git-hooks": "^2.13.1",

@@ -10,7 +10,8 @@
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "vue"
+    "vue",
+    "jsonc"
   ],
   "eslint.ignoreUntitled": true,
   "files.associations": {
