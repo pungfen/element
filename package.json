@@ -35,7 +35,8 @@
   "module": "./es/index.js",
   "types": "./types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "package.json"
   ],
   "scripts": {
     "build": "vite build",
