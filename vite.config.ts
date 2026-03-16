@@ -12,7 +12,7 @@ const locales = (await fg('src/locales/*.ts', { cwd: fileURLToPath(new URL('./',
 export default defineConfig({
   build: {
     lib: {
-      entry: ['src/index.ts', ...components, ...locales]
+      entry: ['src/resolver.ts', 'src/index.ts', ...components, ...locales]
     },
     rollupOptions: {
       external: ['element-plus', 'vue'],

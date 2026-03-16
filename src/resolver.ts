@@ -19,7 +19,7 @@ export default () => {
       if (name in XResolve) {
         return {
           name,
-          from: '@fpfe/element',
+          from: '@pungfe/element',
           sideEffects: XResolve[name]
         }
       }
