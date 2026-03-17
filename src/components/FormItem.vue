@@ -7,7 +7,6 @@ import { X_ELEMENT_IN_TAB_PANE, X_ELEMENT_IN_TABS, X_FORM_ITEM_VALIDATION, X_FOR
 export interface XFormItemProps {
   content?: () => VNodeChild
   label?: string
-  prop?: string
   required?: boolean
   validator?: () => string | void
 }
@@ -36,12 +35,11 @@ const tabsUpdateModelHook = inject(X_TABS_MODEL_UPDATE_HOOK, undefined)
 const error = ref<string | undefined>()
 
 const validation: XFormItemValidation = {
-  clearValidate() {
-    error.value = undefined
-  },
+  clearValidate: () => error.value = undefined,
   label,
   required,
-  validate() {
+  validator,
+  validate: () => {
     error.value = validation.validator?.() ?? undefined
 
     if (error.value && inTabs && inTabPane && tabPaneName) {
@@ -49,21 +47,16 @@ const validation: XFormItemValidation = {
     }
 
     return !error.value
-  },
-  validator
+  }
 }
-
 validations?.push(validation)
-
-defineExpose({ ...validation })
-
 provide(X_FORM_ITEM_VALIDATION, validation)
 
 const Content = () => content?.()
 </script>
 
 <template>
-  <ElFormItem v-bind="{ label, prop, required, error }">
+  <ElFormItem v-bind="{ label, required, error }">
     <Content />
     <template v-if="'label' in $slots">
       <slot name="label" />

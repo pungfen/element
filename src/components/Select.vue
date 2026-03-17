@@ -153,6 +153,7 @@ if (formItemValidation?.required) {
     }"
     v-model="localModel"
     @blur="emit('blur', $event)"
+    @change="value => emit('change', value)"
   >
     <ElOption
       v-for="option of localOptions"

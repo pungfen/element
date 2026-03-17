@@ -30,7 +30,8 @@ export default defineConfig({
           cleanDir: true
         }
       ]
-    }
+    },
+    sourcemap: true
   },
   plugins: [
     Vue(),

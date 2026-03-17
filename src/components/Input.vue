@@ -15,12 +15,15 @@ export interface XInputProps {
   autocomplete?: InputProps['autocomplete']
   autosize?: InputProps['autosize']
   placeholder?: InputProps['placeholder']
+  prefixIcon?: InputProps['prefixIcon']
+  suffixIcon?: InputProps['suffixIcon']
 }
 
 defineProps<XInputProps>()
-defineEmits<{
+const emit = defineEmits<{
   blur: [e: FocusEvent]
   focus: [e: FocusEvent]
+  change: [e: MV]
 }>()
 defineSlots<{
   append: () => VNode
@@ -43,6 +46,17 @@ if (formItemValidation?.required) {
     return validator?.()
   }
 }
+
+const blur = (e: FocusEvent) => {
+  formItemValidation?.validate?.()
+  emit('blur', e)
+}
+const focus = (e: FocusEvent) => {
+  emit('focus', e)
+}
+const change = (value: string) => {
+  emit('change', value as MV)
+}
 </script>
 
 <template>
@@ -58,8 +72,9 @@ if (formItemValidation?.required) {
       placeholder: placeholder ?? t('el.input.placeholder'),
     }"
     v-model="model"
-    @blur="$emit('blur', $event)"
-    @focus="$emit('focus', $event)"
+    @blur="blur"
+    @focus="focus"
+    @change="change"
   >
     <template v-if="'append' in $slots" #append>
       <slot name="append" />

@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import type { DialogProps } from 'element-plus'
 
-import type { VNode } from 'vue'
+import type { VNodeChild } from 'vue'
 import { ElDialog } from 'element-plus'
 
 export interface XDialogProps {
@@ -12,19 +12,33 @@ export interface XDialogProps {
   center?: DialogProps['center']
   alignCenter?: DialogProps['alignCenter']
   draggable?: DialogProps['draggable']
+  closeOnClickModal?: DialogProps['closeOnClickModal']
+  closeOnPressEscape?: DialogProps['closeOnPressEscape']
 }
 
 defineProps<XDialogProps>()
 defineSlots<{
-  default?: () => VNode
-  header?: () => VNode
-  footer?: () => VNode
+  default?: () => VNodeChild
+  header?: () => VNodeChild
+  footer?: () => VNodeChild
 }>()
 const visible = defineModel<boolean>()
 </script>
 
 <template>
-  <ElDialog v-model="visible" v-bind="{ bodyClass, width, showClose, title, center, alignCenter, draggable }">
+  <ElDialog
+    v-model="visible" v-bind="{
+      bodyClass,
+      width,
+      showClose,
+      title,
+      center,
+      alignCenter,
+      draggable,
+      closeOnClickModal,
+      closeOnPressEscape,
+    }"
+  >
     <template v-if="'header' in $slots" #header>
       <slot name="header"></slot>
     </template>
