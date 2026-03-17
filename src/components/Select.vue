@@ -34,6 +34,7 @@ export interface XSelectProps<D, V> {
 
   supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
   placeholder?: SelectProps['placeholder']
+  noDataText?: SelectProps['noDataText']
 }
 
 const {
@@ -137,6 +138,7 @@ if (formItemValidation?.required) {
   <ElSelect
     v-bind="{
       placeholder: placeholder ?? t('el.select.placeholder'),
+      noDataText: noDataText ?? t('el.select.noDataText'),
       disabled,
       allowCreate,
       remote,

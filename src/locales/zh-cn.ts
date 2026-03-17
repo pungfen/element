@@ -13,6 +13,10 @@ Object.assign(
       placeholder: '请选择日期',
       startPlaceholder: '开始日期',
       endPlaceholder: '结束日期'
+    },
+    select: {
+      ...zhCn.el.select,
+      noDataText: '无数据'
     }
   }
 )

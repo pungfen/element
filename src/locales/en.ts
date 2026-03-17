@@ -13,6 +13,10 @@ Object.assign(en.el, {
     placeholder: 'Please select',
     startPlaceholder: 'Start Date',
     endPlaceholder: 'End Date'
+  },
+  select: {
+    ...en.el.select,
+    noDataText: 'No data'
   }
 })
 
