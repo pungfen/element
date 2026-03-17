@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { XButtonProps } from './Button.vue'
+import type { XButtonProps } from '@/components/Button.vue'
 import { ElPopconfirm } from 'element-plus'
-import XButton from './Button.vue'
+import { XButton } from '@/components'
 
 export interface XButtonPopconfirmProps extends XButtonProps {
   title?: string

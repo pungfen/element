@@ -32,7 +32,7 @@ defineSlots<{
   suffix: () => VNode
 }>()
 
-const model = defineModel<number | undefined>()
+const model = defineModel<number>()
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {

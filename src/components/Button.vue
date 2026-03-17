@@ -9,6 +9,7 @@ export interface XButtonProps {
   size?: ButtonProps['size']
   text?: ButtonProps['text']
   type?: ButtonProps['type']
+  icon?: ButtonProps['icon']
 }
 
 export type XButtonType = ButtonType
@@ -22,7 +23,7 @@ const emit = defineEmits<{
 
 <template>
   <ElButton
-    v-bind="{ type, text, link, disabled, size }"
+    v-bind="{ type, text, link, disabled, size, icon }"
     @click="emit('click', $event)"
   >
     <slot />

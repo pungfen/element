@@ -12,6 +12,6 @@
     "strictNullChecks": true,
     "isolatedModules": true
   },
-  "include": ["eslint.config.*", "vite.config.*"],
+  "include": ["eslint.config.*", "vite.config.*", "vitest.config.*"],
   "exclude": ["node_modules"]
 }

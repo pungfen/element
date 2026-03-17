@@ -1,31 +1,15 @@
-import XButton from './Button.vue'
-import XButtonPopconfirm from './ButtonPopconfirm.vue'
-import XDatePicker from './DatePicker.vue'
-import XDialog from './Dialog.vue'
-import XForm from './Form.vue'
-import XFormItem from './FormItem.vue'
-import XInput from './Input.vue'
-import XInputNumber from './InputNumber.vue'
-import XPagination from './Pagination.vue'
-import XSelect from './Select.vue'
-import XTable from './Table.vue'
-import XTabPane from './TabPane.vue'
-import XTabs from './Tabs.vue'
-import XUpload from './Upload.vue'
-
-export {
-  XButton,
-  XButtonPopconfirm,
-  XDatePicker,
-  XDialog,
-  XForm,
-  XFormItem,
-  XInput,
-  XInputNumber,
-  XPagination,
-  XSelect,
-  XTable,
-  XTabPane,
-  XTabs,
-  XUpload
-}
+export { default as XButton, type XButtonProps } from '@/components/Button.vue'
+export { default as XButtonPopconfirm, type XButtonPopconfirmProps } from '@/components/ButtonPopconfirm.vue'
+export { default as XConfigProvider } from '@/components/ConfigProvider.vue'
+export { default as XDatePicker, type XDatePickerProps } from '@/components/DatePicker.vue'
+export { default as XDialog, type XDialogProps } from '@/components/Dialog.vue'
+export { default as XForm, type XFormProps } from '@/components/Form.vue'
+export { default as XFormItem, type XFormItemProps } from '@/components/FormItem.vue'
+export { default as XInput, type XInputProps } from '@/components/Input.vue'
+export { default as XInputNumber, type XInputNumberProps } from '@/components/InputNumber.vue'
+export { default as XPagination, type XPaginationProps } from '@/components/Pagination.vue'
+export { default as XSelect, type XSelectProps } from '@/components/Select.vue'
+export { default as XTable, type XTableColumnProps, type XTableProps } from '@/components/Table.vue'
+export { default as XTabPane, type XTabPaneProps } from '@/components/TabPane.vue'
+export { default as XTabs, type XTabsProps } from '@/components/Tabs.vue'
+export { default as XUpload, type XUploadProps } from '@/components/Upload.vue'

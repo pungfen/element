@@ -1,7 +1,10 @@
 import type { EventHook } from '@vueuse/core'
-import type { InjectionKey } from 'vue'
+import type { Language } from 'element-plus/es/locale'
+import type { InjectionKey, Ref } from 'vue'
 
-import type { XFormItemValidation } from '../components/FormItem.vue'
+import type { XFormItemValidation } from '@/components/FormItem.vue'
+
+export const X_LOCALE_CONFIG: InjectionKey<Ref<Language>> = Symbol('X_LOCALE_CONFIG')
 
 export const X_ELEMENT_IN_TABLE: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TABLE')
 export const X_ELEMENT_IN_TABLE_COLUMN: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TABLE_COLUMN')

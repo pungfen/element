@@ -28,10 +28,10 @@ defineSlots<{
 }>()
 
 const validations = inject(X_FORM_VALIDATIONS, undefined)
-const inTabs = inject(X_ELEMENT_IN_TABS)
-const inTabPane = inject(X_ELEMENT_IN_TAB_PANE)
-const tabPaneName = inject(X_TAB_PANE_NAME)
-const tabsUpdateModelHook = inject(X_TABS_MODEL_UPDATE_HOOK)
+const inTabs = inject(X_ELEMENT_IN_TABS, undefined)
+const inTabPane = inject(X_ELEMENT_IN_TAB_PANE, undefined)
+const tabPaneName = inject(X_TAB_PANE_NAME, undefined)
+const tabsUpdateModelHook = inject(X_TABS_MODEL_UPDATE_HOOK, undefined)
 
 const error = ref<string | undefined>()
 

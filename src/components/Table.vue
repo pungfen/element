@@ -1,9 +1,9 @@
-<script setup lang="tsx" generic="D extends Record<string | number | symbol, unknown>">
+<script setup lang="tsx" generic="D">
 import type { TableColumnCtx, TableProps } from 'element-plus'
-import type { CSSProperties, FunctionalComponent, VNode, VNodeChild } from 'vue'
+import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
 import { ElTable, ElTableColumn } from 'element-plus'
-import { useTemplateRef } from 'vue'
+import { defineComponent, useTemplateRef } from 'vue'
 
 export interface XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -16,25 +16,25 @@ export interface XTableColumnProps<D> {
   width?: number
 }
 
-export interface XTableProps<D extends Record<number | string | symbol, unknown>> {
-  border?: TableProps<D>['border']
+export interface XTableProps<D> {
+  border?: TableProps<any>['border']
   cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
   cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   columns?: XTableColumnProps<D>[]
   data?: D[]
-  fit?: TableProps<D>['fit']
-  height?: TableProps<D>['height']
+  height?: TableProps<any>['height']
+  emptyText?: TableProps<any>['emptyText']
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
   rowKey?: (scope: { row: D }) => string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
-  showOverflowTooltip?: TableProps<D>['showOverflowTooltip']
-  showSummary?: TableProps<D>['showSummary']
-  size?: TableProps<D>['size']
+  showOverflowTooltip?: TableProps<any>['showOverflowTooltip']
+  showSummary?: TableProps<any>['showSummary']
+  size?: TableProps<any>['size']
   spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
 
-const { columns, data, showOverflowTooltip = true } = defineProps<XTableProps<D>>()
+const { columns, data, showOverflowTooltip = true, border = true } = defineProps<XTableProps<D>>()
 
 const emit = defineEmits<{
   headerDragend: [newWidth: number, oldWidth: number, column: TableColumnCtx]
@@ -55,14 +55,21 @@ defineExpose({
   toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable)
 })
 
-const XTableColumn: FunctionalComponent<XTableColumnProps<D>> = props => (
-  <ElTableColumn fixed={props.fixed} label={props.label} prop={props.prop} type={props.type} width={props.width}>
-    {{
-      default: ({ $index, row }: { $index: number, row: D }) => props.content?.({ index: $index, row }),
-      header: () => props.header?.({ column: { ...props } })
-    }}
-  </ElTableColumn>
-)
+const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
+  return () => (
+    <ElTableColumn
+      fixed={props.fixed}
+      label={props.label}
+      prop={props.prop}
+      type={props.type}
+    >
+      {{
+        default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
+        header: () => props.header?.({ column: { ...props } })
+      }}
+    </ElTableColumn>
+  )
+}, { props: ['content', 'fixed', 'header', 'label', 'prop', 'selectable', 'type', 'width'] })
 </script>
 
 <template>
@@ -71,7 +78,6 @@ const XTableColumn: FunctionalComponent<XTableColumnProps<D>> = props => (
     v-bind="{
       data,
       height,
-      fit,
       rowClassName,
       rowStyle,
       cellClassName,
@@ -82,6 +88,8 @@ const XTableColumn: FunctionalComponent<XTableColumnProps<D>> = props => (
       summaryMethod,
       size,
       rowKey,
+      border,
+      emptyText,
     }"
     @row-click="(row: D) => emit('rowClick', row)"
     @row-dblclick="(row: D) => emit('rowDbClick', row)"

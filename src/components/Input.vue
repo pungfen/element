@@ -1,23 +1,21 @@
 <script setup lang="tsx" generic="MV extends string | number">
-import type { InputProps, InputType } from 'element-plus'
+import type { InputProps } from 'element-plus'
 import type { VNode } from 'vue'
-import { ElInput } from 'element-plus'
+import { ElInput, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
 
 export interface XInputProps {
   clearable?: InputProps['clearable']
-  placeholder?: InputProps['placeholder']
   disabled?: InputProps['disabled']
   size?: InputProps['size']
   type?: InputProps['type']
   showPassword?: InputProps['showPassword']
   autocomplete?: InputProps['autocomplete']
   autosize?: InputProps['autosize']
+  placeholder?: InputProps['placeholder']
 }
-
-export type XInputType = InputType
 
 defineProps<XInputProps>()
 defineEmits<{
@@ -31,6 +29,10 @@ defineSlots<{
   suffix: () => VNode
 }>()
 const model = defineModel<MV>()
+
+const locale = inject(X_LOCALE_CONFIG)
+
+const { t } = useLocale(locale)
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
@@ -46,7 +48,16 @@ if (formItemValidation?.required) {
 
 <template>
   <ElInput
-    v-bind="{ disabled, type, size, clearable, placeholder, showPassword, autocomplete, autosize }"
+    v-bind="{
+      disabled,
+      type,
+      size,
+      clearable,
+      showPassword,
+      autocomplete,
+      autosize,
+      placeholder: placeholder ?? t('el.input.placeholder'),
+    }"
     v-model="model"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"

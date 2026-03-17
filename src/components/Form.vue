@@ -1,12 +1,12 @@
 <script setup lang="tsx" generic="D extends object">
-import type { VNode } from 'vue'
+import type { VNodeChild } from 'vue'
 import type { XFormItemValidation } from './FormItem.vue'
 import { ElForm } from 'element-plus'
 import { provide, useTemplateRef } from 'vue'
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '../constants'
 
 export interface XFormItemProps {
-  content?: () => VNode
+  content?: () => VNodeChild
   label?: string
   labelPosition?: '' | 'left' | 'right' | 'top'
   labelWidth?: number | string
@@ -14,7 +14,7 @@ export interface XFormItemProps {
 }
 
 export interface XFormProps<D> {
-  content?: (scope: { data: D }) => VNode
+  content?: (scope: { data: D }) => VNodeChild
   data?: D
   disabled?: boolean
   inline?: boolean

@@ -12,9 +12,9 @@ export interface XTabPaneConfig {
 export interface XTabPaneProps {
   closable?: TabPaneProps['closable']
   disabled?: TabPaneProps['disabled']
-  label: TabPaneProps['label']
-  lazy: TabPaneProps['lazy']
-  name: TabPaneProps['name']
+  label?: TabPaneProps['label']
+  lazy?: TabPaneProps['lazy']
+  name?: TabPaneProps['name']
 }
 
 const { label, name } = defineProps<XTabPaneProps>()
