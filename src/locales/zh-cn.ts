@@ -15,8 +15,7 @@ Object.assign(
       endPlaceholder: '结束日期'
     },
     select: {
-      ...zhCn.el.select,
-      noDataText: '无数据'
+      ...zhCn.el.select
     }
   }
 )

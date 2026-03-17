@@ -40,7 +40,7 @@ export interface XSelectProps<D, V> {
 const {
   allowCreate,
   data,
-  disabled = false,
+  disabled = undefined,
   factory,
   identify,
   supplement
@@ -48,7 +48,7 @@ const {
 
 const emit = defineEmits<{
   blur: [e: FocusEvent]
-  change: [value: MV]
+  change: [value: V]
   focus: []
 }>()
 

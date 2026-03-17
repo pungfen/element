@@ -20,7 +20,7 @@ export interface XInputNumberProps {
   stepStrictly?: InputNumberProps['stepStrictly']
 }
 
-defineProps<XInputNumberProps>()
+const { disabled = undefined } = defineProps<XInputNumberProps>()
 
 const emit = defineEmits<{
   blur: [e: FocusEvent]

@@ -2,10 +2,10 @@
 import type { TableColumnCtx, TableProps } from 'element-plus'
 import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
-import { ElTable, ElTableColumn, useLocale } from 'element-plus'
-import { defineComponent, inject, useTemplateRef } from 'vue'
+import { ElConfigProvider, ElTable, ElTableColumn, useLocale } from 'element-plus'
+import { defineComponent, inject, provide, useTemplateRef } from 'vue'
 
-import { X_LOCALE_CONFIG } from '../constants'
+import { X_ELEMENT_IN_TABLE, X_ELEMENT_IN_TABLE_COLUMN, X_LOCALE_CONFIG } from '../constants'
 
 export interface XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -60,7 +60,10 @@ defineExpose({
   toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable)
 })
 
+provide(X_ELEMENT_IN_TABLE, true)
+
 const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
+  provide(X_ELEMENT_IN_TABLE_COLUMN, true)
   return () => (
     <ElTableColumn
       fixed={props.fixed}
@@ -78,32 +81,34 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
 </script>
 
 <template>
-  <ElTable
-    ref="table"
-    v-bind="{
-      data,
-      height,
-      rowClassName,
-      rowStyle,
-      cellClassName,
-      cellStyle,
-      showSummary,
-      showOverflowTooltip,
-      spanMethod,
-      summaryMethod,
-      size,
-      rowKey,
-      border,
-      emptyText: emptyText ?? t('el.table.emptyText'),
-    }"
-    @row-click="(row: D) => emit('rowClick', row)"
-    @row-dblclick="(row: D) => emit('rowDbClick', row)"
-    @selection-change="(rows: D[]) => emit('selectionChange', rows)"
-    @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
-  >
-    <XTableColumn
-      v-for="column of columns"
-      v-bind="column"
-    />
-  </ElTable>
+  <ElConfigProvider :locale="locale">
+    <ElTable
+      ref="table"
+      v-bind="{
+        data,
+        height,
+        rowClassName,
+        rowStyle,
+        cellClassName,
+        cellStyle,
+        showSummary,
+        showOverflowTooltip,
+        spanMethod,
+        summaryMethod,
+        size,
+        rowKey,
+        border,
+        emptyText: emptyText ?? t('el.table.emptyText'),
+      }"
+      @row-click="(row: D) => emit('rowClick', row)"
+      @row-dblclick="(row: D) => emit('rowDbClick', row)"
+      @selection-change="(rows: D[]) => emit('selectionChange', rows)"
+      @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
+    >
+      <XTableColumn
+        v-for="column of columns"
+        v-bind="column"
+      />
+    </ElTable>
+  </ElConfigProvider>
 </template>

@@ -15,8 +15,7 @@ Object.assign(en.el, {
     endPlaceholder: 'End Date'
   },
   select: {
-    ...en.el.select,
-    noDataText: 'No data'
+    ...en.el.select
   }
 })
 

@@ -19,7 +19,7 @@ export interface XInputProps {
   suffixIcon?: InputProps['suffixIcon']
 }
 
-defineProps<XInputProps>()
+const { disabled = undefined } = defineProps<XInputProps>()
 const emit = defineEmits<{
   blur: [e: FocusEvent]
   focus: [e: FocusEvent]
@@ -32,6 +32,9 @@ defineSlots<{
   suffix: () => VNode
 }>()
 const model = defineModel<MV>()
+
+// const inTable = inject(X_ELEMENT_IN_TABLE, false)
+// const inTableColumn = inject(X_ELEMENT_IN_TABLE_COLUMN, false)
 
 const locale = inject(X_LOCALE_CONFIG)
 const { t } = useLocale(locale)

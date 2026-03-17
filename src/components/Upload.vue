@@ -1,6 +1,7 @@
 <script setup lang="tsx" generic="MV extends string | string[]">
-import type { UploadProps } from 'element-plus'
+import type { UploadFile, UploadProps } from 'element-plus'
 
+import type { VNodeChild } from 'vue'
 import { ElUpload } from 'element-plus'
 import { computed, inject } from 'vue'
 
@@ -15,6 +16,12 @@ export interface XUploadProps {
 }
 
 defineProps<XUploadProps>()
+
+defineSlots<{
+  default: () => VNodeChild
+  file: (scope: { file: UploadFile, index: number }) => VNodeChild
+  tips: () => VNodeChild
+}>()
 
 const model = defineModel<MV>()
 
@@ -35,5 +42,12 @@ if (formItemValidation?.required) {
 <template>
   <ElUpload v-bind="{ disabled, accept, data, limit, fileList, showFileList }">
     <slot />
+
+    <template v-if="'file' in $slots" #file>
+      <slot name="file" />
+    </template>
+    <template v-if="'tips' in $slots" #tips>
+      <slot name="tips" />
+    </template>
   </ElUpload>
 </template>

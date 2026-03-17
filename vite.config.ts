@@ -21,13 +21,15 @@ export default defineConfig({
           format: 'esm',
           dir: 'dist/es',
           entryFileNames: '[name].js',
-          cleanDir: true
+          cleanDir: true,
+          exports: 'named'
         },
         {
           format: 'cjs',
           dir: 'dist/cjs',
           entryFileNames: '[name].cjs',
-          cleanDir: true
+          cleanDir: true,
+          exports: 'named'
         }
       ]
     },

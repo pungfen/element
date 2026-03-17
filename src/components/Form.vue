@@ -2,16 +2,8 @@
 import type { VNodeChild } from 'vue'
 import type { XFormItemValidation } from './FormItem.vue'
 import { ElForm } from 'element-plus'
-import { provide, useTemplateRef } from 'vue'
+import { provide } from 'vue'
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '../constants'
-
-export interface XFormItemProps {
-  content?: () => VNodeChild
-  label?: string
-  labelPosition?: '' | 'left' | 'right' | 'top'
-  labelWidth?: number | string
-  required?: boolean
-}
 
 export interface XFormProps<D> {
   content?: (scope: { data: D }) => VNodeChild
@@ -23,9 +15,7 @@ export interface XFormProps<D> {
   labelWidth?: number | string
 }
 
-const { content, data } = defineProps<XFormProps<D>>()
-
-const form = useTemplateRef('form')
+const { content, data, disabled = undefined } = defineProps<XFormProps<D>>()
 
 const Content = () => content?.({ data: data ?? {} } as { data: D })
 
@@ -41,8 +31,14 @@ defineExpose({ clearValidate, data, validate })
 
 <template>
   <ElForm
-    ref="form"
-    v-bind="{ model: data, disabled, inline, labelPosition, labelWidth, labelSuffix }"
+    v-bind="{
+      model: data,
+      disabled,
+      inline,
+      labelPosition,
+      labelWidth,
+      labelSuffix,
+    }"
   >
     <Content />
   </ElForm>
