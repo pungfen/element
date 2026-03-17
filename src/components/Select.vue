@@ -3,10 +3,10 @@ import type { SelectProps } from 'element-plus'
 import type { Ref } from 'vue'
 
 import { useArrayMap } from '@vueuse/core'
-import { ElOption, ElSelect } from 'element-plus'
+import { ElOption, ElSelect, useLocale } from 'element-plus'
 import { computed, inject, ref, watch } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
 
 export interface XSelectOptionProps<V> {
   disabled?: boolean
@@ -15,6 +15,8 @@ export interface XSelectOptionProps<V> {
 }
 
 export interface XSelectProps<D, V> {
+  collapseTagsTooltip?: SelectProps['collapseTagsTooltip']
+  clearable?: SelectProps['clearable']
   allowCreate?: SelectProps['allowCreate']
   collapseTags?: SelectProps['collapseTags']
   data?: D[]
@@ -31,6 +33,7 @@ export interface XSelectProps<D, V> {
   size?: SelectProps['size']
 
   supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
+  placeholder?: SelectProps['placeholder']
 }
 
 const {
@@ -49,6 +52,9 @@ const emit = defineEmits<{
 }>()
 
 const model = defineModel<MV>()
+
+const locale = inject(X_LOCALE_CONFIG)
+const { t } = useLocale(locale)
 
 const supplements = ref([]) as Ref<D[]>
 const init = useArrayMap(() => data ?? [], factory)
@@ -76,7 +82,7 @@ watch(
   async () => {
     no++
     if (model.value) {
-      const lacks = [...[] as V[], ...model.value]
+      const lacks = [...[] as V[], ...Array.isArray(model.value) ? model.value : [model.value]]
         .filter(item => !init.value.map(it => forward(it.value)).includes(forward(item)))
       const _no = no
       const _data = await supplement?.(lacks)
@@ -129,7 +135,20 @@ if (formItemValidation?.required) {
 
 <template>
   <ElSelect
-    v-bind="{ ...$props, disabled }"
+    v-bind="{
+      placeholder: placeholder ?? t('el.select.placeholder'),
+      disabled,
+      allowCreate,
+      remote,
+      filterable: filterable || remote,
+      clearable,
+      remoteMethod,
+      multiple,
+      loading,
+      size,
+      collapseTags,
+      collapseTagsTooltip,
+    }"
     v-model="localModel"
     @blur="emit('blur', $event)"
   >

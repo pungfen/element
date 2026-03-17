@@ -2,8 +2,10 @@
 import type { TableColumnCtx, TableProps } from 'element-plus'
 import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
-import { ElTable, ElTableColumn } from 'element-plus'
-import { defineComponent, useTemplateRef } from 'vue'
+import { ElTable, ElTableColumn, useLocale } from 'element-plus'
+import { defineComponent, inject, useTemplateRef } from 'vue'
+
+import { X_LOCALE_CONFIG } from '../constants'
 
 export interface XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -42,6 +44,9 @@ const emit = defineEmits<{
   rowDbClick: [row: D]
   selectionChange: [rows: D[]]
 }>()
+
+const locale = inject(X_LOCALE_CONFIG)
+const { t } = useLocale(locale)
 
 const table = useTemplateRef('table')
 
@@ -89,7 +94,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       size,
       rowKey,
       border,
-      emptyText,
+      emptyText: emptyText ?? t('el.table.emptyText'),
     }"
     @row-click="(row: D) => emit('rowClick', row)"
     @row-dblclick="(row: D) => emit('rowDbClick', row)"

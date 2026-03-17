@@ -1,9 +1,9 @@
 <script setup lang="tsx" generic="V extends string">
 import type { DatePickerProps } from 'element-plus'
-import { ElDatePicker } from 'element-plus'
+import { ElDatePicker, useLocale } from 'element-plus'
 import { computed, inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
 
 export interface XDatePickerProps {
   disabled?: boolean
@@ -16,12 +16,7 @@ export interface XDatePickerProps {
   valueFormat?: DatePickerProps['valueFormat']
 }
 
-const {
-  endPlaceholder = '结束日期',
-  placeholder = '请选择',
-  startPlaceholder = '开始日期',
-  type = 'date'
-} = defineProps<XDatePickerProps>()
+const { type = 'date' } = defineProps<XDatePickerProps>()
 
 defineEmits<{
   blur: [e: FocusEvent]
@@ -30,6 +25,9 @@ defineEmits<{
 const model = defineModel<V>()
 const start = defineModel<V>('start')
 const end = defineModel<V>('end')
+
+const locale = inject(X_LOCALE_CONFIG)
+const { t } = useLocale(locale)
 
 const modelValue = computed({
   get() {
@@ -69,7 +67,16 @@ if (formItemValidation?.required) {
 
 <template>
   <ElDatePicker
-    v-bind="{ disabled, disabledDate, type, valueFormat, placeholder, startPlaceholder, endPlaceholder, shortcuts }"
+    v-bind="{
+      disabled,
+      disabledDate,
+      type,
+      valueFormat,
+      placeholder: placeholder ?? t('el.datepicker.placeholder'),
+      startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
+      endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
+      shortcuts,
+    }"
     v-model="modelValue"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"

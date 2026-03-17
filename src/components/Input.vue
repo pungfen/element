@@ -31,7 +31,6 @@ defineSlots<{
 const model = defineModel<MV>()
 
 const locale = inject(X_LOCALE_CONFIG)
-
 const { t } = useLocale(locale)
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)

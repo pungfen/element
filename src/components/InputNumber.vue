@@ -1,10 +1,10 @@
 <script setup lang="tsx">
 import type { InputNumberProps } from 'element-plus'
 import type { VNode } from 'vue'
-import { ElInputNumber } from 'element-plus'
+import { ElInputNumber, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
 
 export interface XInputNumberProps {
   align?: InputNumberProps['align']
@@ -20,7 +20,7 @@ export interface XInputNumberProps {
   stepStrictly?: InputNumberProps['stepStrictly']
 }
 
-const { disabled = false } = defineProps<XInputNumberProps>()
+defineProps<XInputNumberProps>()
 
 const emit = defineEmits<{
   blur: [e: FocusEvent]
@@ -33,6 +33,9 @@ defineSlots<{
 }>()
 
 const model = defineModel<number>()
+
+const locale = inject(X_LOCALE_CONFIG)
+const { t } = useLocale(locale)
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
@@ -56,7 +59,19 @@ const blur = (e: FocusEvent) => {
 
 <template>
   <ElInputNumber
-    v-bind="{ ...$props, disabled }"
+    v-bind="{
+      align,
+      controls,
+      disabled,
+      inputmode,
+      max,
+      min,
+      placeholder: placeholder ?? t('el.inputNumber.placeholder'),
+      precision,
+      size,
+      step,
+      stepStrictly,
+    }"
     v-model="model"
     @blur="blur"
     @focus="focus"
