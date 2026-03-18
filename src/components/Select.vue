@@ -16,6 +16,7 @@ export interface XSelectOptionProps<V> {
 
 export interface XSelectProps<D, V> {
   collapseTagsTooltip?: SelectProps['collapseTagsTooltip']
+  defaultFirstOption?: SelectProps['defaultFirstOption']
   clearable?: SelectProps['clearable']
   allowCreate?: SelectProps['allowCreate']
   collapseTags?: SelectProps['collapseTags']
@@ -150,6 +151,7 @@ if (formItemValidation?.required) {
       size,
       collapseTags,
       collapseTagsTooltip,
+      defaultFirstOption: defaultFirstOption || allowCreate,
     }"
     v-model="localModel"
     @blur="emit('blur', $event)"

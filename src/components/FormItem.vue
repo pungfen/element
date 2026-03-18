@@ -56,10 +56,7 @@ const Content = () => content?.()
 </script>
 
 <template>
-  <ElFormItem v-bind="{ label, required, error }">
+  <ElFormItem :label="label" :required="required" :error="error">
     <Content />
-    <template v-if="'label' in $slots">
-      <slot name="label" />
-    </template>
   </ElFormItem>
 </template>

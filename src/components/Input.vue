@@ -40,6 +40,7 @@ const locale = inject(X_LOCALE_CONFIG)
 const { t } = useLocale(locale)
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
+
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {

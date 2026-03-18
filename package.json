@@ -52,11 +52,11 @@
   },
   "dependencies": {
     "@vueuse/core": "^14.2.1",
-    "element-plus": "^2.13.1",
-    "vue": "^3.5.27"
+    "element-plus": "^2.13.5",
+    "vue": "^3.5.30"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.7.2",
+    "@antfu/eslint-config": "^7.7.3",
     "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
@@ -74,7 +74,7 @@
     "vite": "^8.0.0",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.0",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.6"
   },
   "publishConfig": {
     "access": "public"
