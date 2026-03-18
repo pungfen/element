@@ -70,6 +70,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       label={props.label}
       prop={props.prop}
       type={props.type}
+      width={props.width}
     >
       {{
         default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
