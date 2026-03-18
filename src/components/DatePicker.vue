@@ -1,7 +1,7 @@
 <script setup lang="tsx" generic="V extends string">
 import type { DatePickerProps } from 'element-plus'
 import { ElConfigProvider, ElDatePicker, useLocale } from 'element-plus'
-import { computed, inject } from 'vue'
+import { computed, inject, useAttrs } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
 
@@ -22,6 +22,8 @@ defineEmits<{
   blur: [e: FocusEvent]
   focus: [e: FocusEvent]
 }>()
+
+const attrs = useAttrs()
 const model = defineModel<V>()
 const start = defineModel<V>('start')
 const end = defineModel<V>('end')
@@ -77,6 +79,7 @@ if (formItemValidation?.required) {
         startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
         endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
         shortcuts,
+        ...attrs,
       }"
       v-model="modelValue"
       @blur="$emit('blur', $event)"

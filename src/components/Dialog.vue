@@ -16,7 +16,11 @@ export interface XDialogProps {
   closeOnPressEscape?: DialogProps['closeOnPressEscape']
 }
 
-defineProps<XDialogProps>()
+const {
+  showClose = undefined,
+  closeOnClickModal = undefined,
+  closeOnPressEscape = undefined
+} = defineProps<XDialogProps>()
 defineSlots<{
   default?: () => VNodeChild
   header?: () => VNodeChild
@@ -27,7 +31,8 @@ const visible = defineModel<boolean>()
 
 <template>
   <ElDialog
-    v-model="visible" v-bind="{
+    v-model="visible"
+    v-bind="{
       bodyClass,
       width,
       showClose,
