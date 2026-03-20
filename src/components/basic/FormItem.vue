@@ -2,7 +2,7 @@
 import type { VNodeChild } from 'vue'
 import { ElFormItem } from 'element-plus'
 import { inject, provide, ref } from 'vue'
-import { X_ELEMENT_IN_TAB_PANE, X_ELEMENT_IN_TABS, X_FORM_ITEM_VALIDATION, X_FORM_VALIDATIONS, X_TAB_PANE_NAME, X_TABS_MODEL_UPDATE_HOOK } from '../constants'
+import { X_ELEMENT_IN_TAB_PANE, X_ELEMENT_IN_TABS, X_FORM_ITEM_VALIDATION, X_FORM_VALIDATIONS, X_TAB_PANE_NAME, X_TABS_MODEL_UPDATE_HOOK } from '@/constants'
 
 export interface XFormItemProps {
   content?: () => VNodeChild

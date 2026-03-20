@@ -2,7 +2,7 @@
 import type { TabPaneProps } from 'element-plus'
 import { ElTabPane } from 'element-plus'
 import { provide } from 'vue'
-import { X_ELEMENT_IN_TAB_PANE, X_TAB_PANE_NAME } from '../constants'
+import { X_ELEMENT_IN_TAB_PANE, X_TAB_PANE_NAME } from '@/constants'
 
 export interface XTabPaneConfig {
   label?: string

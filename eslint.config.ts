@@ -24,6 +24,7 @@ export default config(
     'vue/valid-v-for': 'off',
     'vue/html-self-closing': 'off',
     'vue/return-in-computed-property': 'off',
+    'vue/require-explicit-emits': 'off',
     'style/comma-dangle': 'error'
   }
 )

@@ -3,7 +3,7 @@ import type { VNodeChild } from 'vue'
 import type { XFormItemValidation } from './FormItem.vue'
 import { ElForm } from 'element-plus'
 import { provide } from 'vue'
-import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '../constants'
+import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '@/constants'
 
 export interface XFormProps<D> {
   content?: (scope: { data: D }) => VNodeChild

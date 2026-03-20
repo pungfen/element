@@ -6,15 +6,15 @@ import fg from 'fast-glob'
 import { defineConfig } from 'vite'
 import Dts from 'vite-plugin-dts'
 
-const components = (await fg('src/components/*.vue', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
+const components = (await fg('src/components/basic/*.vue', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
 const locales = (await fg('src/locales/*.ts', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
 
 export default defineConfig({
   build: {
     lib: {
-      entry: ['src/resolver.ts', 'src/index.ts', ...components, ...locales]
+      entry: ['src/resolver.ts', 'src/index.ts', 'src/advance.ts', ...components, ...locales]
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['element-plus', 'vue'],
       output: [
         {
@@ -41,6 +41,8 @@ export default defineConfig({
     Dts({ tsconfigPath: './tsconfig.app.json', outDir: 'dist/types' })
   ],
   resolve: {
-    tsconfigPaths: true
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
   }
 })

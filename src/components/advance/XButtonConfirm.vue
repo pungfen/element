@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import type { XButtonProps } from '@/components/Button.vue'
+import type { XButtonProps } from '@/components/basic/Button.vue'
 import { ElPopconfirm } from 'element-plus'
-import { XButton } from '@/components'
+import { computed, inject } from 'vue'
+import { XButton } from '@/components/basic'
 
-export interface XButtonPopconfirmProps extends XButtonProps {
+import { X_ELEMENT_IN_TABLE } from '@/constants'
+
+export interface XButtonConfirmProps extends XButtonProps {
   title?: string
 }
 
-const { title = '是否执行?' } = defineProps<XButtonPopconfirmProps>()
+const { title = '是否执行?', link = undefined } = defineProps<XButtonConfirmProps>()
 
 const emit = defineEmits<{
   cancel: []
   confirm: []
 }>()
+
+const inTable = inject(X_ELEMENT_IN_TABLE, undefined)
+const _link = computed(() => link ?? inTable)
 </script>
 
 <template>
@@ -22,7 +28,16 @@ const emit = defineEmits<{
     @confirm="() => emit('confirm')"
   >
     <template #reference>
-      <XButton v-bind="{ disabled, type, text, size, link }">
+      <XButton
+        v-bind="{
+          disabled,
+          icon,
+          type,
+          link: _link,
+          size,
+          text,
+        }"
+      >
         <slot></slot>
       </XButton>
     </template>

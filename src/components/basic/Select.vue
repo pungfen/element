@@ -6,7 +6,7 @@ import { useArrayMap } from '@vueuse/core'
 import { ElOption, ElSelect, useLocale } from 'element-plus'
 import { computed, inject, ref, watch } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XSelectOptionProps<V> {
   disabled?: boolean
@@ -38,6 +38,12 @@ export interface XSelectProps<D, V> {
   noDataText?: SelectProps['noDataText']
 }
 
+export interface XSelectEvents<V> {
+  blur: [e: FocusEvent]
+  change: [value: V]
+  focus: [e: FocusEvent]
+}
+
 const {
   allowCreate,
   data,
@@ -47,11 +53,7 @@ const {
   supplement
 } = defineProps<XSelectProps<D, V>>()
 
-const emit = defineEmits<{
-  blur: [e: FocusEvent]
-  change: [value: V]
-  focus: []
-}>()
+const emit = defineEmits<XSelectEvents<V>>()
 
 const model = defineModel<MV>()
 
@@ -155,6 +157,7 @@ if (formItemValidation?.required) {
     }"
     v-model="localModel"
     @blur="emit('blur', $event)"
+    @focus="emit('focus', $event)"
     @change="value => emit('change', value)"
   >
     <ElOption

@@ -14,7 +14,7 @@ export interface XButtonProps {
 
 export type XButtonType = ButtonType
 
-const { disabled = undefined } = defineProps<XButtonProps>()
+const { disabled = undefined, link = undefined } = defineProps<XButtonProps>()
 
 const emit = defineEmits<{
   click: [e: MouseEvent]

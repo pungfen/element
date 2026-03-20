@@ -5,18 +5,20 @@ import type { VNodeChild } from 'vue'
 import { ElUpload } from 'element-plus'
 import { inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '../constants'
+import { X_FORM_ITEM_VALIDATION } from '@/constants'
 
 export interface XUploadProps {
+  action?: UploadProps['action']
   accept?: UploadProps['accept']
   data?: UploadProps['data']
   disabled?: UploadProps['disabled']
   limit?: UploadProps['limit']
   showFileList?: UploadProps['showFileList']
   fileList?: UploadProps['fileList']
+  multiple?: UploadProps['multiple']
 }
 
-defineProps<XUploadProps>()
+const { multiple } = defineProps<XUploadProps>()
 
 defineSlots<{
   default: () => VNodeChild
@@ -31,7 +33,7 @@ const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (!model.value || (Array.isArray(model.value) && model.value.length === 0)) {
+    if (!model.value || (multiple && Array.isArray(model.value) && model.value.length === 0)) {
       return `请上传${label}`
     }
     return validator?.()
@@ -40,7 +42,7 @@ if (formItemValidation?.required) {
 </script>
 
 <template>
-  <ElUpload v-bind="{ disabled, accept, data, limit, fileList, showFileList }">
+  <ElUpload v-bind="{ action, disabled, accept, data, limit, fileList, showFileList, multiple }">
     <slot />
 
     <template v-if="'file' in $slots" #file="{ file, index }">

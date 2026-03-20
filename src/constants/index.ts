@@ -2,7 +2,7 @@ import type { EventHook } from '@vueuse/core'
 import type { Language } from 'element-plus/es/locale'
 import type { InjectionKey, Ref } from 'vue'
 
-import type { XFormItemValidation } from '@/components/FormItem.vue'
+import type { XFormItemValidation } from '@/components/basic/FormItem.vue'
 
 export const X_LOCALE_CONFIG: InjectionKey<Ref<Language>> = Symbol('X_LOCALE_CONFIG')
 

@@ -2,9 +2,10 @@ import type { ComponentResolver } from 'unplugin-vue-components'
 
 const base = ['element-plus/es/components/base/style/css']
 
-const XResolve: Record<string, string[]> = {
+const XBasicResolve: Record<string, string[]> = {
   XButton: [...base, 'element-plus/es/components/button/style/css'],
   XButtonPopconfirm: [...base, 'element-plus/es/components/button/style/css', 'element-plus/es/components/popconfirm/style/css'],
+  XCheckbox: [...base, 'element-plus/es/components/checkbox/style/css'],
   XConfigProvider: [],
   XDatePicker: [...base, 'element-plus/es/components/date-picker/style/css'],
   XDialog: [...base, 'element-plus/es/components/dialog/style/css'],
@@ -20,17 +21,38 @@ const XResolve: Record<string, string[]> = {
   XUpload: [...base, 'element-plus/es/components/upload/style/css']
 }
 
-export default () => {
-  return {
-    type: 'component',
-    resolve: (name) => {
-      if (name in XResolve) {
-        return {
-          name,
-          from: '@pungfe/element',
-          sideEffects: XResolve[name]
+const XAdvanceResolve: Record<string, string[]> = {
+  XButtonAsync: [...XBasicResolve.XButton],
+  XButtonConfirm: [...XBasicResolve.XButton],
+  XFormFlex: [...XBasicResolve.XForm],
+  XFormRequestNext: [...XBasicResolve.XForm],
+  XRequest: [],
+  XSelectRequest: [...XBasicResolve.XSelect],
+  XTableFlex: [...XBasicResolve.XTable],
+  XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
+  XTableRequestConfigNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination]
+}
+
+export default (options?: { advance?: boolean }): ComponentResolver[] => {
+  return [
+    {
+      type: 'component',
+      resolve: (name) => {
+        if (name in XBasicResolve) {
+          return {
+            name,
+            from: '@pungfe/element',
+            sideEffects: XBasicResolve[name]
+          }
+        }
+        else if (options?.advance && name in XAdvanceResolve) {
+          return {
+            name,
+            from: '@pungfe/element/advance',
+            sideEffects: XAdvanceResolve[name]
+          }
         }
       }
     }
-  } as ComponentResolver
+  ]
 }

@@ -5,7 +5,7 @@ import type { CSSProperties, VNode, VNodeChild } from 'vue'
 import { ElConfigProvider, ElTable, ElTableColumn, useLocale } from 'element-plus'
 import { defineComponent, inject, provide, useTemplateRef } from 'vue'
 
-import { X_ELEMENT_IN_TABLE, X_ELEMENT_IN_TABLE_COLUMN, X_LOCALE_CONFIG } from '../constants'
+import { X_ELEMENT_IN_TABLE, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -36,16 +36,18 @@ export interface XTableProps<D> {
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
 
-const { columns, data, showOverflowTooltip = true, border = true } = defineProps<XTableProps<D>>()
-
-const emit = defineEmits<{
+export interface XTableEvents<D> {
   headerDragend: [newWidth: number, oldWidth: number, column: TableColumnCtx]
   rowClick: [row: D]
   rowDbClick: [row: D]
   selectionChange: [rows: D[]]
-}>()
+}
 
-const locale = inject(X_LOCALE_CONFIG)
+const { columns, data, showOverflowTooltip = true, border = true } = defineProps<XTableProps<D>>()
+
+const emit = defineEmits<XTableEvents<D>>()
+
+const locale = inject(X_LOCALE_CONFIG, undefined)
 const { t } = useLocale(locale)
 
 const table = useTemplateRef('table')
@@ -63,7 +65,6 @@ defineExpose({
 provide(X_ELEMENT_IN_TABLE, true)
 
 const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
-  provide(X_ELEMENT_IN_TABLE_COLUMN, true)
   return () => (
     <ElTableColumn
       fixed={props.fixed}

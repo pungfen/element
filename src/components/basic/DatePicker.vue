@@ -3,7 +3,7 @@ import type { DatePickerProps } from 'element-plus'
 import { ElConfigProvider, ElDatePicker, useLocale } from 'element-plus'
 import { computed, inject, useAttrs } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '../constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XDatePickerProps {
   disabled?: boolean
