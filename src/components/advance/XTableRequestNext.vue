@@ -1,19 +1,17 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { Ref, VNodeChild } from 'vue'
-import type { XRequestProps, XTableFlexEvents, XTableFlexProps } from '@/components/advance'
+import type { XTableFlexEvents, XTableFlexProps } from '@/components/advance'
 import type { XTableColumnProps } from '@/components/basic'
 import type { Paging } from '@/types'
 import { useDebounceFn } from '@vueuse/core'
-import { XRequest, XTableFlex } from '@/components/advance'
+import { XTableFlex } from '@/components/advance'
 import { XPagination } from '@/components/basic'
 
 export interface XTableRequestColumnsProps<D> extends XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
 }
 
-export interface XTableRequestProps<U, PT, QR, D> extends
-  Omit<XRequestProps<U, PT, QR, D>, 'request'>,
-  Omit<XTableFlexProps<D>, 'data' | 'columns'> {
+export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'data' | 'columns'> {
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -43,22 +41,35 @@ const search = useDebounceFn(async () => {
 
 defineExpose({ search, data, paging, isFetching, url, query })
 
-const X = () => (
-  <XRequest
-    request={request}
-    onPrepare={parameters => emit('prepare', parameters)}
-    content={() => (
-      <>
-        <XTableFlex data={data.value} columns={columns} />
-        <XPagination />
-      </>
-    )}
+const T = () => (
+  <XTableFlex
+    data={data.value}
+    columns={columns}
+    onRowClick={row => emit('rowClick', row)}
+    onRowDblclick={row => emit('rowDblclick', row)}
+    onSelectionChange={rows => emit('selectionChange', rows)}
+    onHeaderDragend={(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)}
+  />
+)
+
+const P = () => (
+  <XPagination
+    total={paging.value.itemCount}
+    currentPage={paging.value.pageIndex}
+    pageSize={paging.value.pageSize}
+    onUpdate:currentPage={value => paging.value.pageIndex = value ?? 0}
+    onUpdate:pageSize={value => paging.value.pageSize = value ?? 0}
+    onCurrentChange={() => execute()}
+    onSizeChange={() => execute()}
   />
 )
 </script>
 
 <template>
   <div class="flex-1 overflow-hidden flex flex-col">
-    <X />
+    <T />
+    <div v-if="pagination" class="flex justify-end">
+      <P />
+    </div>
   </div>
 </template>

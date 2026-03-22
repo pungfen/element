@@ -45,7 +45,7 @@
   ],
   "scripts": {
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --chche --concurrency=auto",
     "prepare": "simple-git-hooks",
     "typecheck": "vue-tsc --noEmit",
     "release": "npm run build && bumpp",

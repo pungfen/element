@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import { fileURLToPath, URL } from 'node:url'
 
 import VueJsx from '@vitejs/plugin-vue'
@@ -6,13 +8,14 @@ import fg from 'fast-glob'
 import { defineConfig } from 'vite'
 import Dts from 'vite-plugin-dts'
 
-const components = (await fg('src/components/basic/*.vue', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
+const basic = (await fg('src/components/basic/*.vue', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
+const advance = (await fg('src/components/advance/*.vue', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
 const locales = (await fg('src/locales/*.ts', { cwd: fileURLToPath(new URL('./', import.meta.url)) }))
 
 export default defineConfig({
   build: {
     lib: {
-      entry: ['src/resolver.ts', 'src/index.ts', 'src/advance.ts', ...components, ...locales]
+      entry: ['src/resolver.ts', 'src/index.ts', 'src/advance.ts', ...basic, ...advance, ...locales]
     },
     rolldownOptions: {
       external: ['element-plus', 'vue'],
@@ -44,5 +47,9 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true
   }
 })

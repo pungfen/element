@@ -39,7 +39,7 @@ export interface XTableProps<D> {
 export interface XTableEvents<D> {
   headerDragend: [newWidth: number, oldWidth: number, column: TableColumnCtx]
   rowClick: [row: D]
-  rowDbClick: [row: D]
+  rowDblclick: [row: D]
   selectionChange: [rows: D[]]
 }
 
@@ -103,7 +103,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
         emptyText: emptyText ?? t('el.table.emptyText'),
       }"
       @row-click="(row: D) => emit('rowClick', row)"
-      @row-dblclick="(row: D) => emit('rowDbClick', row)"
+      @row-dblclick="(row: D) => emit('rowDblclick', row)"
       @selection-change="(rows: D[]) => emit('selectionChange', rows)"
       @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
     >

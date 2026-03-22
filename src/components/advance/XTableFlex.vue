@@ -34,7 +34,7 @@ defineExpose({
       v-bind="$props"
       :height="size.height.value"
       @row-click="(row: D) => $emit('rowClick', row)"
-      @row-dblclick="(row: D) => $emit('rowDbClick', row)"
+      @row-dblclick="(row: D) => $emit('rowDblclick', row)"
       @selection-change="(rows: D[]) => $emit('selectionChange', rows)"
       @header-dragend="(newWidth, oldWidth, column) => $emit('headerDragend', newWidth, oldWidth, column)"
     />
