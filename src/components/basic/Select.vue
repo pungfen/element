@@ -135,6 +135,11 @@ if (formItemValidation?.required) {
     return validator?.()
   }
 }
+
+const change = (value: V) => {
+  formItemValidation?.validate?.()
+  emit('change', value)
+}
 </script>
 
 <template>
@@ -158,7 +163,7 @@ if (formItemValidation?.required) {
     v-model="localModel"
     @blur="emit('blur', $event)"
     @focus="emit('focus', $event)"
-    @change="value => emit('change', value)"
+    @change="change"
   >
     <ElOption
       v-for="option of localOptions"

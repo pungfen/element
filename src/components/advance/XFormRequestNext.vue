@@ -1,12 +1,12 @@
 <script setup lang="tsx" generic="U, PT, QR, D extends object">
 import type { Ref, VNodeChild } from 'vue'
-import type { XFormFlexProps } from '@/components/advance'
+import type { XFormProps } from '@/components/basic'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, useTemplateRef } from 'vue'
 
-import { XFormFlex } from '@/components/advance'
+import { XForm } from '@/components/basic'
 
-export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormFlexProps<D>, 'disabled' | 'data'> {
+export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'disabled' | 'data'> {
   request: () => {
     data: Ref<D>
     execute: () => PromiseLike<unknown>
@@ -51,7 +51,7 @@ defineExpose({ data, url, search, validate, clearValidate, reset })
 </script>
 
 <template>
-  <XFormFlex
+  <XForm
     ref="form"
     v-bind="{
       data,

@@ -5,9 +5,9 @@ import type { XTableColumnProps } from '@/components/basic'
 import type { Paging, TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
-import { useSortable } from '@vueuse/integrations/useSortable'
-import { ElScrollbar, ElSwitch, ElText, ElTooltip } from 'element-plus'
-import { ref } from 'vue'
+import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
+import { ElPopover, ElScrollbar, ElSwitch, ElText } from 'element-plus'
+import { nextTick, useTemplateRef } from 'vue'
 
 import { XTableFlex } from '@/components/advance'
 import { XButton, XPagination } from '@/components/basic'
@@ -29,6 +29,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableReque
   }
   fields: () => {
     data: Ref<TableColumnField[]>
+    update: (fields: TableColumnField[]) => PromiseLike<unknown>
   }
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
 }
@@ -58,10 +59,6 @@ const columns = useArrayMap(visibleColumns, (it) => {
   } as XTableColumnProps<D>
 })
 
-const button = ref()
-
-const B = () => <XButton ref={button} icon={Setting} text type="info" />
-
 const T = () => <XTableFlex data={data.value} columns={columns.value} showOverflowTooltip={showOverflowTooltip} />
 
 const P = () => (
@@ -77,37 +74,43 @@ const P = () => (
   />
 )
 
-const sortable = ref()
-useSortable(sortable, fieldsData)
-const S = () => (
-  <ElTooltip virtualTriggering virtualRef={button.value} trigger="click">
-    <ElText size="small">表头设置</ElText>
-    <ElScrollbar height={200}>
-      <div ref={sortable} class="flex flex-col">
-        {() => fieldsData.value.map(
-          it => (
-            <div class="p-2 flex items-center gap-2">
-              <XButton text icon={Rank} type="primary" />
-              <ElText size="small" class="flex-1 overflow-ellipsis">{it.label}</ElText>
-              <ElSwitch size="small"></ElSwitch>
-            </div>
-          )
-        )}
-      </div>
-    </ElScrollbar>
-  </ElTooltip>
-)
+const sortable = useTemplateRef('sortable')
+const { option } = useSortable(sortable, fieldsData)
+option('animation', 150)
+option('ghostClass', 'bg-(--el-color-primary-light-7)')
+option('handle', '.cursor-grab')
+option('onUpdate', (e: { oldIndex: number, newIndex: number }) => {
+  moveArrayElement(fieldsData.value, e.oldIndex, e.newIndex, e)
+  nextTick(() => {})
+})
 
 defineExpose({ search, data, paging, isFetching, url, query })
 </script>
 
 <template>
   <div class="relative flex-1 overflow-hidden flex flex-col gap-2">
-    <B class="absolute top-0 right-0" style="z-index: 2;" />
+    <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
+      <template #reference>
+        <XButton :icon="Setting" text class="absolute top-0 right-0 z-1000" />
+      </template>
+      <ElText size="small">
+        表头设置
+      </ElText>
+      <ElScrollbar :max-height="500">
+        <div ref="sortable" class="flex flex-col">
+          <div v-for="item of fieldsData" :key="item.code" class="w-50 px-2 flex items-center gap-2">
+            <XButton text :icon="Rank" type="primary" size="small" />
+            <ElText class="flex-1 overflow-ellipsis">
+              {{ item.label }}
+            </ElText>
+            <ElSwitch size="small" :model-value="item.visible"></ElSwitch>
+          </div>
+        </div>
+      </ElScrollbar>
+    </ElPopover>
     <T />
     <div v-if="pagination" class="flex justify-end">
       <P />
     </div>
-    <S />
   </div>
 </template>
