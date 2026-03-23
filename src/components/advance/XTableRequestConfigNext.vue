@@ -66,6 +66,7 @@ const T = () => <XTableFlex data={data.value} columns={columns.value} showOverfl
 
 const P = () => (
   <XPagination
+    size="small"
     total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
     pageSize={paging.value.pageSize}

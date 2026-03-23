@@ -55,6 +55,7 @@ const T = () => (
 
 const P = () => (
   <XPagination
+    size="small"
     total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
     pageSize={paging.value.pageSize}
@@ -67,7 +68,7 @@ const P = () => (
 </script>
 
 <template>
-  <div class="flex-1 overflow-hidden flex flex-col">
+  <div class="flex-1 overflow-hidden flex flex-col gap-2">
     <T />
     <div v-if="pagination" class="flex justify-end">
       <P />
