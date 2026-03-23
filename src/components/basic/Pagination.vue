@@ -1,6 +1,9 @@
 <script setup lang="tsx">
 import type { PaginationProps } from 'element-plus'
-import { ElPagination } from 'element-plus'
+import { ElConfigProvider, ElPagination, useLocale } from 'element-plus'
+
+import { inject } from 'vue'
+import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XPaginationProps {
   pageSizes?: PaginationProps['pageSizes']
@@ -19,17 +22,22 @@ const emit = defineEmits<{
 }>()
 const currentPage = defineModel<number>('currentPage')
 const pageSize = defineModel<number>('pageSize')
+
+const locale = inject(X_LOCALE_CONFIG)
+useLocale(locale)
 </script>
 
 <template>
-  <ElPagination
-    v-bind="{ size, total, pageSizes, background, layout }"
-    v-model:current-page="currentPage"
-    v-model:page-size="pageSize"
-    :default-page-size="defaultPageSize"
-    @size-change="emit('sizeChange', $event)"
-    @current-change="emit('currentChange', $event)"
-  >
-    <slot />
-  </ElPagination>
+  <ElConfigProvider :locale="locale">
+    <ElPagination
+      v-bind="{ size, total, pageSizes, background, layout }"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :default-page-size="defaultPageSize"
+      @size-change="emit('sizeChange', $event)"
+      @current-change="emit('currentChange', $event)"
+    >
+      <slot />
+    </ElPagination>
+  </ElConfigProvider>
 </template>

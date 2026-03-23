@@ -29,7 +29,7 @@ export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { request, columns, pagination = true, showOverflowTooltip = undefined } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -45,6 +45,7 @@ const T = () => (
   <XTableFlex
     data={data.value}
     columns={columns}
+    showOverflowTooltip={showOverflowTooltip}
     onRowClick={row => emit('rowClick', row)}
     onRowDblclick={row => emit('rowDblclick', row)}
     onSelectionChange={rows => emit('selectionChange', rows)}

@@ -35,7 +35,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableReque
 
 export interface XTableRequestConfigEvents<PT, QR, D> extends XTableRequestEvents<PT, QR, D> {}
 
-const { request, config, fields, pagination = true } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { request, config, fields, pagination = true, showOverflowTooltip = undefined } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -62,7 +62,7 @@ const button = ref()
 
 const B = () => <XButton ref={button} icon={Setting} text type="info" />
 
-const T = () => <XTableFlex data={data.value} columns={columns.value} />
+const T = () => <XTableFlex data={data.value} columns={columns.value} showOverflowTooltip={showOverflowTooltip} />
 
 const P = () => (
   <XPagination
