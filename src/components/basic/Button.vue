@@ -1,7 +1,15 @@
 <script setup lang="tsx">
-import type { ButtonProps, ButtonType } from 'element-plus'
+import type { ButtonProps } from 'element-plus'
 
 import { ElButton } from 'element-plus'
+
+export interface XButtonConfig {
+  /**
+   * 两个中文字符之间自动插入空格(仅当文本长度为 2 且所有字符均为中文时才生效)
+   * @default false
+   */
+  autoInsertSpace?: boolean
+}
 
 export interface XButtonProps {
   disabled?: ButtonProps['disabled']
@@ -11,8 +19,6 @@ export interface XButtonProps {
   type?: ButtonProps['type']
   icon?: ButtonProps['icon']
 }
-
-export type XButtonType = ButtonType
 
 const { disabled = undefined, link = undefined } = defineProps<XButtonProps>()
 

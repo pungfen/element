@@ -23,13 +23,15 @@ export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D
   }
   pagination?: boolean
   columns: XTableRequestColumnsProps<D>[]
+  header?: (scope: { query: QR }) => VNodeChild
+  footer?: (scope: { query: QR }) => VNodeChild
 }
 
 export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns, pagination = true, showOverflowTooltip = undefined } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -41,8 +43,11 @@ const search = useDebounceFn(async () => {
 
 defineExpose({ search, data, paging, isFetching, url, query })
 
+const H = () => header?.({ query: query.value })
+
 const T = () => (
   <XTableFlex
+    loading={isFetching.value}
     data={data.value}
     columns={columns}
     showOverflowTooltip={showOverflowTooltip}
@@ -65,13 +70,17 @@ const P = () => (
     onSizeChange={() => execute()}
   />
 )
+
+const F = () => footer?.({ query: query.value })
 </script>
 
 <template>
   <div class="flex-1 overflow-hidden flex flex-col gap-2">
+    <H />
     <T />
     <div v-if="pagination" class="flex justify-end">
       <P />
     </div>
+    <F />
   </div>
 </template>

@@ -52,8 +52,8 @@ if (formItemValidation?.required) {
 }
 
 const blur = (e: FocusEvent) => {
-  formItemValidation?.validate?.()
   emit('blur', e)
+  formItemValidation?.validate?.()
 }
 const focus = (e: FocusEvent) => {
   emit('focus', e)

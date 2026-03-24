@@ -5,7 +5,16 @@ import type { CSSProperties, VNode, VNodeChild } from 'vue'
 import { ElConfigProvider, ElTable, ElTableColumn, useLocale } from 'element-plus'
 import { defineComponent, inject, provide, useTemplateRef } from 'vue'
 
-import { X_ELEMENT_IN_TABLE, X_LOCALE_CONFIG } from '@/constants'
+import { X_ELEMENT_CONFIG, X_ELEMENT_IN_TABLE, X_LOCALE_CONFIG } from '@/constants'
+
+export interface XTableConfig {
+  /**
+   * 是否隐藏额外内容并在单元格悬停时使用 Tooltip 显示它们。这将影响全部列的展示
+   * @default false
+   */
+  showOverflowTooltip?: boolean
+  border?: boolean
+}
 
 export interface XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -16,6 +25,7 @@ export interface XTableColumnProps<D> {
   selectable?: (row: D, index: number) => boolean
   type?: 'index' | 'selection'
   width?: number
+  columnKey?: string
 }
 
 export interface XTableProps<D> {
@@ -34,6 +44,7 @@ export interface XTableProps<D> {
   size?: TableProps<any>['size']
   spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
+  loading?: boolean
 }
 
 export interface XTableEvents<D> {
@@ -43,9 +54,10 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-const { columns, data, showOverflowTooltip = true, border = true } = defineProps<XTableProps<D>>()
-
+const { columns, data, showOverflowTooltip = undefined, border = undefined } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
+const config = inject(X_ELEMENT_CONFIG)
+const tableConfig = config?.table
 
 const locale = inject(X_LOCALE_CONFIG, undefined)
 const { t } = useLocale(locale)
@@ -72,6 +84,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       prop={props.prop}
       type={props.type}
       width={props.width}
+      columnKey={props.columnKey}
     >
       {{
         default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
@@ -86,6 +99,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
   <ElConfigProvider :locale="locale">
     <ElTable
       ref="table"
+      v-loading="loading"
       v-bind="{
         data,
         height,
@@ -99,7 +113,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
         summaryMethod,
         size,
         rowKey,
-        border,
+        border: border ?? tableConfig?.border,
         emptyText: emptyText ?? t('el.table.emptyText'),
       }"
       @row-click="(row: D) => emit('rowClick', row)"

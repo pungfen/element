@@ -137,8 +137,8 @@ if (formItemValidation?.required) {
 }
 
 const change = (value: V) => {
-  formItemValidation?.validate?.()
   emit('change', value)
+  formItemValidation?.validate?.()
 }
 </script>
 
