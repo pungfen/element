@@ -2,7 +2,7 @@
 import type { VNodeChild } from 'vue'
 import type { XFormItemValidation } from './FormItem.vue'
 import { ElForm } from 'element-plus'
-import { provide } from 'vue'
+import { provide, useTemplateRef } from 'vue'
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '@/constants'
 
 export interface XFormProps<D> {
@@ -17,6 +17,8 @@ export interface XFormProps<D> {
 
 const { content, data, disabled = undefined } = defineProps<XFormProps<D>>()
 
+const form = useTemplateRef('form')
+
 const Content = () => content?.({ data: data ?? {} } as { data: D })
 
 provide(X_ELEMENT_IN_FORM, true)
@@ -25,12 +27,17 @@ const validations = [] as XFormItemValidation[]
 provide(X_FORM_VALIDATIONS, validations)
 const validate = () => validations.every(item => item.validate())
 const clearValidate = () => validations.forEach(it => it.clearValidate())
+const resetFields = () => {
+  clearValidate()
+  form.value?.resetFields()
+}
 
-defineExpose({ clearValidate, data, validate })
+defineExpose({ clearValidate, data, validate, resetFields })
 </script>
 
 <template>
   <ElForm
+    ref="form"
     v-bind="{
       model: data,
       disabled,

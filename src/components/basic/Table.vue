@@ -37,14 +37,14 @@ export interface XTableProps<D> {
   height?: TableProps<any>['height']
   emptyText?: TableProps<any>['emptyText']
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
-  rowKey?: (scope: { row: D }) => string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  rowKey?: (scope: { row: D }) => string
   showOverflowTooltip?: TableProps<any>['showOverflowTooltip']
   showSummary?: TableProps<any>['showSummary']
   size?: TableProps<any>['size']
+  fit?: TableProps<any>['fit']
   spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
-  loading?: boolean
 }
 
 export interface XTableEvents<D> {
@@ -54,7 +54,7 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-const { columns, data, showOverflowTooltip = undefined, border = undefined } = defineProps<XTableProps<D>>()
+const { columns, data, showOverflowTooltip = undefined, border = undefined, fit = true } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
 const config = inject(X_ELEMENT_CONFIG)
 const tableConfig = config?.table
@@ -99,7 +99,6 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
   <ElConfigProvider :locale="locale">
     <ElTable
       ref="table"
-      v-loading="loading"
       v-bind="{
         data,
         height,
@@ -112,6 +111,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
         spanMethod,
         summaryMethod,
         size,
+        fit,
         rowKey,
         border: border ?? tableConfig?.border,
         emptyText: emptyText ?? t('el.table.emptyText'),

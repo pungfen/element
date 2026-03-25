@@ -7,6 +7,7 @@ import XSelectRequest from '@/components/advance/XSelectRequest.vue'
 import XTableFlex from '@/components/advance/XTableFlex.vue'
 import XTableRequestConfigNext from '@/components/advance/XTableRequestConfigNext.vue'
 import XTableRequestNext from '@/components/advance/XTableRequestNext.vue'
+import XUploadOssNext from '@/components/advance/XUploadOssNext.vue'
 
 export {
   XButtonAsync,
@@ -17,7 +18,8 @@ export {
   XSelectRequest,
   XTableFlex,
   XTableRequestConfigNext,
-  XTableRequestNext
+  XTableRequestNext,
+  XUploadOssNext
 }
 
 export * from '@/components/advance/XButtonAsync.vue'
@@ -29,6 +31,7 @@ export * from '@/components/advance/XSelectRequest.vue'
 export * from '@/components/advance/XTableFlex.vue'
 export * from '@/components/advance/XTableRequestConfigNext.vue'
 export * from '@/components/advance/XTableRequestNext.vue'
+export * from '@/components/advance/XUploadOssNext.vue'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -41,5 +44,6 @@ declare module 'vue' {
     XTableFlex: typeof XTableFlex
     XTableRequestNext: typeof XTableRequestNext
     XTableRequestConfigNext: typeof XTableRequestConfigNext
+    XUploadOssNext: typeof XUploadOssNext
   }
 }

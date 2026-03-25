@@ -6,7 +6,7 @@ import { vLoading } from 'element-plus'
 import * as advances from '@/components/advance'
 import * as basics from '@/components/basic'
 
-import { X_ELEMENT_CONFIG } from '@/constants'
+import { X_ELEMENT_CONFIG, X_ELEMENT_INSTALLED } from '@/constants'
 
 const defaultElementConfig: ElementConfig = {
   button: {
@@ -24,10 +24,20 @@ const mergeElementConfig = (config: ElementConfig = {}): ElementConfig => {
   }
 }
 
+declare module 'vue' {
+  export interface App {
+    [X_ELEMENT_INSTALLED]: boolean
+  }
+}
+
 export const install = (app: App, options?: { advance?: boolean, config?: ElementConfig }) => {
+  if (app[X_ELEMENT_INSTALLED]) return
+
+  app[X_ELEMENT_INSTALLED] = true
+
   app.provide(X_ELEMENT_CONFIG, mergeElementConfig(options?.config))
 
-  app.directive('v-loading', vLoading)
+  app.directive('loading', vLoading)
 
   Object.entries(basics).forEach(([name, component]) => {
     app.component(name, component as Component)

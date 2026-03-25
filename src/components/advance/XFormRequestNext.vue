@@ -33,26 +33,30 @@ const _disabled = computed(() => isFetching.value || (typeof disabled === 'funct
 
 const form = useTemplateRef('form')
 
+const reset = () => data.value = JSON.parse(_init) as D
+
 const validate = () => form.value?.validate()
 const clearValidate = () => form.value?.clearValidate()
+const resetFields = () => {
+  reset()
+  form.value?.resetFields()
+}
 
 const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
   execute()
 })
-const reset = () => {
-  data.value = JSON.parse(_init) as D
-  clearValidate()
-}
 
 const _content = () => content?.({ data: data.value })
 
-defineExpose({ data, url, search, validate, clearValidate, reset })
+defineExpose({ data, url, search, validate, clearValidate, reset, resetFields })
 </script>
 
 <template>
   <XForm
     ref="form"
+    v-loading="isFetching"
+    class="flex-1 overflow-hidden flex flex-col gap-2"
     v-bind="{
       data,
       disabled: _disabled,

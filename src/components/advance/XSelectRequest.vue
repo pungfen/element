@@ -53,6 +53,7 @@ defineExpose({ search, data, path, url, execute, query })
       disabled: isFetching || disabled,
       loading: isFetching || loading,
       multiple,
+      size,
     }"
     v-model="model"
     @blur="$emit('blur', $event)"

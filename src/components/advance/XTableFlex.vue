@@ -1,14 +1,21 @@
 <script setup lang="tsx" generic="D">
+import type { TableColumnCtx } from 'element-plus'
+import type { CSSProperties } from 'vue'
 import type { XTableEvents, XTableProps } from '@/components/basic'
 import { useElementSize } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 import { XTable } from '@/components/basic'
 
-export interface XTableFlexProps<D> extends XTableProps<D> {}
+export interface XTableFlexProps<D> extends XTableProps<D> {
+  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
+  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
+  rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+}
 
 export interface XTableFlexEvents<D> extends XTableEvents<D> {}
 
-const { showOverflowTooltip = undefined } = defineProps<XTableFlexProps<D>>()
+const { showOverflowTooltip = undefined, cellClassName, cellStyle, rowClassName, rowStyle, fit = true } = defineProps<XTableFlexProps<D>>()
 defineEmits<XTableFlexEvents<D>>()
 
 const container = useTemplateRef('container')
@@ -31,7 +38,7 @@ defineExpose({
   <div ref="container" class="flex-1 overflow-hidden">
     <XTable
       ref="table"
-      v-bind="{ ...$props, showOverflowTooltip }"
+      v-bind="{ ...$props, cellClassName, cellStyle, rowClassName, rowStyle, showOverflowTooltip, fit }"
       :height="size.height.value"
       @row-click="(row: D) => $emit('rowClick', row)"
       @row-dblclick="(row: D) => $emit('rowDblclick', row)"

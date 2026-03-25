@@ -1,5 +1,6 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
-import type { Ref, VNodeChild } from 'vue'
+import type { TableColumnCtx } from 'element-plus'
+import type { CSSProperties, Ref, VNodeChild } from 'vue'
 import type { XTableFlexEvents, XTableFlexProps } from '@/components/advance'
 import type { XTableColumnProps } from '@/components/basic'
 import type { Paging } from '@/types'
@@ -25,13 +26,17 @@ export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D
   columns: XTableRequestColumnsProps<D>[]
   header?: (scope: { query: QR }) => VNodeChild
   footer?: (scope: { query: QR }) => VNodeChild
+  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
+  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
+  rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
 }
 
 export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle, fit = true } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -47,7 +52,6 @@ const H = () => header?.({ query: query.value })
 
 const T = () => (
   <XTableFlex
-    loading={isFetching.value}
     data={data.value}
     columns={columns}
     showOverflowTooltip={showOverflowTooltip}
@@ -55,6 +59,11 @@ const T = () => (
     onRowDblclick={row => emit('rowDblclick', row)}
     onSelectionChange={rows => emit('selectionChange', rows)}
     onHeaderDragend={(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)}
+    cellClassName={cellClassName}
+    cellStyle={cellStyle}
+    rowClassName={rowClassName}
+    rowStyle={rowStyle}
+    fit={fit}
   />
 )
 
@@ -75,7 +84,7 @@ const F = () => footer?.({ query: query.value })
 </script>
 
 <template>
-  <div class="flex-1 overflow-hidden flex flex-col gap-2">
+  <div v-loading="isFetching" class="flex-1 overflow-hidden flex flex-col gap-2">
     <H />
     <T />
     <div v-if="pagination" class="flex justify-end">

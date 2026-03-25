@@ -8,6 +8,7 @@ import type { ElementConfig } from '@/types'
 
 export const X_LOCALE_CONFIG: InjectionKey<Ref<Language>> = Symbol('X_LOCALE_CONFIG')
 export const X_ELEMENT_CONFIG: InjectionKey<ElementConfig> = Symbol('X_ELEMENT_CONFIG')
+export const X_ELEMENT_INSTALLED = Symbol('X_ELEMENT_INSTALLED')
 
 export const X_ELEMENT_IN_TABLE: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TABLE')
 export const X_ELEMENT_IN_TABLE_COLUMN: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TABLE_COLUMN')

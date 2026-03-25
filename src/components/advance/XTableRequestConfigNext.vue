@@ -1,6 +1,6 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { Ref, VNodeChild } from 'vue'
-import type { XTableRequestColumnsProps, XTableRequestEvents, XTableRequestProps } from '@/components/advance'
+import type { XTableFlexEvents, XTableFlexProps, XTableRequestColumnsProps } from '@/components/advance'
 import type { XTableColumnProps } from '@/components/basic'
 import type { Paging, TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
@@ -17,7 +17,7 @@ export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableReque
   search?: (scope: { query: QR }) => VNodeChild
 }
 
-export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableRequestProps<U, PT, QR, D>, 'columns' | 'request'> {
+export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -32,11 +32,14 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableReque
     update: (fields: TableColumnField[]) => PromiseLike<unknown>
   }
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
+  pagination?: boolean
 }
 
-export interface XTableRequestConfigEvents<PT, QR, D> extends XTableRequestEvents<PT, QR, D> {}
+export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D> {
+  prepare: [parameters: { path: PT, query: QR }]
+}
 
-const { request, config, fields, pagination = true, showOverflowTooltip = undefined } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { request, config, fields, pagination = true } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -103,9 +106,8 @@ const T = () => (
   <XTableFlex
     data={data.value}
     columns={columns.value}
-    showOverflowTooltip={showOverflowTooltip}
+    showOverflowTooltip
     border
-    loading={isFetching.value}
     onHeaderDragend={(newWidth, _oldWidth, column) => {
       const item = fieldsData.value.find(it => it.code === column.columnKey)
       if (item) {
@@ -150,7 +152,7 @@ defineExpose({ search, data, paging, isFetching, url, query })
 <template>
   <Q class="pt-4 px-2 rounded bg-(--el-fill-color-light)" />
 
-  <div class="relative flex-1 overflow-hidden flex flex-col gap-2">
+  <div v-loading="isFetching" class="relative flex-1 overflow-hidden flex flex-col gap-2">
     <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
       <template #reference>
         <XButton :icon="Setting" text class="absolute top-0 right-0 z-1000" />

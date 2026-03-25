@@ -30,7 +30,8 @@ const XAdvanceResolve: Record<string, string[]> = {
   XSelectRequest: [...XBasicResolve.XSelect],
   XTableFlex: [...XBasicResolve.XTable],
   XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
-  XTableRequestConfigNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination]
+  XTableRequestConfigNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
+  XUploadOssNext: [...XBasicResolve.XUpload]
 }
 
 export default (options?: { advance?: boolean }): ComponentResolver[] => {
