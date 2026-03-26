@@ -85,6 +85,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       type={props.type}
       width={props.width}
       columnKey={props.columnKey}
+      selectable={props.selectable}
     >
       {{
         default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
