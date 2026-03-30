@@ -20,7 +20,8 @@ const defaultElementConfig: ElementConfig = {
 const mergeElementConfig = (config: ElementConfig = {}): ElementConfig => {
   return {
     button: { ...defaultElementConfig.button, ...config.button },
-    table: { ...defaultElementConfig.table, ...config.table }
+    table: { ...defaultElementConfig.table, ...config.table },
+    oss: config.oss
   }
 }
 
@@ -30,22 +31,18 @@ declare module 'vue' {
   }
 }
 
-export const install = (app: App, options?: { advance?: boolean, config?: ElementConfig }) => {
+export const install = (app: App, options: { advance?: boolean, config?: ElementConfig } = {}) => {
   if (app[X_ELEMENT_INSTALLED]) return
-
   app[X_ELEMENT_INSTALLED] = true
 
-  app.provide(X_ELEMENT_CONFIG, mergeElementConfig(options?.config))
+  app.provide(X_ELEMENT_CONFIG, mergeElementConfig(options.config))
 
   app.directive('loading', vLoading)
 
-  Object.entries(basics).forEach(([name, component]) => {
-    app.component(name, component as Component)
-  })
-
-  if (options?.advance) {
-    Object.entries(advances).forEach(([name, component]) => {
-      app.component(name, component as Component)
-    })
-  }
+  Object.entries(
+    {
+      ...basics,
+      ...(options.advance ? advances : {})
+    }
+  ).forEach(([name, component]) => app.component(name, component as Component))
 }

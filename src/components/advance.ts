@@ -1,5 +1,6 @@
 import XButtonAsync from '@/components/advance/XButtonAsync.vue'
 import XButtonConfirm from '@/components/advance/XButtonConfirm.vue'
+import XCascaderRequest from '@/components/advance/XCascaderRequest.vue'
 import XFormFlex from '@/components/advance/XFormFlex.vue'
 import XFormRequestNext from '@/components/advance/XFormRequestNext.vue'
 import XRequest from '@/components/advance/XRequest.vue'
@@ -12,6 +13,7 @@ import XUploadOssNext from '@/components/advance/XUploadOssNext.vue'
 export {
   XButtonAsync,
   XButtonConfirm,
+  XCascaderRequest,
   XFormFlex,
   XFormRequestNext,
   XRequest,
@@ -24,6 +26,7 @@ export {
 
 export * from '@/components/advance/XButtonAsync.vue'
 export * from '@/components/advance/XButtonConfirm.vue'
+export * from '@/components/advance/XCascaderRequest.vue'
 export * from '@/components/advance/XFormFlex.vue'
 export * from '@/components/advance/XFormRequestNext.vue'
 export * from '@/components/advance/XRequest.vue'
@@ -37,6 +40,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     XButtonAsync: typeof XButtonAsync
     XButtonConfirm: typeof XButtonConfirm
+    XCascaderRequest: typeof XCascaderRequest
     XFormFlex: typeof XFormFlex
     XFormRequestNext: typeof XFormRequestNext
     XRequest: typeof XRequest

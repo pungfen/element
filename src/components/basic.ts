@@ -1,5 +1,5 @@
 import XButton from '@/components/basic/Button.vue'
-
+import XCascader from '@/components/basic/Cascader.vue'
 import XCheckbox from '@/components/basic/Checkbox.vue'
 import XConfigProvider from '@/components/basic/ConfigProvider.vue'
 import XDatePicker from '@/components/basic/DatePicker.vue'
@@ -17,6 +17,7 @@ import XUpload from '@/components/basic/Upload.vue'
 
 export {
   XButton,
+  XCascader,
   XCheckbox,
   XConfigProvider,
   XDatePicker,
@@ -34,6 +35,7 @@ export {
 }
 
 export * from '@/components/basic/Button.vue'
+export * from '@/components/basic/Cascader.vue'
 export * from '@/components/basic/Checkbox.vue'
 export * from '@/components/basic/ConfigProvider.vue'
 export * from '@/components/basic/DatePicker.vue'

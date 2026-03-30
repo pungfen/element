@@ -4,6 +4,7 @@ const base = ['element-plus/es/components/base/style/css']
 
 const XBasicResolve: Record<string, string[]> = {
   XButton: [...base, 'element-plus/es/components/button/style/css'],
+  XCascader: [...base, 'element-plus/es/components/cascader/style/css'],
   XButtonPopconfirm: [...base, 'element-plus/es/components/button/style/css', 'element-plus/es/components/popconfirm/style/css'],
   XCheckbox: [...base, 'element-plus/es/components/checkbox/style/css'],
   XConfigProvider: [],
@@ -24,6 +25,7 @@ const XBasicResolve: Record<string, string[]> = {
 const XAdvanceResolve: Record<string, string[]> = {
   XButtonAsync: [...XBasicResolve.XButton],
   XButtonConfirm: [...XBasicResolve.XButton],
+  XCascaderRequest: [...XBasicResolve.XCascader],
   XFormFlex: [...XBasicResolve.XForm],
   XFormRequestNext: [...XBasicResolve.XForm],
   XRequest: [],

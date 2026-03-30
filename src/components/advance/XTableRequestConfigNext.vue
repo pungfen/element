@@ -146,7 +146,7 @@ useSortable(sortable, fieldsData, {
   }
 })
 
-defineExpose({ search, data, paging, isFetching, url, query })
+defineExpose({ search, data, paging, isFetching, url, query, path })
 </script>
 
 <template>

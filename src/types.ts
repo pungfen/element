@@ -3,6 +3,7 @@ import type { XButtonConfig, XTableConfig } from '@/components/basic'
 export interface ElementConfig {
   button?: XButtonConfig
   table?: XTableConfig
+  oss?: OssInfo | (() => OssInfo)
 }
 
 export interface Paging { pageIndex: number, pageSize: number, itemCount: number }

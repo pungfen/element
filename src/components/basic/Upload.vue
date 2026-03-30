@@ -1,10 +1,10 @@
-<script setup lang="tsx" generic="MV extends string | string[]">
+<script setup lang="tsx">
 import type { UploadFile, UploadProps } from 'element-plus'
 
 import type { VNodeChild } from 'vue'
 import { ElUpload } from 'element-plus'
-import { inject } from 'vue'
 
+import { inject } from 'vue'
 import { X_FORM_ITEM_VALIDATION } from '@/constants'
 
 export interface XUploadProps {
@@ -16,9 +16,13 @@ export interface XUploadProps {
   showFileList?: UploadProps['showFileList']
   fileList?: UploadProps['fileList']
   multiple?: UploadProps['multiple']
+  beforeUpload?: UploadProps['beforeUpload']
+  onSuccess?: UploadProps['onSuccess']
+  onRemove?: UploadProps['onRemove']
+  onPreview?: UploadProps['onPreview']
 }
 
-const { multiple } = defineProps<XUploadProps>()
+const { multiple, onSuccess, onRemove, onPreview, showFileList = undefined } = defineProps<XUploadProps>()
 
 defineSlots<{
   default: () => VNodeChild
@@ -27,22 +31,44 @@ defineSlots<{
   trigger: () => VNodeChild
 }>()
 
-const model = defineModel<MV>()
-
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
-  const { label, validator } = formItemValidation
+  const { validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (!model.value || (multiple && Array.isArray(model.value) && model.value.length === 0)) {
-      return `请上传${label}`
-    }
     return validator?.()
   }
+}
+
+const success: UploadProps['onSuccess'] = (_, uploadFile, uploadFiles) => {
+  onSuccess?.(_, uploadFile, uploadFiles)
+}
+
+const remove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+  onRemove?.(uploadFile, uploadFiles)
+}
+
+const preview: UploadProps['onPreview'] = (uploadFile) => {
+  onPreview?.(uploadFile)
 }
 </script>
 
 <template>
-  <ElUpload v-bind="{ action, disabled, accept, data, limit, fileList, showFileList, multiple }">
+  <ElUpload
+    v-bind="{
+      action,
+      disabled,
+      accept,
+      data,
+      limit,
+      fileList,
+      showFileList,
+      multiple,
+      beforeUpload,
+      onPreview: preview,
+      onSuccess: success,
+      onRemove: remove,
+    }"
+  >
     <slot />
 
     <template v-if="'file' in $slots" #file="{ file, index }">

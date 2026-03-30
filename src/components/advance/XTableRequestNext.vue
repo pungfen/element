@@ -46,7 +46,7 @@ const search = useDebounceFn(async () => {
   execute()
 })
 
-defineExpose({ search, data, paging, isFetching, url, query })
+defineExpose({ search, data, paging, isFetching, url, query, path })
 
 const H = () => header?.({ query: query.value })
 
