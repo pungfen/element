@@ -1,7 +1,6 @@
-/// <reference types="vitest/config" />
-
 import { fileURLToPath, URL } from 'node:url'
 
+import Tailwindcss from '@tailwindcss/vite'
 import VueJsx from '@vitejs/plugin-vue'
 import Vue from '@vitejs/plugin-vue-jsx'
 import fg from 'fast-glob'
@@ -15,7 +14,15 @@ const locales = (await fg('src/locales/*.ts', { cwd: fileURLToPath(new URL('./',
 export default defineConfig({
   build: {
     lib: {
-      entry: ['src/resolver.ts', 'src/index.ts', 'src/advance.ts', ...basic, ...advance, ...locales]
+      entry: [
+        'src/resolver.ts',
+        'src/index.ts',
+        'src/advance.ts',
+        'src/style.ts',
+        ...basic,
+        ...advance,
+        ...locales
+      ]
     },
     rolldownOptions: {
       external: ['element-plus', 'vue'],
@@ -41,15 +48,12 @@ export default defineConfig({
   plugins: [
     Vue(),
     VueJsx(),
-    Dts({ tsconfigPath: './tsconfig.app.json', outDir: 'dist/types' })
+    Dts({ tsconfigPath: './tsconfig.build.json', outDir: 'dist/types' }),
+    Tailwindcss()
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
-  test: {
-    environment: 'jsdom',
-    globals: true
   }
 })

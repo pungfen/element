@@ -133,9 +133,15 @@ if (formItemValidation?.required) {
   }
 }
 
+const blur = (e: FocusEvent) => {
+  emit('blur', e)
+  formItemValidation?.validate?.()
+}
+const focus = (e: FocusEvent) => {
+  emit('focus', e)
+}
 const change = (value: V) => {
   emit('change', value)
-  formItemValidation?.validate?.()
 }
 </script>
 
@@ -158,8 +164,8 @@ const change = (value: V) => {
       defaultFirstOption: defaultFirstOption || allowCreate,
     }"
     v-model="localModel"
-    @blur="emit('blur', $event)"
-    @focus="emit('focus', $event)"
+    @blur="blur"
+    @focus="focus"
     @change="change"
   >
     <ElOption

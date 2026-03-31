@@ -42,10 +42,10 @@ const _link = computed(() => link ?? inTable)
       </XButton>
     </template>
     <template #actions="{ confirm, cancel }">
-      <XButton size="small" @click="cancel">
+      <XButton size="small" :disabled="false" @click="cancel">
         取消
       </XButton>
-      <XButton type="danger" size="small" @click="confirm">
+      <XButton type="danger" :disabled="false" size="small" @click="confirm">
         确定
       </XButton>
     </template>
