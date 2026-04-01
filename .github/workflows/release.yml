@@ -1,5 +1,6 @@
 name: Release
 
+# Publish when pushing a semver tag (e.g. v1.2.3). Bump package.json version before tagging.
 on:
   push:
     tags: ['v*']
@@ -10,6 +11,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,6 +21,15 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
           node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run typecheck
+
+      - run: npm run test:ci
 
       - run: npm run build
 

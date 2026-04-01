@@ -34,3 +34,5 @@ typed-router.d.ts
 
 node_modules
 dist
+
+.eslintcache

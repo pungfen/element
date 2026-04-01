@@ -49,11 +49,12 @@
   ],
   "scripts": {
     "build": "vite build",
-    "lint": "eslint . --chche --concurrency=auto",
+    "lint": "eslint . --cache --concurrency=auto",
     "prepare": "simple-git-hooks",
     "typecheck": "vue-tsc --noEmit",
     "release": "npm run build && bumpp",
-    "test": "vitest"
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "peerDependencies": {
     "element-plus": "^2.13.1",
@@ -99,6 +100,6 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*.{js,ts,mjs,cjs,vue,tsx,jsx}": "eslint --fix"
   }
 }
