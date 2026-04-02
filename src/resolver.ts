@@ -40,7 +40,12 @@ const XAdvanceResolve: Record<string, string[]> = {
   XSelectRequest: [...XBasicResolve.XSelect],
   XTableFlex: [...XBasicResolve.XTable],
   XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
-  XTableRequestConfigNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
+  XTableRequestConfigNext: [
+    ...XBasicResolve.XTable,
+    ...XBasicResolve.XPagination,
+    ...XBasicResolve.XForm,
+    ...XBasicResolve.XFormItem
+  ],
   XUploadOssNext: [...XBasicResolve.XUpload]
 }
 
