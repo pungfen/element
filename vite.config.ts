@@ -24,20 +24,11 @@ export default defineConfig(({ mode }) => ({
     },
     rolldownOptions: {
       external: ['element-plus', 'vue'],
-      output: {
-        exports: 'named'
-      }
+      output: { exports: 'named' }
     },
     sourcemap: mode === 'staging'
   },
-  plugins: [
-    Vue(),
-    VueJsx(),
-    Dts({
-      tsconfigPath: './tsconfig.app.json'
-    }),
-    Tailwindcss()
-  ],
+  plugins: [Vue(), VueJsx(), Dts({ tsconfigPath: './tsconfig.app.json' }), Tailwindcss()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
