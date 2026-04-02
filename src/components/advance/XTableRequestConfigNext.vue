@@ -1,7 +1,5 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { Ref, VNodeChild } from 'vue'
-import type { XTableFlexEvents, XTableFlexProps, XTableRequestColumnsProps } from '@/components/advance'
-import type { XTableColumnProps } from '@/components/basic'
 import type { Paging, TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
@@ -9,8 +7,8 @@ import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
 import { nextTick, useTemplateRef } from 'vue'
 
-import { XButtonAsync, XTableFlex } from '@/components/advance'
-import { XButton, XForm, XFormItem, XInput, XPagination } from '@/components/basic'
+import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
+import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
 
 export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableRequestColumnsProps<D>, 'content'> {
   content?: (scope: { row: D, index: number }) => VNodeChild
@@ -150,23 +148,21 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
 </script>
 
 <template>
-  <Q class="pt-4 px-2 rounded bg-(--el-fill-color-light)" />
+  <Q class="rounded bg-(--el-fill-color-light) px-2 pt-4" />
 
-  <div v-loading="isFetching" class="relative flex-1 overflow-hidden flex flex-col gap-2">
+  <div v-loading="isFetching" class="relative flex flex-1 flex-col gap-2 overflow-hidden">
     <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
       <template #reference>
         <XButton :icon="Setting" text class="absolute top-0 right-0 z-1000" />
       </template>
       <div class="flex flex-col gap-2">
-        <ElText size="large">
-          表头设置
-        </ElText>
+        <ElText size="large"> 表头设置 </ElText>
         <ElScrollbar :max-height="500">
           <div ref="sortable" class="flex flex-col divide-y divide-[#f2f6fc]">
             <div
               v-for="item of fieldsData"
               :key="item.code"
-              class="w-50 py-2 flex items-center gap-2"
+              class="flex w-50 items-center gap-2 py-2"
             >
               <XButton text :icon="Rank" type="primary" size="small" class="cursor-grab" />
               <ElText class="flex-1 overflow-ellipsis">

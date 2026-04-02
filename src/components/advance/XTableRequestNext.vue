@@ -1,12 +1,10 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties, Ref, VNodeChild } from 'vue'
-import type { XTableFlexEvents, XTableFlexProps } from '@/components/advance'
-import type { XTableColumnProps } from '@/components/basic'
 import type { Paging } from '@/types'
 import { useDebounceFn } from '@vueuse/core'
-import { XTableFlex } from '@/components/advance'
-import { XPagination } from '@/components/basic'
+import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
+import { XPagination, type XTableColumnProps } from '@/basic'
 
 export interface XTableRequestColumnsProps<D> extends XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -84,7 +82,7 @@ const F = () => footer?.({ query: query.value })
 </script>
 
 <template>
-  <div v-loading="isFetching" class="flex-1 overflow-hidden flex flex-col gap-2">
+  <div v-loading="isFetching" class="flex flex-1 flex-col gap-2 overflow-hidden">
     <H />
     <T />
     <div v-if="pagination" class="flex justify-end">

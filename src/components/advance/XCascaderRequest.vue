@@ -1,11 +1,15 @@
 <script setup lang="tsx" generic="U, PT, QR, D, V, MV extends V | V[]">
+import { useDebounceFn } from '@vueuse/core'
+
+import { XCascader, type XCascaderProps } from '@/basic'
+
 import type { CascaderComponentProps } from 'element-plus'
 import type { Ref } from 'vue'
-import type { XCascaderProps } from '@/components/basic'
-import { useDebounceFn } from '@vueuse/core'
-import { XCascader } from '@/components/basic'
 
-export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<XCascaderProps<D, V>, 'data' | 'factory'> {
+export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
+  XCascaderProps<D, V>,
+  'data' | 'factory'
+> {
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -20,11 +24,15 @@ export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<XCascaderPr
 }
 
 export interface XCascaderRequestEvents<PT, QR, V> {
-  prepare: [parameters: { path: PT, query: QR }]
+  prepare: [parameters: { path: PT; query: QR }]
   change: [value: V]
 }
 
-const { request, disabled = undefined, props } = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
+const {
+  request,
+  disabled = undefined,
+  props
+} = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XCascaderRequestEvents<PT, QR, V>>()
 

@@ -1,10 +1,14 @@
 <script setup lang="tsx" generic="U, PT, QR, D, V, MV extends V | V[]">
-import type { Ref } from 'vue'
-import type { XSelectEvents, XSelectProps } from '@/components/basic'
 import { useDebounceFn } from '@vueuse/core'
-import { XSelect } from '@/components/basic'
 
-export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<XSelectProps<D, V>, 'supplement'> {
+import { XSelect, type XSelectEvents, type XSelectProps } from '@/basic'
+
+import type { Ref } from 'vue'
+
+export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<
+  XSelectProps<D, V>,
+  'supplement'
+> {
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -17,10 +21,15 @@ export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<XSelectProps<
 }
 
 export interface XSelectRequestEvents<PT, QR, V> extends XSelectEvents<V> {
-  prepare: [parameters: { path: PT, query: QR }, input?: string]
+  prepare: [parameters: { path: PT; query: QR }, input?: string]
 }
 
-const { request, supplement, disabled = undefined, multiple = undefined } = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
+const {
+  request,
+  supplement,
+  disabled = undefined,
+  multiple = undefined
+} = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XSelectRequestEvents<PT, QR, V>>()
 
@@ -53,7 +62,7 @@ defineExpose({ search, data, path, url, execute, query })
       disabled: isFetching || disabled,
       loading: isFetching || loading,
       multiple,
-      size,
+      size
     }"
     v-model="model"
     @blur="$emit('blur', $event)"

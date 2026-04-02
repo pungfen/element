@@ -1,12 +1,11 @@
-import type { App, Component } from 'vue'
-import type { ElementConfig } from '@/types'
-
 import { vLoading } from 'element-plus'
 
-import * as advances from '@/components/advance'
-import * as basics from '@/components/basic'
-
+import * as advances from '@/advance'
+import * as basics from '@/basic'
 import { X_ELEMENT_CONFIG, X_ELEMENT_INSTALLED } from '@/constants'
+
+import type { ElementConfig } from '@/types'
+import type { App, Component } from 'vue'
 
 const defaultElementConfig: ElementConfig = {
   button: {
@@ -31,7 +30,7 @@ declare module 'vue' {
   }
 }
 
-export const install = (app: App, options: { advance?: boolean, config?: ElementConfig } = {}) => {
+export const install = (app: App, options: { advance?: boolean; config?: ElementConfig } = {}) => {
   if (app[X_ELEMENT_INSTALLED]) return
   app[X_ELEMENT_INSTALLED] = true
 
@@ -39,10 +38,8 @@ export const install = (app: App, options: { advance?: boolean, config?: Element
 
   app.directive('loading', vLoading)
 
-  Object.entries(
-    {
-      ...basics,
-      ...(options.advance ? advances : {})
-    }
-  ).forEach(([name, component]) => app.component(name, component as Component))
+  Object.entries({
+    ...basics,
+    ...(options.advance ? advances : {})
+  }).forEach(([name, component]) => app.component(name, component as Component))
 }

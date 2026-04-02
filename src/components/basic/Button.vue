@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import type { ButtonProps } from 'element-plus'
-
 import { ElButton } from 'element-plus'
+
+import type { ButtonProps } from 'element-plus'
 
 export interface XButtonConfig {
   /**
@@ -28,10 +28,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <ElButton
-    v-bind="{ type, text, link, disabled, size, icon }"
-    @click="emit('click', $event)"
-  >
+  <ElButton v-bind="{ type, text, link, disabled, size, icon }" @click="emit('click', $event)">
     <slot />
   </ElButton>
 </template>

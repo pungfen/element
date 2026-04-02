@@ -1,10 +1,10 @@
 <script setup lang="tsx" generic="U, PT, QR, D extends object">
-import type { Ref, VNodeChild } from 'vue'
-import type { XFormProps } from '@/components/basic'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, useTemplateRef } from 'vue'
 
-import { XForm } from '@/components/basic'
+import { XForm, type XFormProps } from '@/basic'
+
+import type { Ref, VNodeChild } from 'vue'
 
 export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'disabled' | 'data'> {
   request: () => {
@@ -20,20 +20,28 @@ export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'di
 }
 
 export interface XFormRequestEvents<PT, QR> {
-  prepare: [parameters: { path: PT, query: QR }]
+  prepare: [parameters: { path: PT; query: QR }]
 }
 
-const { disabled = undefined, content, labelWidth = 'auto', request } = defineProps<XFormRequestProps<U, PT, QR, D>>()
+const {
+  disabled = undefined,
+  content,
+  labelWidth = 'auto',
+  request
+} = defineProps<XFormRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XFormRequestEvents<PT, QR>>()
 
 const { data, isFetching, execute, path, url, query } = request()
 const _init = JSON.stringify(data.value)
 
-const _disabled = computed(() => isFetching.value || (typeof disabled === 'function' ? disabled({ data: data.value }) : disabled))
+const _disabled = computed(
+  () =>
+    isFetching.value || (typeof disabled === 'function' ? disabled({ data: data.value }) : disabled)
+)
 
 const form = useTemplateRef('form')
 
-const reset = () => data.value = JSON.parse(_init) as D
+const reset = () => (data.value = JSON.parse(_init) as D)
 
 const validate = () => form.value?.validate()
 const clearValidate = () => form.value?.clearValidate()
@@ -56,7 +64,7 @@ defineExpose({ data, url, search, validate, clearValidate, reset, resetFields })
   <XForm
     ref="form"
     v-loading="isFetching"
-    class="flex-1 overflow-hidden flex flex-col gap-2"
+    class="flex flex-1 flex-col gap-2 overflow-hidden"
     v-bind="{
       data,
       disabled: _disabled,
@@ -64,7 +72,7 @@ defineExpose({ data, url, search, validate, clearValidate, reset, resetFields })
       labelPosition,
       labelSuffix,
       labelWidth,
-      content: _content,
+      content: _content
     }"
   />
 </template>

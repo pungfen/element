@@ -1,11 +1,11 @@
 <script setup lang="tsx">
-import type { UploadFile, UploadProps } from 'element-plus'
-
-import type { VNodeChild } from 'vue'
 import { ElUpload } from 'element-plus'
-
 import { inject } from 'vue'
+
 import { X_FORM_ITEM_VALIDATION } from '@/constants'
+
+import type { UploadFile, UploadProps } from 'element-plus'
+import type { VNodeChild } from 'vue'
 
 export interface XUploadProps {
   action?: UploadProps['action']
@@ -22,11 +22,17 @@ export interface XUploadProps {
   onPreview?: UploadProps['onPreview']
 }
 
-const { multiple, onSuccess, onRemove, onPreview, showFileList = undefined } = defineProps<XUploadProps>()
+const {
+  multiple,
+  onSuccess,
+  onRemove,
+  onPreview,
+  showFileList = undefined
+} = defineProps<XUploadProps>()
 
 defineSlots<{
   default: () => VNodeChild
-  file: (scope: { file: UploadFile, index: number }) => VNodeChild
+  file: (scope: { file: UploadFile; index: number }) => VNodeChild
   tip: () => VNodeChild
   trigger: () => VNodeChild
 }>()
@@ -66,7 +72,7 @@ const preview: UploadProps['onPreview'] = (uploadFile) => {
       beforeUpload,
       onPreview: preview,
       onSuccess: success,
-      onRemove: remove,
+      onRemove: remove
     }"
   >
     <slot />

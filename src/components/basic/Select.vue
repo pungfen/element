@@ -1,12 +1,12 @@
 <script setup lang="tsx" generic="D, V, MV extends V | V[]">
-import type { SelectProps } from 'element-plus'
-import type { Ref } from 'vue'
-
 import { useArrayMap } from '@vueuse/core'
 import { ElOption, ElSelect, useLocale } from 'element-plus'
 import { computed, inject, ref, watch } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
+
+import type { SelectProps } from 'element-plus'
+import type { Ref } from 'vue'
 
 export interface XSelectOptionProps<V> {
   disabled?: boolean
@@ -68,16 +68,15 @@ const forward = (value: V) => {
   if (typeof value === 'object') {
     if (identify) {
       return identify(value)
+    } else {
+      throw new Error("`identify` is required when value's type extends `object` or `object[]`")
     }
-    else {
-      throw new Error('`identify` is required when value\'s type extends `object` or `object[]`')
-    }
-  }
-  else {
+  } else {
     return value as number | string
   }
 }
-const backward = (key: number | string) => options.value.map(item => item.value).find(item => forward(item) === key)
+const backward = (key: number | string) =>
+  options.value.map((item) => item.value).find((item) => forward(item) === key)
 
 let no = 0
 watch(
@@ -85,15 +84,16 @@ watch(
   async () => {
     no++
     if (model.value) {
-      const lacks = [...[] as V[], ...Array.isArray(model.value) ? model.value : [model.value]]
-        .filter(item => !init.value.map(it => forward(it.value)).includes(forward(item)))
+      const lacks = [
+        ...([] as V[]),
+        ...(Array.isArray(model.value) ? model.value : [model.value])
+      ].filter((item) => !init.value.map((it) => forward(it.value)).includes(forward(item)))
       const _no = no
       const _data = await supplement?.(lacks)
       if (_no === no && _data) {
         supplements.value = _data
       }
-    }
-    else {
+    } else {
       supplements.value = []
     }
   },
@@ -108,14 +108,15 @@ const localOptions = computed(() =>
 )
 
 const localModel = computed({
-  get: () => model.value && (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
+  get: () =>
+    model.value &&
+    (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
   set: (value) => {
     if (Array.isArray(value)) {
-      model.value = value.map(item => backward(item)!) as MV
-    }
-    else {
-      model.value
-        = value === undefined
+      model.value = value.map((item) => backward(item)!) as MV
+    } else {
+      model.value =
+        value === undefined
           ? undefined
           : ((backward(value) ?? (allowCreate ? value : undefined)) as MV)
     }
@@ -161,7 +162,7 @@ const change = (value: V) => {
       size,
       collapseTags,
       collapseTagsTooltip,
-      defaultFirstOption: defaultFirstOption || allowCreate,
+      defaultFirstOption: defaultFirstOption || allowCreate
     }"
     v-model="localModel"
     @blur="blur"

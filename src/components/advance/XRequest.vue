@@ -1,7 +1,8 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
-import type { Ref, VNodeChild } from 'vue'
-import type { Paging } from '@/types'
 import { useDebounceFn } from '@vueuse/core'
+
+import type { Paging } from '@/types'
+import type { Ref, VNodeChild } from 'vue'
 
 export interface XRequestProps<U, PT, QR, D> {
   request: () => {
@@ -13,26 +14,30 @@ export interface XRequestProps<U, PT, QR, D> {
     query: Ref<QR>
     url: U
   }
-  content?: (scope: { data: D, query: QR, path: PT, isFetching: boolean, paging: Paging }) => VNodeChild
+  content?: (scope: {
+    data: D
+    query: QR
+    path: PT
+    isFetching: boolean
+    paging: Paging
+  }) => VNodeChild
 }
 
 export interface XRequestEvents<PT, QR> {
-  prepare: [parameters: { path: PT, query: QR }]
+  prepare: [parameters: { path: PT; query: QR }]
 }
 
 const { request, content } = defineProps<XRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XRequestEvents<PT, QR>>()
 defineSlots<{
-  default: (
-    scope: {
-      data: D
-      execute: () => PromiseLike<unknown>
-      isFetching: boolean
-      paging: Paging
-      path: PT
-      query: QR
-    }
-  ) => VNodeChild
+  default: (scope: {
+    data: D
+    execute: () => PromiseLike<unknown>
+    isFetching: boolean
+    paging: Paging
+    path: PT
+    query: QR
+  }) => VNodeChild
 }>()
 
 const { data, paging, path, query, isFetching, url, execute } = request()
@@ -41,15 +46,14 @@ const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
   execute()
 })
-const Content = () => content?.(
-  {
+const Content = () =>
+  content?.({
     data: data.value,
     path: path.value,
     isFetching: isFetching.value,
     query: query.value,
     paging: paging.value
-  }
-)
+  })
 
 defineExpose({ data, paging, path, query, isFetching, url, execute, search })
 </script>

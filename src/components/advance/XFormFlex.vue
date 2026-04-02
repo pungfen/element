@@ -1,9 +1,8 @@
 <script setup lang="tsx" generic="D extends object">
-import type { XFormProps } from '@/components/basic'
 import { ElScrollbar } from 'element-plus'
 import { useTemplateRef } from 'vue'
 
-import { XForm } from '@/components/basic'
+import { XForm, type XFormProps } from '@/basic'
 
 export interface XFormFlexProps<D> extends XFormProps<D> {}
 

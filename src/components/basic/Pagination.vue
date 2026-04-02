@@ -1,9 +1,10 @@
 <script setup lang="tsx">
-import type { PaginationProps } from 'element-plus'
 import { ElConfigProvider, ElPagination, useLocale } from 'element-plus'
-
 import { inject } from 'vue'
+
 import { X_LOCALE_CONFIG } from '@/constants'
+
+import type { PaginationProps } from 'element-plus'
 
 export interface XPaginationProps {
   pageSizes?: PaginationProps['pageSizes']
@@ -14,7 +15,8 @@ export interface XPaginationProps {
   defaultPageSize?: PaginationProps['defaultPageSize']
 }
 
-const { defaultPageSize = 20, layout = 'prev, pager, next, sizes, jumper, ->, total' } = defineProps<XPaginationProps>()
+const { defaultPageSize = 20, layout = 'prev, pager, next, sizes, jumper, ->, total' } =
+  defineProps<XPaginationProps>()
 
 const emit = defineEmits<{
   sizeChange: [size: number]

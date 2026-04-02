@@ -2,16 +2,16 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-
-    "target": "esnext",
-    "moduleDetection": "force",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "types": ["node", "vite/client"],
     "strict": true,
-    "strictNullChecks": true,
-    "isolatedModules": true
+    "skipLibCheck": true,
+    "esModuleInterop": true
   },
-  "include": ["eslint.config.*", "vite.config.*", "vitest.config.*"],
+  "include": [
+    "oxfmt.config.*",
+    "oxlint.config.*",
+    "vite.config.*",
+    "vitest.config.*",
+    "types/shims/**/*.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

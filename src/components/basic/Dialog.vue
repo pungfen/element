@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import type { DialogProps } from 'element-plus'
-
-import type { VNodeChild } from 'vue'
 import { ElDialog } from 'element-plus'
+
+import type { DialogProps } from 'element-plus'
+import type { VNodeChild } from 'vue'
 
 export interface XDialogProps {
   bodyClass?: DialogProps['bodyClass']
@@ -41,7 +41,7 @@ const visible = defineModel<boolean>()
       alignCenter,
       draggable,
       closeOnClickModal,
-      closeOnPressEscape,
+      closeOnPressEscape
     }"
   >
     <template v-if="'header' in $slots" #header>

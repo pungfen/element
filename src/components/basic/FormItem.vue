@@ -1,8 +1,17 @@
 <script setup lang="tsx" generic="D extends object">
-import type { VNodeChild } from 'vue'
 import { ElFormItem } from 'element-plus'
 import { inject, onMounted, onUnmounted, provide, ref, useId } from 'vue'
-import { X_ELEMENT_IN_TAB_PANE, X_ELEMENT_IN_TABS, X_FORM_ITEM_VALIDATION, X_FORM_VALIDATIONS, X_TAB_PANE_NAME, X_TABS_MODEL_UPDATE_HOOK } from '@/constants'
+
+import {
+  X_ELEMENT_IN_TAB_PANE,
+  X_ELEMENT_IN_TABS,
+  X_FORM_ITEM_VALIDATION,
+  X_FORM_VALIDATIONS,
+  X_TAB_PANE_NAME,
+  X_TABS_MODEL_UPDATE_HOOK
+} from '@/constants'
+
+import type { VNodeChild } from 'vue'
 
 export interface XFormItemProps {
   content?: () => VNodeChild
@@ -38,7 +47,7 @@ const error = ref<string | undefined>()
 const id = useId()
 const validation: XFormItemValidation = {
   id,
-  clearValidate: () => error.value = undefined,
+  clearValidate: () => (error.value = undefined),
   label,
   required,
   validate: () => {
@@ -54,14 +63,14 @@ const validation: XFormItemValidation = {
 provide(X_FORM_ITEM_VALIDATION, validation)
 
 onMounted(() => {
-  const exist = validations?.some(it => it.id === id)
+  const exist = validations?.some((it) => it.id === id)
   if (!exist) {
     validations?.push(validation)
   }
 })
 
 onUnmounted(() => {
-  const index = validations?.findIndex(it => it.id === id)
+  const index = validations?.findIndex((it) => it.id === id)
   if (index && index > -1) {
     validations?.splice(index, 1)
   }

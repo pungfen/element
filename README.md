@@ -18,9 +18,9 @@
 
 请与下列 **peerDependencies** 版本保持一致（或兼容范围）：
 
-| 包 | 版本 |
-| --- | --- |
-| `vue` | `^3.5.27` |
+| 包             | 版本      |
+| -------------- | --------- |
+| `vue`          | `^3.5.27` |
 | `element-plus` | `^2.13.1` |
 
 ## 安装
@@ -43,6 +43,8 @@ const app = createApp(App)
 
 app.use(Element)
 ```
+
+同时请确保 **Element Plus** 的样式已按需或全量引入（例如全量：`import 'element-plus/dist/index.css'`）；若仅用 `unplugin-vue-components` + 本库解析器，一般由解析器为各组件注入 Element Plus 的 CSS 副作用路径。
 
 ### 注册进阶组件
 
@@ -71,7 +73,7 @@ app.use(Element, {
 从本库导出扩展后的语言包，配合 `el-config-provider` 使用：
 
 ```ts
-import { zhCn } from '@pungfe/element'
+import { zhCn } from '@pungfe/element/locales'
 
 // 在模板中：<el-config-provider :locale="zhCn">...</el-config-provider>
 ```
@@ -104,12 +106,14 @@ export default defineConfig({
 
 ## 子路径导出
 
-| 路径 | 说明 |
-| --- | --- |
-| `@pungfe/element` | 默认入口：`install`、基础组件、类型、语言包 |
-| `@pungfe/element/advance` | 仅进阶组件（按需静态导入时使用） |
-| `@pungfe/element/resolver` | `unplugin-vue-components` 解析器 |
-| `@pungfe/element/style.css` | 本库样式 |
+| 路径                        | 说明                                                                      |
+| --------------------------- | ------------------------------------------------------------------------- |
+| `@pungfe/element`           | 默认入口：`install`、`ElementConfig` 等类型（不含语言包，见下）           |
+| `@pungfe/element/basic`     | 基础 X 组件具名导出；含 `GlobalComponents` 类型补充（按需静态导入）       |
+| `@pungfe/element/advance`   | 进阶组件具名导出；含对应 `GlobalComponents` 类型补充（按需静态导入）      |
+| `@pungfe/element/locales`   | 扩展后的 `en`、`zhCn`（配合 `el-config-provider`）                        |
+| `@pungfe/element/resolver`  | `unplugin-vue-components` 解析器（基础从 `basic`、进阶从 `advance` 解析） |
+| `@pungfe/element/style.css` | 本库样式                                                                  |
 
 ## 组件一览
 
@@ -121,13 +125,19 @@ export default defineConfig({
 
 ```bash
 npm ci
-npm run build    # 输出 dist/（es、cjs、types）
-npm run lint     # ESLint
+npm run build    # 输出 dist
+npm run fmt      # oxfmt 格式化
+npm run lint     # Oxlint（含类型感知）
 npm run typecheck
-npm run test     # Vitest
+npm run test     # Vitest（watch）
+npm run test:ci  # Vitest 单次跑完（与 CI 一致）
 ```
 
-发布流程可通过 `npm run release`（先构建再使用 bumpp 升版）完成；CI 在指向 `main` 的 Push / PR 上会执行 lint、typecheck 与 build。
+发布流程可通过 `npm run release`（先构建再使用 bumpp 升版）完成；CI 在指向 `main` 的 Push / PR 上会执行 lint、typecheck、test 与 build。
+
+### 静态按需导入
+
+未使用 `app.use` 全局注册时，可从子路径具名导入基础或进阶组件（与解析器 `from` 一致）：`@pungfe/element/basic`、`@pungfe/element/advance`。
 
 ## License
 
@@ -139,5 +149,3 @@ npm run test     # Vitest
 [npm-version-href]: https://npmjs.com/package/@pungfe/element
 [npm-downloads-src]: https://img.shields.io/npm/dm/@pungfe/element
 [npm-downloads-href]: https://www.npmcharts.com/compare/@pungfe/element?interval=30
-
-<!-- npm publish --access public --tag alpha -->

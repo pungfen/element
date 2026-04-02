@@ -1,9 +1,10 @@
 <script setup lang="tsx" generic="V extends string">
-import type { DatePickerProps } from 'element-plus'
 import { ElConfigProvider, ElDatePicker, useLocale } from 'element-plus'
 import { computed, inject, useAttrs } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
+
+import type { DatePickerProps } from 'element-plus'
 
 export interface XDatePickerProps {
   disabled?: boolean
@@ -35,8 +36,7 @@ const modelValue = computed({
   get() {
     if (type.includes('range') && start.value && end.value) {
       return [start.value, end.value]
-    }
-    else if (!type.includes('range')) {
+    } else if (!type.includes('range')) {
       return model.value
     }
     return null
@@ -45,8 +45,7 @@ const modelValue = computed({
     if (type.includes('range') && Array.isArray(value)) {
       start.value = value?.[0] as V
       end.value = value?.[1] as V
-    }
-    else {
+    } else {
       model.value = value as V
     }
   }
@@ -58,8 +57,7 @@ if (formItemValidation?.required) {
   formItemValidation.validator = () => {
     if (type.includes('range') && (!start.value || !end.value)) {
       return `请选择${label}`
-    }
-    else if (!model.value) {
+    } else if (!model.value) {
       return `请选择${label}`
     }
     return validator?.()
@@ -79,7 +77,7 @@ if (formItemValidation?.required) {
         startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
         endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
         shortcuts,
-        ...attrs,
+        ...attrs
       }"
       v-model="modelValue"
       @blur="$emit('blur', $event)"

@@ -1,10 +1,11 @@
 <script setup lang="tsx" generic="MV extends string | number">
-import type { InputProps } from 'element-plus'
-import type { VNode } from 'vue'
 import { ElInput, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
+
+import type { InputProps } from 'element-plus'
+import type { VNode } from 'vue'
 
 export interface XInputProps {
   clearable?: InputProps['clearable']
@@ -73,7 +74,7 @@ const change = (value: string) => {
       showPassword,
       autocomplete,
       autosize,
-      placeholder: placeholder ?? t('el.input.placeholder'),
+      placeholder: placeholder ?? t('el.input.placeholder')
     }"
     v-model="model"
     @blur="blur"

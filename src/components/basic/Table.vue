@@ -115,17 +115,16 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
         fit,
         rowKey,
         border: border ?? tableConfig?.border,
-        emptyText: emptyText ?? t('el.table.emptyText'),
+        emptyText: emptyText ?? t('el.table.emptyText')
       }"
       @row-click="(row: D) => emit('rowClick', row)"
       @row-dblclick="(row: D) => emit('rowDblclick', row)"
       @selection-change="(rows: D[]) => emit('selectionChange', rows)"
-      @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
+      @header-dragend="
+        (newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)
+      "
     >
-      <XTableColumn
-        v-for="column of columns"
-        v-bind="column"
-      />
+      <XTableColumn v-for="column of columns" v-bind="column" />
     </ElTable>
   </ElConfigProvider>
 </template>

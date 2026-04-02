@@ -1,8 +1,7 @@
 import { install } from '@/install'
+import '@/index.css'
 
-export * from '@/components/basic'
 export * from '@/install'
-export * from '@/locales'
 export * from '@/types'
 
 export default install

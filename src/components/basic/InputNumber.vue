@@ -1,10 +1,11 @@
 <script setup lang="tsx">
-import type { InputNumberProps } from 'element-plus'
-import type { VNode } from 'vue'
 import { ElInputNumber, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
+
+import type { InputNumberProps } from 'element-plus'
+import type { VNode } from 'vue'
 
 export interface XInputNumberProps {
   align?: InputNumberProps['align']
@@ -70,22 +71,16 @@ const blur = (e: FocusEvent) => {
       precision,
       size,
       step,
-      stepStrictly,
+      stepStrictly
     }"
     v-model="model"
     @blur="blur"
     @focus="focus"
   >
-    <template
-      v-if="'prefix' in $slots"
-      #prefix
-    >
+    <template v-if="'prefix' in $slots" #prefix>
       <slot name="prefix" />
     </template>
-    <template
-      v-if="'suffix' in $slots"
-      #suffix
-    >
+    <template v-if="'suffix' in $slots" #suffix>
       <slot name="suffix" />
     </template>
   </ElInputNumber>

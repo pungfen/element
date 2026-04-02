@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { XButtonProps } from '@/components/basic'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, inject } from 'vue'
-import { XButton } from '@/components/basic'
+
+import { XButton, type XButtonProps } from '@/basic'
 import { X_ELEMENT_IN_TABLE } from '@/constants'
 
 export interface XButtonAsyncProps extends XButtonProps {
@@ -14,8 +14,7 @@ const { action, type = 'primary', link = undefined } = defineProps<XButtonAsyncP
 const click = useDebounceFn(async () => {
   try {
     await action?.()
-  }
-  catch (e) {
+  } catch (e) {
     console.log(e)
   }
 })
