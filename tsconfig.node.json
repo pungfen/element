@@ -6,12 +6,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": [
-    "oxfmt.config.*",
-    "oxlint.config.*",
-    "vite.config.*",
-    "vitest.config.*",
-    "types/shims/**/*.d.ts"
-  ],
+  "include": ["oxfmt.config.*", "oxlint.config.*", "vite.config.*"],
   "exclude": ["node_modules"]
 }
