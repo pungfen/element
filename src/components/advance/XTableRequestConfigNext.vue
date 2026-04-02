@@ -127,7 +127,10 @@ const P = () => (
     onUpdate:currentPage={value => paging.value.pageIndex = value ?? 0}
     onUpdate:pageSize={value => paging.value.pageSize = value ?? 0}
     onCurrentChange={() => execute()}
-    onSizeChange={() => execute()}
+    onSizeChange={() => {
+      paging.value.pageIndex = 1
+      execute()
+    }}
   />
 )
 

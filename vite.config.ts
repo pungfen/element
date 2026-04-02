@@ -25,7 +25,8 @@ export default defineConfig({
       output: {
         exports: 'named'
       }
-    }
+    },
+    sourcemap: true
   },
   plugins: [
     Vue(),
