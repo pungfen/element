@@ -61,14 +61,13 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --mode staging",
     "fmt": "oxfmt",
     "lint": "oxlint -c oxlint.config.ts --type-aware",
     "lint:fix": "oxlint --fix",
     "prepare": "simple-git-hooks",
     "release": "npm run build && bumpp",
     "test": "vitest",
-    "test:ci": "vitest run",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {

@@ -1,4 +1,6 @@
 /// <reference types="vitest/config" />
+/// <reference types="vite/client" />
+
 import { fileURLToPath, URL } from 'node:url'
 
 import Tailwindcss from '@tailwindcss/vite'
@@ -7,7 +9,7 @@ import Vue from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'vite'
 import Dts from 'vite-plugin-dts'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   build: {
     lib: {
       entry: [
@@ -26,7 +28,7 @@ export default defineConfig({
         exports: 'named'
       }
     },
-    sourcemap: true
+    sourcemap: mode === 'staging'
   },
   plugins: [
     Vue(),
@@ -44,4 +46,4 @@ export default defineConfig({
   test: {
     environment: 'jsdom'
   }
-})
+}))

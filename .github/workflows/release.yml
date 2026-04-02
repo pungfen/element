@@ -29,9 +29,9 @@ jobs:
 
       - run: npm run typecheck
 
-      - run: npm run test:ci
+      - run: npx vitest run
 
-      - run: npm run build
+      - run: npx vite build
 
       # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
       - name: Publish to npm
