@@ -28,6 +28,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexP
   fields: () => {
     data: Ref<TableColumnField[]>
     update: (fields: TableColumnField[]) => PromiseLike<unknown>
+    loading: Ref<boolean>
   }
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   pagination?: boolean
@@ -53,7 +54,7 @@ const reset = useDebounceFn(async () => {
   search()
 })
 
-const { data: fieldsData, update } = fields()
+const { data: fieldsData, update, loading } = fields()
 const visibleColumns = useArrayFilter(fieldsData, it => it.visible)
 
 const columns = useArrayMap(visibleColumns, (it) => {
@@ -180,7 +181,10 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
 <template>
   <Q class="rounded bg-(--el-fill-color-light) px-2 pt-4" />
 
-  <div v-loading="isFetching" class="relative flex flex-1 flex-col gap-2 overflow-hidden">
+  <div
+    v-loading="loading || isFetching"
+    class="relative flex flex-1 flex-col gap-2 overflow-hidden"
+  >
     <S />
     <T />
     <div v-if="pagination" class="flex justify-end">
