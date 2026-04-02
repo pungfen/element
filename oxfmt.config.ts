@@ -12,5 +12,6 @@ export default defineConfig({
   sortTailwindcss: true,
   sortPackageJson: {
     sortScripts: true
-  }
+  },
+  jsxSingleQuote: true
 })

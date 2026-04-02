@@ -118,6 +118,33 @@ const T = () => (
   />
 )
 
+const S = () => (
+  <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
+    {{
+      reference: () => <XButton icon={Setting} text class="absolute top-0 right-0 z-1000" />,
+      default: () => <div class="flex flex-col gap-2">
+        <ElText size="large"> 表头设置 </ElText>
+        <ElScrollbar max-height={500}>
+          <div ref={sortable} class="flex flex-col divide-y divide-[#f2f6fc]">
+            {() => fieldsData.value.map(
+              it => <div class="flex w-50 items-center gap-2 py-2">
+                <XButton text icon={Rank} type="primary" size="small" class="cursor-grab"/>
+                <ElText class="flex-1 overflow-ellipsis">{it.label}</ElText>
+                <ElSwitch size="small" modelValue={it.visible} onUpdate:modelValue={value => {
+                  it.visible = value as boolean
+                  nextTick(() => {
+                    update(fieldsData.value)
+                  })
+                }}/>
+              </div>
+            )}
+          </div>
+        </ElScrollbar>
+      </div>
+    }}
+  </ElPopover>
+)
+
 const P = () => (
   <XPagination
     size="small"
@@ -154,29 +181,7 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
   <Q class="rounded bg-(--el-fill-color-light) px-2 pt-4" />
 
   <div v-loading="isFetching" class="relative flex flex-1 flex-col gap-2 overflow-hidden">
-    <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
-      <template #reference>
-        <XButton :icon="Setting" text class="absolute top-0 right-0 z-1000" />
-      </template>
-      <div class="flex flex-col gap-2">
-        <ElText size="large"> 表头设置 </ElText>
-        <ElScrollbar :max-height="500">
-          <div ref="sortable" class="flex flex-col divide-y divide-[#f2f6fc]">
-            <div
-              v-for="item of fieldsData"
-              :key="item.code"
-              class="flex w-50 items-center gap-2 py-2"
-            >
-              <XButton text :icon="Rank" type="primary" size="small" class="cursor-grab" />
-              <ElText class="flex-1 overflow-ellipsis">
-                {{ item.label }}
-              </ElText>
-              <ElSwitch size="small" :model-value="item.visible"></ElSwitch>
-            </div>
-          </div>
-        </ElScrollbar>
-      </div>
-    </ElPopover>
+    <S />
     <T />
     <div v-if="pagination" class="flex justify-end">
       <P />
