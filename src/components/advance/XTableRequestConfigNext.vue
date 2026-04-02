@@ -73,7 +73,7 @@ const items = useArrayFilter(visibleColumns, it => it.search)
 const Q = () => (
   <XForm
     data={query.value as object}
-    disabled={isFetching.value}
+    disabled={loading.value || isFetching.value}
     content={({ data }) => (
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2">
         {[
