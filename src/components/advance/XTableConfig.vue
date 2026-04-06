@@ -1,4 +1,4 @@
-<script setup lang="tsx" generic="U, PT, QR, D">
+<script setup lang="tsx" generic="D">
 import type { Ref, VNodeChild } from 'vue'
 import type { TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
@@ -104,8 +104,6 @@ defineExpose({ data })
 </script>
 
 <template>
-  <H />
-
   <div v-loading="loading" class="relative flex flex-1 flex-col gap-2 overflow-hidden">
     <S />
     <T />
