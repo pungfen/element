@@ -20,7 +20,7 @@ export interface XRequestProps<U, PT, QR, D> {
     path: PT
     isFetching: boolean
     paging: Paging
-    execute: () => PromiseLike<unknown>
+    search: () => PromiseLike<unknown>
   }) => VNodeChild
 }
 
@@ -33,7 +33,7 @@ const emit = defineEmits<XRequestEvents<PT, QR>>()
 defineSlots<{
   default: (scope: {
     data: D
-    execute: () => PromiseLike<unknown>
+    search: () => PromiseLike<unknown>
     isFetching: boolean
     paging: Paging
     path: PT
@@ -54,7 +54,7 @@ const Content = () =>
     isFetching: isFetching.value,
     query: query.value,
     paging: paging.value,
-    execute
+    search
   })
 
 defineExpose({ data, paging, path, query, isFetching, url, execute, search })
@@ -67,7 +67,7 @@ defineExpose({ data, paging, path, query, isFetching, url, execute, search })
     :path="path"
     :query="query"
     :is-fetching="isFetching"
-    :execute="execute"
+    :search="search"
   >
     <Content />
   </slot>
