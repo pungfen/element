@@ -4,7 +4,7 @@ import type { TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
-import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
+import { ElPopover, ElScrollbar, ElSwitch, ElText } from 'element-plus'
 import { nextTick, ref } from 'vue'
 
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
