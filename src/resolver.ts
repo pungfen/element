@@ -38,6 +38,7 @@ const XAdvanceResolve: Record<string, string[]> = {
   XFormRequestNext: [...XBasicResolve.XForm],
   XRequest: [],
   XSelectRequest: [...XBasicResolve.XSelect],
+  XTableConfig: [...XBasicResolve.XSelect],
   XTableFlex: [...XBasicResolve.XTable],
   XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
   XTableRequestConfigNext: [

@@ -5,6 +5,7 @@ import XFormFlex from '@/components/advance/XFormFlex.vue'
 import XFormRequestNext from '@/components/advance/XFormRequestNext.vue'
 import XRequest from '@/components/advance/XRequest.vue'
 import XSelectRequest from '@/components/advance/XSelectRequest.vue'
+import XTableConfig from '@/components/advance/XTableConfig.vue'
 import XTableFlex from '@/components/advance/XTableFlex.vue'
 import XTableRequestConfigNext from '@/components/advance/XTableRequestConfigNext.vue'
 import XTableRequestNext from '@/components/advance/XTableRequestNext.vue'
@@ -18,6 +19,7 @@ export {
   XFormRequestNext,
   XRequest,
   XSelectRequest,
+  XTableConfig,
   XTableFlex,
   XTableRequestConfigNext,
   XTableRequestNext,
@@ -31,6 +33,7 @@ export * from '@/components/advance/XFormFlex.vue'
 export * from '@/components/advance/XFormRequestNext.vue'
 export * from '@/components/advance/XRequest.vue'
 export * from '@/components/advance/XSelectRequest.vue'
+export * from '@/components/advance/XTableConfig.vue'
 export * from '@/components/advance/XTableFlex.vue'
 export * from '@/components/advance/XTableRequestConfigNext.vue'
 export * from '@/components/advance/XTableRequestNext.vue'
