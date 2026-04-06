@@ -5,7 +5,7 @@ import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
-import { nextTick, useTemplateRef } from 'vue'
+import { nextTick, ref } from 'vue'
 
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
 import { XButton, type XTableColumnProps } from '@/basic'
@@ -40,6 +40,19 @@ const columns = useArrayMap(visibleColumns, (it) => {
     width: it.width,
     content: _config?.content
   } as XTableColumnProps<D>
+})
+
+const sortable = ref<HTMLDivElement | null>()
+useSortable(sortable, fieldsData, {
+  animation: 150,
+  ghostClass: 'bg-(--el-color-primary-light-7)',
+  handle: '.cursor-grab',
+  onUpdate: (e) => {
+    moveArrayElement(fieldsData.value, e.oldIndex!, e.newIndex!, e)
+    nextTick(() => {
+      update(fieldsData.value)
+    })
+  }
 })
 
 const T = () => (
@@ -86,19 +99,6 @@ const S = () => (
     }}
   </ElPopover>
 )
-
-const sortable = useTemplateRef('sortable')
-useSortable(sortable, fieldsData, {
-  animation: 150,
-  ghostClass: 'bg-(--el-color-primary-light-7)',
-  handle: '.cursor-grab',
-  onUpdate: (e) => {
-    moveArrayElement(fieldsData.value, e.oldIndex!, e.newIndex!, e)
-    nextTick(() => {
-      update(fieldsData.value)
-    })
-  }
-})
 
 defineExpose({ data })
 </script>

@@ -5,7 +5,7 @@ import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
-import { nextTick, useTemplateRef } from 'vue'
+import { nextTick, ref } from 'vue'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
 import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
@@ -76,6 +76,19 @@ const columns = useArrayMap(visibleColumns, (it) => {
 })
 
 const items = useArrayFilter(visibleColumns, it => it.search)
+
+const sortable = ref<HTMLDivElement | null>()
+useSortable(sortable, fieldsData, {
+  animation: 150,
+  ghostClass: 'bg-(--el-color-primary-light-7)',
+  handle: '.cursor-grab',
+  onUpdate: (e) => {
+    moveArrayElement(fieldsData.value, e.oldIndex!, e.newIndex!, e)
+    nextTick(() => {
+      update(fieldsData.value)
+    })
+  }
+})
 
 const Q = () => (
   <XForm
@@ -170,19 +183,6 @@ const P = () => (
     }}
   />
 )
-
-const sortable = useTemplateRef('sortable')
-useSortable(sortable, fieldsData, {
-  animation: 150,
-  ghostClass: 'bg-(--el-color-primary-light-7)',
-  handle: '.cursor-grab',
-  onUpdate: (e) => {
-    moveArrayElement(fieldsData.value, e.oldIndex!, e.newIndex!, e)
-    nextTick(() => {
-      update(fieldsData.value)
-    })
-  }
-})
 
 defineExpose({ search, data, paging, isFetching, url, query, path })
 </script>
