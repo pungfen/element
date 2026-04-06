@@ -20,6 +20,7 @@ export interface XRequestProps<U, PT, QR, D> {
     path: PT
     isFetching: boolean
     paging: Paging
+    execute: () => PromiseLike<unknown>
   }) => VNodeChild
 }
 
@@ -52,7 +53,8 @@ const Content = () =>
     path: path.value,
     isFetching: isFetching.value,
     query: query.value,
-    paging: paging.value
+    paging: paging.value,
+    execute
   })
 
 defineExpose({ data, paging, path, query, isFetching, url, execute, search })
