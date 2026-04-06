@@ -30,6 +30,13 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexP
     update: (fields: TableColumnField[]) => PromiseLike<unknown>
     loading: Ref<boolean>
   }
+  header?: (scope: {
+    data: D[]
+    query: QR
+    path: PT
+    isFetching: boolean
+    paging: Paging
+  }) => VNodeChild
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   pagination?: boolean
 }
@@ -38,7 +45,7 @@ export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, config, fields, pagination = true } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { request, config, fields, pagination = true, header } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -100,6 +107,8 @@ const Q = () => (
     )}
   />
 )
+
+const H = () => header?.({ data: data.value, isFetching: isFetching.value, paging: paging.value, path: path.value, query: query.value })
 
 const T = () => (
   <XTableFlex
@@ -180,6 +189,8 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
 
 <template>
   <Q class="rounded bg-(--el-fill-color-light) px-2 pt-4" />
+
+  <H />
 
   <div
     v-loading="loading || isFetching"
