@@ -70,7 +70,7 @@ const columns = useArrayMap(visibleColumns, (it) => {
     columnKey: it.code,
     label: _config?.label ?? it.label,
     prop: _config?.prop ?? it.prop,
-    width: it.width,
+    minWidth: it.width,
     content: _config?.content
   } as XTableColumnProps<D>
 })

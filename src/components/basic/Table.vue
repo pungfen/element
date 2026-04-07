@@ -25,6 +25,7 @@ export interface XTableColumnProps<D> {
   selectable?: (row: D, index: number) => boolean
   type?: 'index' | 'selection'
   width?: number
+  minWidth?: number
   columnKey?: string
 }
 
@@ -84,6 +85,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       prop={props.prop}
       type={props.type}
       width={props.width}
+      minWidth={props.minWidth}
       columnKey={props.columnKey}
       selectable={props.selectable}
     >
