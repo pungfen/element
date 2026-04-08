@@ -1,9 +1,9 @@
 <script setup lang="ts" generic="V extends string, MV extends V | V[]">
-import { ElMessage, genFileId } from 'element-plus'
+import { ElMessage, genFileId, useLocale } from 'element-plus'
 import { computed, inject, ref } from 'vue'
 
 import { XUpload, type XUploadProps } from '@/basic'
-import { X_ELEMENT_CONFIG } from '@/constants'
+import { X_ELEMENT_CONFIG, X_LOCALE_CONFIG } from '@/constants'
 
 import type { UploadHooks } from 'element-plus'
 import type { VNodeChild } from 'vue'
@@ -16,7 +16,7 @@ export interface XUploadOssProps extends Omit<
   maxSize?: number
 }
 
-const { maxSize = 50 * 1024 } = defineProps<XUploadOssProps>()
+const { maxSize = 50 * 1024 * 1024 } = defineProps<XUploadOssProps>()
 defineSlots<{
   default: () => VNodeChild
   tip: () => VNodeChild
@@ -60,6 +60,9 @@ const fileList = computed(() =>
     .reverse()
     .map((it) => ({ name: it.split('/').findLast(() => true)!, url: it, uid: genFileId() }))
 )
+
+const locale = inject(X_LOCALE_CONFIG, undefined)
+const { t } = useLocale(locale)
 </script>
 
 <template>
@@ -74,9 +77,10 @@ const fileList = computed(() =>
       onSuccess: success,
       onPreview: preview
     }"
+    showFileList
   >
     <slot>
-      <XButton type="primary" size="small"> 点击上传 </XButton>
+      <XButton type="primary" size="small">{{ t('el.uploadOss.placeholder') }}</XButton>
     </slot>
 
     <template v-if="'tip' in $slots" #tip>

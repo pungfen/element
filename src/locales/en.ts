@@ -16,6 +16,9 @@ Object.assign(en.el, {
   },
   select: {
     ...en.el.select
+  },
+  uploadOss: {
+    placeholder: 'Click Upload'
   }
 })
 

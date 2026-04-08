@@ -14,6 +14,9 @@ Object.assign(zhCn.el, {
   },
   select: {
     ...zhCn.el.select
+  },
+  uploadOss: {
+    placeholder: '点击上传'
   }
 })
 

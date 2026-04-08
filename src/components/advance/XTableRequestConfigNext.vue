@@ -188,7 +188,7 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
 </script>
 
 <template>
-  <Q class="rounded bg-(--el-fill-color-light) px-2 pt-4" />
+  <Q class="rounded bg-(--el-fill-color-darker) px-2 pt-4" />
 
   <H />
 

@@ -14,7 +14,8 @@ export interface XTableConfigColumnsProps<D> extends Omit<XTableColumnProps<D>, 
   content?: (scope: { row: D, index: number }) => VNodeChild
 }
 
-export interface XTableConfigProps<D> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
+export interface XTableConfigProps<D> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip' | 'data'> {
+  data?: D[]
   fields: () => {
     data: Ref<TableColumnField[]>
     update: (fields: TableColumnField[]) => PromiseLike<unknown>
@@ -23,7 +24,9 @@ export interface XTableConfigProps<D> extends Omit<XTableFlexProps<D>, 'columns'
   config: Record<string, XTableConfigColumnsProps<D>>
 }
 
-export interface XTableConfigEvents<D> extends XTableFlexEvents<D> {}
+export interface XTableConfigEvents<D> extends XTableFlexEvents<D> {
+  rowClick: [row: D]
+}
 
 const { config, fields, data } = defineProps<XTableConfigProps<D>>()
 const emit = defineEmits<XTableConfigEvents<D>>()
@@ -37,7 +40,7 @@ const columns = useArrayMap(visibleColumns, (it) => {
     columnKey: it.code,
     label: _config?.label ?? it.label,
     prop: _config?.prop ?? it.prop,
-    width: it.width,
+    minWidth: it.width,
     content: _config?.content
   } as XTableColumnProps<D>
 })
@@ -70,6 +73,7 @@ const T = () => (
         })
       }
     }}
+    onRowClick={(row) => emit('rowClick', row)}
   />
 )
 
