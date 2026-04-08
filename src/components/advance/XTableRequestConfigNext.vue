@@ -5,7 +5,7 @@ import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
-import { nextTick, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
 import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
@@ -76,6 +76,8 @@ const columns = useArrayMap(visibleColumns, (it) => {
 })
 
 const items = useArrayFilter(visibleColumns, it => it.search)
+
+const queryShow = computed(() => !!items.value.length)
 
 const sortable = ref<HTMLDivElement | null>()
 useSortable(sortable, fieldsData, {
@@ -188,7 +190,7 @@ defineExpose({ search, data, paging, isFetching, url, query, path })
 </script>
 
 <template>
-  <Q class="rounded bg-(--el-fill-color-darker) px-2 pt-4" />
+  <Q v-if="queryShow" class="rounded bg-(--el-fill-color-darker) px-2 pt-4" />
 
   <H />
 

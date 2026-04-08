@@ -7,7 +7,7 @@ import { XTable, type XTableEvents, type XTableProps } from '@/basic'
 import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties } from 'vue'
 
-export interface XTableFlexProps<D> extends Omit<XTableProps<D>, 'fit'> {
+export interface XTableFlexProps<D> extends XTableProps<D> {
   cellClassName?:
     | ((scope: { column: TableColumnCtx; columnIndex: number; row: D; rowIndex: number }) => string)
     | string
@@ -25,13 +25,7 @@ export interface XTableFlexProps<D> extends Omit<XTableProps<D>, 'fit'> {
 
 export interface XTableFlexEvents<D> extends XTableEvents<D> {}
 
-const {
-  showOverflowTooltip = undefined,
-  cellClassName,
-  cellStyle,
-  rowClassName,
-  rowStyle
-} = defineProps<XTableFlexProps<D>>()
+defineProps<XTableFlexProps<D>>()
 defineEmits<XTableFlexEvents<D>>()
 
 const container = useTemplateRef('container')
@@ -56,14 +50,7 @@ defineExpose({
   <div ref="container" class="flex-1 overflow-hidden">
     <XTable
       ref="table"
-      v-bind="{
-        ...$props,
-        cellClassName,
-        cellStyle,
-        rowClassName,
-        rowStyle,
-        showOverflowTooltip
-      }"
+      v-bind="{ ...$props }"
       :height="size.height.value"
       @row-click="(row: D) => $emit('rowClick', row)"
       @row-dblclick="(row: D) => $emit('rowDblclick', row)"

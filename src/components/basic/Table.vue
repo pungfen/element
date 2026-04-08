@@ -110,11 +110,11 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
         cellClassName,
         cellStyle,
         showSummary,
-        showOverflowTooltip,
         spanMethod,
         summaryMethod,
         size,
-        fit,
+        showOverflowTooltip: true,
+        fit: true,
         rowKey,
         border: border ?? tableConfig?.border,
         emptyText: emptyText ?? t('el.table.emptyText')

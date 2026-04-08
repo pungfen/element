@@ -34,7 +34,7 @@ export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle, fit = true } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -61,7 +61,6 @@ const T = () => (
     cellStyle={cellStyle}
     rowClassName={rowClassName}
     rowStyle={rowStyle}
-    fit={fit}
   />
 )
 
