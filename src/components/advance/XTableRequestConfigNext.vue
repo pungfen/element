@@ -4,11 +4,13 @@ import type { Paging, TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
-import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText } from 'element-plus'
-import { computed, nextTick, ref } from 'vue'
+import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
+import { computed, nextTick, ref, inject } from 'vue'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
 import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
+
+import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableRequestColumnsProps<D>, 'content'> {
   content?: (scope: { row: D, index: number }) => VNodeChild
@@ -92,6 +94,9 @@ useSortable(sortable, fieldsData, {
   }
 })
 
+const locale = inject(X_LOCALE_CONFIG, undefined)
+const { t } = useLocale(locale)
+
 const Q = () => (
   <XForm
     data={query.value as object}
@@ -112,8 +117,8 @@ const Q = () => (
           ),
           <XFormItem content={() => (
             <ElSpace>
-              <XButtonAsync action={() => search()}>查询</XButtonAsync>
-              <XButton onClick={() => reset()}>重置</XButton>
+              <XButtonAsync action={() => search()}>{t('common.query')}</XButtonAsync>
+              <XButton onClick={() => reset()}>{t('common.reset')}</XButton>
             </ElSpace>
           )}
           />

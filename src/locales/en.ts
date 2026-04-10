@@ -19,6 +19,10 @@ Object.assign(en.el, {
   },
   uploadOss: {
     placeholder: 'Click Upload'
+  },
+  common: {
+    query: 'Query',
+    reset: 'Reset'
   }
 })
 

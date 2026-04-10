@@ -17,6 +17,10 @@ Object.assign(zhCn.el, {
   },
   uploadOss: {
     placeholder: '点击上传'
+  },
+  common: {
+    query: '查询',
+    reset: '重置'
   }
 })
 
