@@ -117,8 +117,8 @@ const Q = () => (
           ),
           <XFormItem content={() => (
             <ElSpace>
-              <XButtonAsync action={() => search()}>{t('common.query')}</XButtonAsync>
-              <XButton onClick={() => reset()}>{t('common.reset')}</XButton>
+              <XButtonAsync action={() => search()}>{t('el.common.query')}</XButtonAsync>
+              <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
             </ElSpace>
           )}
           />
