@@ -1,7 +1,7 @@
 <script setup lang="tsx" generic="D, V, MV extends V | V[]">
 import { useArrayMap } from '@vueuse/core'
 import { ElOption, ElSelect, useLocale } from 'element-plus'
-import { computed, inject, ref, watch } from 'vue'
+import { computed, inject, ref, watch, type VNodeChild, type FunctionalComponent } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
@@ -12,6 +12,7 @@ export interface XSelectOptionProps<V> {
   disabled?: boolean
   label?: number | string
   value: V
+  render?: VNodeChild
 }
 
 export interface XSelectProps<D, V> {
@@ -36,6 +37,8 @@ export interface XSelectProps<D, V> {
   supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
   placeholder?: SelectProps['placeholder']
   noDataText?: SelectProps['noDataText']
+
+  option?: (option: D) => VNodeChild
 }
 
 export interface XSelectEvents<V> {
@@ -50,7 +53,8 @@ const {
   disabled = undefined,
   factory,
   identify,
-  supplement
+  supplement,
+  option
 } = defineProps<XSelectProps<D, V>>()
 
 const emit = defineEmits<XSelectEvents<V>>()
@@ -102,8 +106,8 @@ watch(
 
 const localOptions = computed(() =>
   options.value.map((item) => {
-    const key = forward(item.value)
-    return { disabled: item.disabled, key, label: item.label, value: key }
+    const key = forward(item.value) as V
+    return { disabled: item.disabled, key, label: item.label, value: key, render: item.render }
   })
 )
 
@@ -144,6 +148,16 @@ const focus = (e: FocusEvent) => {
 const change = (value: V) => {
   emit('change', value)
 }
+
+const XOption: FunctionalComponent<XSelectOptionProps<V>> = (props) => (
+  <ElOption
+    disabled={props.disabled}
+    label={props.label}
+    value={props.value as string | boolean | object}
+  >
+    {props.render ?? props.label}
+  </ElOption>
+)
 </script>
 
 <template>
@@ -169,14 +183,12 @@ const change = (value: V) => {
     @focus="focus"
     @change="change"
   >
-    <ElOption
+    <XOption
       v-for="option of localOptions"
-      :key="option.key"
       :label="option.label"
       :value="option.value"
       :disabled="option.disabled"
-    >
-      {{ option.label }}
-    </ElOption>
+      :render="option.render"
+    />
   </ElSelect>
 </template>
