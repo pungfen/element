@@ -59,7 +59,7 @@ defineExpose({ search, data, path, url, execute, query })
       identify,
       remote,
       filterable: remote || filterable,
-      disabled: isFetching || disabled,
+      disabled: disabled,
       loading: isFetching || loading,
       multiple,
       size
