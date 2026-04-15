@@ -99,6 +99,7 @@ const { t } = useLocale(locale)
 
 const Q = () => (
   <XForm
+    labelPosition={locale?.value.name.toLowerCase() === 'zh-cn' ? 'left' : 'top'}
     data={query.value as object}
     disabled={loading.value || isFetching.value}
     content={({ data }) => (

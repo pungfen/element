@@ -1,5 +1,5 @@
 <script setup lang="tsx" generic="D extends object">
-import { ElForm } from 'element-plus'
+import { ElForm, type FormProps } from 'element-plus'
 import { provide, useTemplateRef } from 'vue'
 
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '@/constants'
@@ -15,6 +15,7 @@ export interface XFormProps<D> {
   labelPosition?: 'left' | 'right' | 'top'
   labelSuffix?: string
   labelWidth?: number | string
+  size?: FormProps['size']
 }
 
 const { content, data, disabled = undefined } = defineProps<XFormProps<D>>()
@@ -46,7 +47,8 @@ defineExpose({ clearValidate, data, validate, resetFields })
       inline,
       labelPosition,
       labelWidth,
-      labelSuffix
+      labelSuffix,
+      size
     }"
   >
     <Content />
