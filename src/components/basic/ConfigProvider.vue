@@ -1,4 +1,5 @@
 <script setup lang="tsx">
+import { ElConfigProvider } from 'element-plus'
 import { computed, provide } from 'vue'
 
 import { X_LOCALE_CONFIG } from '@/constants'
@@ -18,5 +19,7 @@ provide(X_LOCALE_CONFIG, localLocale)
 </script>
 
 <template>
-  <slot></slot>
+  <ElConfigProvider>
+    <slot></slot>
+  </ElConfigProvider>
 </template>
