@@ -54,11 +54,33 @@ const success: UploadHooks['onSuccess'] = () =>
   ) as MV)
 const preview: UploadHooks['onPreview'] = (uploadFile) => window.open(uploadFile.url)
 
+const isPlausibleMillisTimestamp = (s: string) => {
+  if (!/^\d+$/.test(s)) return false
+  const n = Number(s)
+  if (!Number.isSafeInteger(n)) return false
+  if (s.length < 12 || s.length > 16) return false
+  const t = new Date(n)
+  const MIN = Date.UTC(2000, 0, 1)
+  const MAX = Date.UTC(2100, 0, 1)
+  return n >= MIN && n <= MAX
+}
+
 const fileList = computed(() =>
   ([] as string[])
     .concat(model.value ?? [])
     .reverse()
-    .map((it) => ({ name: it.split('/').findLast(() => true)!, url: it, uid: genFileId() }))
+    .map((url) => {
+      const segments = url.split('/')
+      const name = segments.at(-1)!
+      let sid = name?.split('_').at(0)
+      if (!sid || !isPlausibleMillisTimestamp(sid)) {
+        sid = segments.at(-2)
+      }
+      if (sid && !isPlausibleMillisTimestamp(sid)) {
+        sid = `${genFileId()}`
+      }
+      return { name, url, uid: Number(sid) }
+    })
 )
 
 const locale = inject(X_LOCALE_CONFIG, undefined)
