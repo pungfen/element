@@ -36,9 +36,6 @@ export interface XSelectProps<D, V> {
 
   supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
   placeholder?: SelectProps['placeholder']
-  noDataText?: SelectProps['noDataText']
-
-  option?: (option: D) => VNodeChild
 }
 
 export interface XSelectEvents<V> {
@@ -54,7 +51,6 @@ const {
   factory,
   identify,
   supplement,
-  option
 } = defineProps<XSelectProps<D, V>>()
 
 const emit = defineEmits<XSelectEvents<V>>()
@@ -164,7 +160,6 @@ const XOption: FunctionalComponent<XSelectOptionProps<V>> = (props) => (
   <ElSelect
     v-bind="{
       placeholder: placeholder ?? t('el.select.placeholder'),
-      noDataText: noDataText ?? t('el.select.noDataText'),
       disabled,
       allowCreate,
       remote,

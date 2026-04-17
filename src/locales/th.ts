@@ -22,7 +22,10 @@ Object.assign(th.el, {
   },
   common: {
     query: 'ค้นหา',
-    reset: 'รีเซ็ต'
+    reset: 'รีเซ็ต',
+    cancel: 'ยกเลิก',
+    confirm: 'ยืนยัน',
+    confirmExecute: 'ยืนยันการดำเนินการ?'
   }
 })
 

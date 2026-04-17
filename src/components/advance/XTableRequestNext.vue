@@ -28,13 +28,14 @@ export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D
   cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  paginationLayout?: string
 }
 
 export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { request, columns, pagination = true, showOverflowTooltip = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle, paginationLayout } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -67,6 +68,7 @@ const T = () => (
 const P = () => (
   <XPagination
     size="small"
+    layout={paginationLayout}
     total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
     pageSize={paging.value.pageSize}

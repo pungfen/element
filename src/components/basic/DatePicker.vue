@@ -1,5 +1,5 @@
 <script setup lang="tsx" generic="V extends string">
-import { ElConfigProvider, ElDatePicker, useLocale } from 'element-plus'
+import { ElDatePicker, useLocale } from 'element-plus'
 import { computed, inject, useAttrs } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
@@ -66,22 +66,20 @@ if (formItemValidation?.required) {
 </script>
 
 <template>
-  <ElConfigProvider :locale="locale">
-    <ElDatePicker
-      v-bind="{
-        disabled,
-        disabledDate,
-        type,
-        valueFormat,
-        placeholder: placeholder ?? t('el.datepicker.placeholder'),
-        startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
-        endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
-        shortcuts,
-        ...attrs
-      }"
-      v-model="modelValue"
-      @blur="$emit('blur', $event)"
-      @focus="$emit('focus', $event)"
-    />
-  </ElConfigProvider>
+  <ElDatePicker
+    v-bind="{
+      disabled,
+      disabledDate,
+      type,
+      valueFormat,
+      placeholder: placeholder ?? t('el.datepicker.placeholder'),
+      startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
+      endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
+      shortcuts,
+      ...attrs
+    }"
+    v-model="modelValue"
+    @blur="$emit('blur', $event)"
+    @focus="$emit('focus', $event)"
+  />
 </template>

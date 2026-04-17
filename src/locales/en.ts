@@ -22,7 +22,10 @@ Object.assign(en.el, {
   },
   common: {
     query: 'Query',
-    reset: 'Reset'
+    reset: 'Reset',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    confirmExecute: 'Confirm execution?'
   }
 })
 

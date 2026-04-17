@@ -13,6 +13,9 @@ const defaultElementConfig: ElementConfig = {
   },
   table: {
     showOverflowTooltip: false
+  },
+  pagination: {
+    layout: 'prev, pager, next, sizes, jumper, ->, total'
   }
 }
 

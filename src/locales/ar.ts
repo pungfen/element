@@ -22,7 +22,10 @@ Object.assign(ar.el, {
   },
   common: {
     query: 'استعلام',
-    reset: 'إعادة تعيين'
+    reset: 'إعادة تعيين',
+    cancel: 'إلغاء',
+    confirm: 'تأكيد',
+    confirmExecute: 'تأكيد التنفيذ؟'
   }
 })
 

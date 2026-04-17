@@ -20,7 +20,10 @@ Object.assign(zhCn.el, {
   },
   common: {
     query: '查询',
-    reset: '重置'
+    reset: '重置',
+    cancel: '取消',
+    confirm: '确认',
+    confirmExecute: '是否执行?'
   }
 })
 

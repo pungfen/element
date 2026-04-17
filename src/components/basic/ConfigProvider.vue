@@ -19,7 +19,7 @@ provide(X_LOCALE_CONFIG, localLocale)
 </script>
 
 <template>
-  <ElConfigProvider>
+  <ElConfigProvider :locale="localLocale">
     <slot></slot>
   </ElConfigProvider>
 </template>
