@@ -26,6 +26,14 @@ Object.assign(ar.el, {
     cancel: 'إلغاء',
     confirm: 'تأكيد',
     confirmExecute: 'تأكيد التنفيذ؟'
+  },
+  validation: {
+    input: 'يرجى إدخال{label}',
+    inputNumber: 'يرجى إدخال{label}',
+    checkbox: 'يرجى تحديد{label}',
+    select: 'يرجى تحديد{label}',
+    datepicker: 'يرجى تحديد{label}',
+    upload: 'يرجى رفع{label}'
   }
 })
 

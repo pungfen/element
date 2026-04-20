@@ -26,6 +26,14 @@ Object.assign(th.el, {
     cancel: 'ยกเลิก',
     confirm: 'ยืนยัน',
     confirmExecute: 'ยืนยันการดำเนินการ?'
+  },
+  validation: {
+    input: 'กรุณากรอก{label}',
+    inputNumber: 'กรุณากรอก{label}',
+    checkbox: 'กรุณาเลือก{label}',
+    select: 'กรุณาเลือก{label}',
+    datepicker: 'กรุณาเลือก{label}',
+    upload: 'กรุณาอัปโหลด{label}'
   }
 })
 

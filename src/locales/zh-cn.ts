@@ -24,6 +24,14 @@ Object.assign(zhCn.el, {
     cancel: '取消',
     confirm: '确认',
     confirmExecute: '是否执行?'
+  },
+  validation: {
+    input: '请填写{label}',
+    inputNumber: '请填写{label}',
+    checkbox: '请选择{label}',
+    select: '请选择{label}',
+    datepicker: '请选择{label}',
+    upload: '请上传{label}'
   }
 })
 

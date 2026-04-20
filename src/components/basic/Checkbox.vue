@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import { ElCheckbox } from 'element-plus'
+import { ElCheckbox, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION } from '@/constants'
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 import type { CheckboxProps, CheckboxValueType } from 'element-plus'
 
@@ -23,12 +23,15 @@ defineEmits<{
 
 const model = defineModel<CheckboxValueType>()
 
+const locale = inject(X_LOCALE_CONFIG)
+const { t } = useLocale(locale)
+
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (!model.value) {
-      return `请选择${label}`
+    if (label && !model.value) {
+      return t('el.validation.input', { label })
     }
     return validator?.()
   }

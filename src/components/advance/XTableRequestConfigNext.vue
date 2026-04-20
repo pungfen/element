@@ -4,7 +4,7 @@ import type { Paging, TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
-import { ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
+import { ElFormItem, ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
 import { computed, nextTick, ref, inject } from 'vue'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
@@ -117,18 +117,20 @@ const Q = () => (
               )
             }
           ),
-          <XFormItem content={() => (
-            <ElSpace>
-              <XButtonAsync action={() => {
-                const _q = query.value as { pageIndex?: number; pageSize?: number }
-                _q.pageIndex = undefined
-                _q.pageSize = undefined
-                search()
-              }}>{t('el.common.query')}</XButtonAsync>
-              <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
-            </ElSpace>
-          )}
-          />
+          <ElFormItem>
+            {{
+              default: () => <ElSpace>
+                <XButtonAsync action={() => {
+                  const _q = query.value as { pageIndex?: number; pageSize?: number }
+                  _q.pageIndex = undefined
+                  _q.pageSize = undefined
+                  search()
+                }}>{t('el.common.query')}</XButtonAsync>
+                <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
+              </ElSpace>,
+              label: () => <div style='height: 22px'></div>
+            }}
+          </ElFormItem>
         ]}
       </div>
     )}

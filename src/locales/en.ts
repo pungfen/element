@@ -26,6 +26,14 @@ Object.assign(en.el, {
     cancel: 'Cancel',
     confirm: 'Confirm',
     confirmExecute: 'Confirm execution?'
+  },
+  validation: {
+    input: 'Please enter {label}',
+    inputNumber: 'Please enter {label}',
+    checkbox: 'Please select {label}',
+    select: 'Please select {label}',
+    datepicker: 'Please select {label}',
+    upload: 'Please upload {label}'
   }
 })
 
