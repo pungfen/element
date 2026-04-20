@@ -81,6 +81,11 @@ const Content = () => content?.()
 
 <template>
   <ElFormItem :label="label" :required="required" :error="error">
-    <Content />
+    <slot>
+      <Content />
+    </slot>
+    <template v-if="'label' in $slots" #label>
+      <slot name="label"></slot>
+    </template>
   </ElFormItem>
 </template>
