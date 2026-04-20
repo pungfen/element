@@ -41,13 +41,14 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexP
   }) => VNodeChild
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   pagination?: boolean
+  paginationLayout?: string
 }
 
 export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, config, fields, pagination = true, header } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { request, config, fields, pagination = true, header, paginationLayout } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
@@ -118,7 +119,12 @@ const Q = () => (
           ),
           <XFormItem content={() => (
             <ElSpace>
-              <XButtonAsync action={() => search()}>{t('el.common.query')}</XButtonAsync>
+              <XButtonAsync action={() => {
+                const _q = query.value as { pageIndex?: number; pageSize?: number }
+                _q.pageIndex = undefined
+                _q.pageSize = undefined
+                search()
+              }}>{t('el.common.query')}</XButtonAsync>
               <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
             </ElSpace>
           )}
@@ -179,20 +185,22 @@ const S = () => (
 const P = () => (
   <XPagination
     size="small"
+    layout={paginationLayout}
     total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
     pageSize={paging.value.pageSize}
-    onUpdate:currentPage={value => paging.value.pageIndex = value ?? 0}
-    onUpdate:pageSize={value => paging.value.pageSize = value ?? 0}
+    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
+    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
     onCurrentChange={() => execute()}
     onSizeChange={() => {
-      paging.value.pageIndex = 1
+      const _q = query.value as { pageIndex?: number }
+      _q.pageIndex = 1
       execute()
     }}
   />
 )
 
-defineExpose({ search, data, paging, isFetching, url, query, path })
+defineExpose({ search, reset, data, paging, isFetching, url, query, path })
 </script>
 
 <template>

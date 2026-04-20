@@ -40,12 +40,17 @@ const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, path, query, isFetching, url, paging } = request()
 
+const init = JSON.stringify(query.value)
 const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
   execute()
 })
+const reset = useDebounceFn(async () => {
+  query.value = JSON.parse(init) as QR
+  search()
+})
 
-defineExpose({ search, data, paging, isFetching, url, query, path })
+defineExpose({ search, reset, data, paging, isFetching, url, query, path })
 
 const H = () => header?.({ query: query.value })
 
@@ -72,10 +77,14 @@ const P = () => (
     total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
     pageSize={paging.value.pageSize}
-    onUpdate:currentPage={value => paging.value.pageIndex = value ?? 0}
-    onUpdate:pageSize={value => paging.value.pageSize = value ?? 0}
+    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
+    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
     onCurrentChange={() => execute()}
-    onSizeChange={() => execute()}
+    onSizeChange={() => {
+      const _q = query.value as { pageIndex?: number }
+      _q.pageIndex = 1
+      execute()
+    }}
   />
 )
 
