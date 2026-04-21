@@ -29,7 +29,7 @@ export interface XFormItemValidation {
   validator?: () => string | void
 }
 
-const { content, label, required } = defineProps<XFormItemProps>()
+const { content, label, required, validator } = defineProps<XFormItemProps>()
 
 defineSlots<{
   default: () => VNodeChild
@@ -50,6 +50,7 @@ const validation: XFormItemValidation = {
   clearValidate: () => (error.value = undefined),
   label,
   required,
+  validator,
   validate: () => {
     error.value = validation.validator?.() ?? undefined
 
