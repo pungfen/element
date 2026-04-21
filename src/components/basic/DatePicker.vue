@@ -55,7 +55,9 @@ const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (label && (!model.value || !start.value || !end.value)) {
+    if (label && type.includes('range') && (!start.value || !end.value)) {
+      return t('el.validation.datepicker', { label })
+    } else if (label && !model.value) {
       return t('el.validation.datepicker', { label })
     }
     return validator?.()
