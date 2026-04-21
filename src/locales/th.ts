@@ -31,6 +31,7 @@ Object.assign(th.el, {
     input: 'กรุณากรอก{label}',
     inputNumber: 'กรุณากรอก{label}',
     checkbox: 'กรุณาเลือก{label}',
+    cascader: 'กรุณาเลือก{label}',
     select: 'กรุณาเลือก{label}',
     datepicker: 'กรุณาเลือก{label}',
     upload: 'กรุณาอัปโหลด{label}'

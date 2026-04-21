@@ -31,6 +31,7 @@ Object.assign(en.el, {
     input: 'Please enter {label}',
     inputNumber: 'Please enter {label}',
     checkbox: 'Please select {label}',
+    cascader: 'Please select {label}',
     select: 'Please select {label}',
     datepicker: 'Please select {label}',
     upload: 'Please upload {label}'

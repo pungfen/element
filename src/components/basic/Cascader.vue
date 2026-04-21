@@ -46,16 +46,12 @@ const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (!model.value || (Array.isArray(model.value) && model.value.length === 0)) {
-      return `请选择${label}`
+    if (label && (!model.value || (Array.isArray(model.value) && model.value.length === 0))) {
+      return t('el.validation.cascader', { label })
     }
     return validator?.()
   }
 }
-
-watchEffect(() => {
-  console.log(options.value)
-})
 </script>
 
 <template>

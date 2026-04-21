@@ -31,6 +31,7 @@ Object.assign(ar.el, {
     input: 'يرجى إدخال{label}',
     inputNumber: 'يرجى إدخال{label}',
     checkbox: 'يرجى تحديد{label}',
+    cascader: 'يرجى تحديد{label}',
     select: 'يرجى تحديد{label}',
     datepicker: 'يرجى تحديد{label}',
     upload: 'يرجى رفع{label}'

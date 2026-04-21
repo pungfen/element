@@ -29,6 +29,7 @@ Object.assign(zhCn.el, {
     input: '请填写{label}',
     inputNumber: '请填写{label}',
     checkbox: '请选择{label}',
+    cascader: '请选择{label}',
     select: '请选择{label}',
     datepicker: '请选择{label}',
     upload: '请上传{label}'
