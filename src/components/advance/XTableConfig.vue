@@ -80,7 +80,7 @@ const T = () => (
 const S = () => (
   <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
     {{
-      reference: () => <XButton icon={Setting} text class="absolute top-0 right-0 z-1000" />,
+      reference: () => <XButton icon={Setting} disabled={false} text class="absolute top-0 right-0 z-1000" />,
       default: () => <div class="flex flex-col gap-2">
         <ElText size="large"> 表头设置 </ElText>
         <ElScrollbar max-height={500}>
