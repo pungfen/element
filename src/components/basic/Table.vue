@@ -57,7 +57,7 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-const { columns, data, border = undefined, align, headerAlign } = defineProps<XTableProps<D>>()
+const { columns, data, border = undefined, fit = undefined, showOverflowTooltip = undefined, align, headerAlign } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
 const config = inject(X_ELEMENT_CONFIG)
 const tableConfig = config?.table

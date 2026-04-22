@@ -25,7 +25,11 @@ export interface XTableFlexProps<D> extends XTableProps<D> {
 
 export interface XTableFlexEvents<D> extends XTableEvents<D> {}
 
-defineProps<XTableFlexProps<D>>()
+const props = withDefaults(defineProps<XTableFlexProps<D>>(), {
+  border: undefined,
+  showOverflowTooltip: undefined,
+  fit: undefined
+})
 defineEmits<XTableFlexEvents<D>>()
 
 const container = useTemplateRef('container')
@@ -50,7 +54,7 @@ defineExpose({
   <div ref="container" class="flex-1 overflow-hidden">
     <XTable
       ref="table"
-      v-bind="{ ...$props }"
+      v-bind="{ ...props }"
       :height="size.height.value"
       @row-click="(row: D) => $emit('rowClick', row)"
       @row-dblclick="(row: D) => $emit('rowDblclick', row)"
