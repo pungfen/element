@@ -12,8 +12,12 @@ export interface XTableConfig {
    * 是否隐藏额外内容并在单元格悬停时使用 Tooltip 显示它们。这将影响全部列的展示
    * @default false
    */
-  showOverflowTooltip?: boolean
-  border?: boolean
+  showOverflowTooltip?: TableProps<any>['showOverflowTooltip']
+  border?: TableProps<any>['border']
+  fit?: TableProps<any>['fit']
+  emptyText?: TableProps<any>['emptyText']
+  headerAlign?: string
+  align?: string
 }
 
 export interface XTableColumnProps<D> {
@@ -27,23 +31,21 @@ export interface XTableColumnProps<D> {
   width?: number
   minWidth?: number
   columnKey?: string
+  headerAlign?: string
+  align?: string
 }
 
-export interface XTableProps<D> {
-  border?: TableProps<any>['border']
+export interface XTableProps<D> extends XTableConfig {
   cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
   cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   columns?: XTableColumnProps<D>[]
   data?: D[]
   height?: TableProps<any>['height']
-  emptyText?: TableProps<any>['emptyText']
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   rowKey?: (scope: { row: D }) => string
-  showOverflowTooltip?: TableProps<any>['showOverflowTooltip']
   showSummary?: TableProps<any>['showSummary']
   size?: TableProps<any>['size']
-  fit?: TableProps<any>['fit']
   spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
@@ -55,7 +57,7 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-const { columns, data, border = undefined } = defineProps<XTableProps<D>>()
+const { columns, data, border = undefined, align, headerAlign } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
 const config = inject(X_ELEMENT_CONFIG)
 const tableConfig = config?.table
@@ -85,6 +87,8 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       minWidth={props.minWidth}
       columnKey={props.columnKey}
       selectable={props.selectable}
+      headerAlign={props.headerAlign}
+      align={props.align}
     >
       {{
         default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
@@ -121,6 +125,13 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       (newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)
     "
   >
-    <XTableColumn v-for="column of columns" v-bind="column" />
+    <XTableColumn
+      v-for="column of columns"
+      v-bind="{
+        align: align ?? tableConfig?.align,
+        headerAlign: headerAlign ?? tableConfig?.headerAlign,
+        ...column
+      }"
+    />
   </ElTable>
 </template>

@@ -28,6 +28,7 @@ const emit = defineEmits<{
 }>()
 const currentPage = defineModel<number>('currentPage')
 const pageSize = defineModel<number>('pageSize')
+const paginationConfig = config?.pagination
 
 const locale = inject(X_LOCALE_CONFIG)
 useLocale(locale)
@@ -35,7 +36,7 @@ useLocale(locale)
 
 <template>
   <ElPagination
-    v-bind="{ size, total, pageSizes, background, layout: layout ?? config?.pagination?.layout }"
+    v-bind="{ size, total, pageSizes, background, layout: layout ?? paginationConfig?.layout }"
     v-model:current-page="currentPage"
     v-model:page-size="pageSize"
     :default-page-size="defaultPageSize"

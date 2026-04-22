@@ -23,6 +23,7 @@ const mergeElementConfig = (config: ElementConfig = {}): ElementConfig => {
   return {
     button: { ...defaultElementConfig.button, ...config.button },
     table: { ...defaultElementConfig.table, ...config.table },
+    pagination: { ...defaultElementConfig.pagination, ...config.pagination },
     oss: config.oss
   }
 }
