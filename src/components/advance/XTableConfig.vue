@@ -4,11 +4,12 @@ import type { TableColumnField } from '@/types'
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
-import { ElPopover, ElScrollbar, ElSwitch, ElText } from 'element-plus'
-import { nextTick, ref } from 'vue'
+import { ElPopover, ElScrollbar, ElSwitch, ElText, useLocale } from 'element-plus'
+import { nextTick, ref, inject } from 'vue'
 
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
 import { XButton, type XTableColumnProps } from '@/basic'
+import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableConfigColumnsProps<D> extends Omit<XTableColumnProps<D>, 'content'> {
   content?: (scope: { row: D, index: number }) => VNodeChild
@@ -58,6 +59,9 @@ useSortable(sortable, fieldsData, {
   }
 })
 
+const locale = inject(X_LOCALE_CONFIG, undefined)
+const { t } = useLocale(locale)
+
 const T = () => (
   <XTableFlex
     data={data}
@@ -82,7 +86,7 @@ const S = () => (
     {{
       reference: () => <XButton icon={Setting} disabled={false} text class="absolute top-0 right-0 z-1000" />,
       default: () => <div class="flex flex-col gap-2">
-        <ElText size="large"> 表头设置 </ElText>
+        <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
         <ElScrollbar max-height={500}>
           <div ref={sortable} class="flex flex-col divide-y divide-[#f2f6fc]">
             {() => fieldsData.value.map(

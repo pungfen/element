@@ -162,7 +162,7 @@ const S = () => (
     {{
       reference: () => <XButton icon={Setting} text disabled={false} class="absolute top-0 right-0 z-1000" />,
       default: () => <div class="flex flex-col gap-2">
-        <ElText size="large"> 表头设置 </ElText>
+        <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
         <ElScrollbar max-height={500}>
           <div ref={sortable} class="flex flex-col divide-y divide-[#f2f6fc]">
             {() => fieldsData.value.map(
