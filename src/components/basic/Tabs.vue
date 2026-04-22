@@ -1,6 +1,7 @@
 <script setup lang="tsx" generic="V extends string | number">
 import { createEventHook } from '@vueuse/core'
 import { ElTabs } from 'element-plus'
+import { type VNodeChild } from 'vue'
 import { provide } from 'vue'
 
 import { X_ELEMENT_IN_TABS, X_TABS_MODEL_UPDATE_HOOK } from '@/constants'
@@ -21,6 +22,11 @@ export interface XTabsEvents<V> {
 defineProps<XTabsProps>()
 defineEmits<XTabsEvents<V>>()
 
+defineSlots<{
+  default: () => VNodeChild
+  addIcon: () => VNodeChild
+}>()
+
 const model = defineModel<V>()
 provide(X_ELEMENT_IN_TABS, true)
 
@@ -37,5 +43,9 @@ modelUpdateHook.on((value) => (model.value = value))
     @tab-remove="$emit('remove', $event as V)"
   >
     <slot></slot>
+
+    <template v-if="'addIcon' in $slots" #add-icon>
+      <slot name="addIcon" />
+    </template>
   </ElTabs>
 </template>
