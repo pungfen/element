@@ -25,7 +25,8 @@ Object.assign(ar.el, {
     reset: 'إعادة تعيين',
     cancel: 'إلغاء',
     confirm: 'تأكيد',
-    confirmExecute: 'تأكيد التنفيذ؟'
+    confirmExecute: 'تأكيد التنفيذ؟',
+    tableConfigTitle: 'إعدادات رؤوس الأعمدة'
   },
   validation: {
     input: 'يرجى إدخال{label}',

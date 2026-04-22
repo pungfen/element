@@ -25,7 +25,8 @@ Object.assign(en.el, {
     reset: 'Reset',
     cancel: 'Cancel',
     confirm: 'Confirm',
-    confirmExecute: 'Confirm execution?'
+    confirmExecute: 'Confirm execution?',
+    tableConfigTitle: 'Header Settings'
   },
   validation: {
     input: 'Please enter {label}',

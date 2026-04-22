@@ -25,7 +25,8 @@ Object.assign(th.el, {
     reset: 'รีเซ็ต',
     cancel: 'ยกเลิก',
     confirm: 'ยืนยัน',
-    confirmExecute: 'ยืนยันการดำเนินการ?'
+    confirmExecute: 'ยืนยันการดำเนินการ?',
+    tableConfigTitle: 'การตั้งค่าส่วนหัว'
   },
   validation: {
     input: 'กรุณากรอก{label}',

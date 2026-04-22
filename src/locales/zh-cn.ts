@@ -23,7 +23,8 @@ Object.assign(zhCn.el, {
     reset: '重置',
     cancel: '取消',
     confirm: '确认',
-    confirmExecute: '是否执行?'
+    confirmExecute: '是否执行?',
+    tableConfigTitle: '表头设置'
   },
   validation: {
     input: '请填写{label}',
