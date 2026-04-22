@@ -91,9 +91,9 @@ const S = () => (
           <div ref={sortable} class="flex flex-col divide-y divide-[#f2f6fc]">
             {() => fieldsData.value.map(
               it => <div class="flex w-50 items-center gap-2 py-2">
-                <XButton text icon={Rank} type="primary" size="small" class="cursor-grab"/>
+                <XButton text icon={Rank} disabled={false} type="primary" size="small" class="cursor-grab"/>
                 <ElText class="flex-1 overflow-ellipsis">{it.label}</ElText>
-                <ElSwitch size="small" modelValue={it.visible} onUpdate:modelValue={value => {
+                <ElSwitch size="small" disabled={false} modelValue={it.visible} onUpdate:modelValue={value => {
                   it.visible = value as boolean
                   nextTick(() => {
                     update(fieldsData.value)
