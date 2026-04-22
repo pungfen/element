@@ -17,6 +17,7 @@ export interface XTabsProps {
 export interface XTabsEvents<V> {
   change: [name: V]
   remove: [name: V]
+  edit: [name: V, action: 'remove' | 'add']
 }
 
 defineProps<XTabsProps>()
@@ -41,6 +42,7 @@ modelUpdateHook.on((value) => (model.value = value))
     v-model="model"
     @tab-change="$emit('change', $event as V)"
     @tab-remove="$emit('remove', $event as V)"
+    @edit="(paneName, action) => $emit('edit', paneName as V, action)"
   >
     <slot></slot>
 
