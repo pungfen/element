@@ -66,11 +66,13 @@ const table = useTemplateRef('table')
 
 defineExpose({
   clearSelection: () => table.value?.clearSelection(),
-  getSelectionRows: () => table.value?.getSelectionRows(),
+  getSelectionRows: (): D[] => table.value?.getSelectionRows() as D[],
+  toggleAllSelection: () => table.value?.toggleAllSelection(),
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
-  setScrollLeft: (left: number) => table.value?.scrollTo(left),
-  setScrollTop: (top: number) => table.value?.scrollTo(top),
+  setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
+  setScrollTop: (top: number) => table.value?.setScrollTop(top),
+  doLayout: () => table.value?.doLayout(),
   toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable)
 })
 
@@ -113,9 +115,9 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       spanMethod,
       summaryMethod,
       size,
-      showOverflowTooltip: true,
-      fit: true,
       rowKey,
+      showOverflowTooltip: showOverflowTooltip ?? tableConfig?.showOverflowTooltip,
+      fit: fit ?? tableConfig?.fit,
       border: border ?? tableConfig?.border
     }"
     @row-click="(row: D) => emit('rowClick', row)"

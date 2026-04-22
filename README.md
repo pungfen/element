@@ -12,7 +12,7 @@
 - **进阶组件（可选）**：通过 `install` 的 `advance: true` 注册，适合列表请求、表单提交、OSS 等场景。
 - **按需样式**：提供 `unplugin-vue-components` 解析器，自动解析组件并引入对应 Element Plus 的 CSS 副作用路径。
 - **TypeScript**：导出类型声明；为全局组件提供类型补充。
-- **国际化**：内置在 Element Plus 语言包上扩展的 `en`、`zhCn` 文案。
+- **国际化**：内置在 Element Plus 语言包上扩展的 `en`、`zhCn`、`ar`、`th` 文案。
 
 ## 环境要求
 
