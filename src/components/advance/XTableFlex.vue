@@ -43,8 +43,8 @@ defineExpose({
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) =>
     table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
-  setScrollLeft: (left: number) => table.value?.scrollTo(left),
-  setScrollTop: (top: number) => table.value?.scrollTo(top),
+  setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
+  setScrollTop: (top: number) => table.value?.setScrollTop(top),
   toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) =>
     table.value?.toggleRowSelection(row, selected, ignoreSelectable)
 })
