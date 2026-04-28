@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import { ElDialog } from 'element-plus'
-
 import type { DialogProps } from 'element-plus'
 import type { VNodeChild } from 'vue'
+
+import { ElDialog } from 'element-plus'
 
 export interface XDialogProps {
   bodyClass?: DialogProps['bodyClass']

@@ -1,10 +1,10 @@
 <script setup lang="tsx">
+import type { PaginationProps } from 'element-plus'
+
 import { ElPagination, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_LOCALE_CONFIG, X_ELEMENT_CONFIG } from '@/constants'
-
-import type { PaginationProps } from 'element-plus'
 
 export interface XPaginationConfig {
   layout?: XPaginationProps['layout']

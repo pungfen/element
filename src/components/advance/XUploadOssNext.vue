@@ -1,12 +1,12 @@
 <script setup lang="ts" generic="V extends string, MV extends V | V[]">
+import type { UploadHooks } from 'element-plus'
+import type { VNodeChild } from 'vue'
+
 import { ElMessage, genFileId, useLocale } from 'element-plus'
 import { computed, inject, ref } from 'vue'
 
 import { XUpload, type XUploadProps } from '@/basic'
 import { X_ELEMENT_CONFIG, X_LOCALE_CONFIG } from '@/constants'
-
-import type { UploadHooks } from 'element-plus'
-import type { VNodeChild } from 'vue'
 
 export interface XUploadOssProps extends Omit<
   XUploadProps,

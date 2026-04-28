@@ -1,10 +1,10 @@
 <script setup lang="tsx" generic="U, PT, QR, D extends object">
+import type { Ref, VNodeChild } from 'vue'
+
 import { useDebounceFn } from '@vueuse/core'
 import { computed, useTemplateRef } from 'vue'
 
 import { XForm, type XFormProps } from '@/basic'
-
-import type { Ref, VNodeChild } from 'vue'
 
 export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'disabled' | 'data'> {
   request: () => {

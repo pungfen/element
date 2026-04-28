@@ -1,4 +1,6 @@
 <script setup lang="tsx" generic="D extends object">
+import type { VNodeChild } from 'vue'
+
 import { ElFormItem } from 'element-plus'
 import { inject, onMounted, onUnmounted, provide, ref, useId } from 'vue'
 
@@ -10,8 +12,6 @@ import {
   X_TAB_PANE_NAME,
   X_TABS_MODEL_UPDATE_HOOK
 } from '@/constants'
-
-import type { VNodeChild } from 'vue'
 
 export interface XFormItemProps {
   content?: () => VNodeChild

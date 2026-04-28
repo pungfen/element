@@ -1,7 +1,8 @@
-import type { XButtonConfig, XTableConfig, XPaginationConfig } from '@/basic'
+import type { XButtonConfig, XTableConfig, XPaginationConfig, XDateConfig } from '@/basic'
 
 export interface ElementConfig {
   button?: XButtonConfig
+  datePicker?: XDateConfig
   table?: XTableConfig
   oss?: OssInfo | (() => OssInfo)
   pagination?: XPaginationConfig

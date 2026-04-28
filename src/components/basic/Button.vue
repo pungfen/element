@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import { ElButton } from 'element-plus'
-
 import type { ButtonProps } from 'element-plus'
+
+import { ElButton } from 'element-plus'
 
 export interface XButtonConfig {
   /**

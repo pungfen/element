@@ -1,5 +1,6 @@
 import { install } from '@/install'
 import '@/index.css'
+
 import { version } from '../package.json'
 
 export * from '@/install'

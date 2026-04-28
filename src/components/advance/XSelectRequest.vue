@@ -1,9 +1,9 @@
 <script setup lang="tsx" generic="U, PT, QR, D, V, MV extends V | V[]">
+import type { Ref } from 'vue'
+
 import { useDebounceFn } from '@vueuse/core'
 
 import { XSelect, type XSelectEvents, type XSelectProps } from '@/basic'
-
-import type { Ref } from 'vue'
 
 export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<
   XSelectProps<D, V>,

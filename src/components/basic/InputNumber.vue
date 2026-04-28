@@ -1,11 +1,11 @@
 <script setup lang="tsx">
+import type { InputNumberProps } from 'element-plus'
+import type { VNode } from 'vue'
+
 import { ElInputNumber, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
-
-import type { InputNumberProps } from 'element-plus'
-import type { VNode } from 'vue'
 
 export interface XInputNumberProps {
   align?: InputNumberProps['align']

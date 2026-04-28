@@ -1,12 +1,16 @@
 <script setup lang="tsx" generic="V extends string">
-import { ElDatePicker, useLocale } from 'element-plus'
-import { computed, inject, useAttrs } from 'vue'
-
-import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
-
 import type { DatePickerProps } from 'element-plus'
 
-export interface XDatePickerProps {
+import { ElDatePicker, useLocale } from 'element-plus'
+import { computed, inject } from 'vue'
+
+import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG, X_ELEMENT_CONFIG } from '@/constants'
+
+export interface XDateConfig {
+  valueFormat?: DatePickerProps['valueFormat']
+}
+
+export interface XDatePickerProps extends XDateConfig {
   disabled?: boolean
   disabledDate?: DatePickerProps['disabledDate']
   endPlaceholder?: DatePickerProps['endPlaceholder']
@@ -14,7 +18,7 @@ export interface XDatePickerProps {
   shortcuts?: DatePickerProps['shortcuts']
   startPlaceholder?: DatePickerProps['startPlaceholder']
   type?: DatePickerProps['type']
-  valueFormat?: DatePickerProps['valueFormat']
+  size?: DatePickerProps['size']
 }
 
 const { type = 'date', disabled = undefined } = defineProps<XDatePickerProps>()
@@ -24,11 +28,11 @@ defineEmits<{
   focus: [e: FocusEvent]
 }>()
 
-const attrs = useAttrs()
 const model = defineModel<V>()
 const start = defineModel<V>('start')
 const end = defineModel<V>('end')
 
+const config = inject(X_ELEMENT_CONFIG)
 const locale = inject(X_LOCALE_CONFIG)
 const { t } = useLocale(locale)
 
@@ -71,12 +75,12 @@ if (formItemValidation?.required) {
       disabled,
       disabledDate,
       type,
-      valueFormat,
+      valueFormat: valueFormat ?? config?.datePicker?.valueFormat,
       placeholder: placeholder ?? t('el.datepicker.placeholder'),
-      startPlaceholder: placeholder ?? t('el.datepicker.startPlaceholder'),
-      endPlaceholder: placeholder ?? t('el.datepicker.endPlaceholder'),
+      startPlaceholder: startPlaceholder ?? placeholder ?? t('el.datepicker.startPlaceholder'),
+      endPlaceholder: endPlaceholder ?? placeholder ?? t('el.datepicker.endPlaceholder'),
       shortcuts,
-      ...attrs
+      size
     }"
     v-model="modelValue"
     @blur="$emit('blur', $event)"

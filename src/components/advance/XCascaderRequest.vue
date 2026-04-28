@@ -1,10 +1,10 @@
 <script setup lang="tsx" generic="U, PT, QR, D, V, MV extends V | V[]">
+import type { CascaderComponentProps } from 'element-plus'
+import type { Ref } from 'vue'
+
 import { useDebounceFn } from '@vueuse/core'
 
 import { XCascader, type XCascaderProps } from '@/basic'
-
-import type { CascaderComponentProps } from 'element-plus'
-import type { Ref } from 'vue'
 
 export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
   XCascaderProps<D, V>,
