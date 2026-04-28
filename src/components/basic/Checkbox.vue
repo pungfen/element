@@ -1,10 +1,10 @@
 <script setup lang="tsx">
+import type { CheckboxProps, CheckboxValueType } from 'element-plus'
+
 import { ElCheckbox, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
-
-import type { CheckboxProps, CheckboxValueType } from 'element-plus'
 
 export interface XCheckboxProps {
   disabled?: boolean

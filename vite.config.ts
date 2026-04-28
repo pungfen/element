@@ -1,11 +1,10 @@
 /// <reference types="vitest/config" />
 /// <reference types="vite/client" />
 
-import { fileURLToPath, URL } from 'node:url'
-
 import Tailwindcss from '@tailwindcss/vite'
 import VueJsx from '@vitejs/plugin-vue'
 import Vue from '@vitejs/plugin-vue-jsx'
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import Dts from 'vite-plugin-dts'
 

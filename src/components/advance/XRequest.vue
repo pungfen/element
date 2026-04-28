@@ -1,8 +1,9 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
+import type { Ref, VNodeChild } from 'vue'
+
 import { useDebounceFn } from '@vueuse/core'
 
 import type { Paging } from '@/types'
-import type { Ref, VNodeChild } from 'vue'
 
 export interface XRequestProps<U, PT, QR, D> {
   request: () => {

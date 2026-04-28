@@ -1,12 +1,12 @@
 <script setup lang="tsx" generic="V extends string | number">
+import type { TabsProps } from 'element-plus'
+
 import { createEventHook } from '@vueuse/core'
 import { ElTabs } from 'element-plus'
 import { type VNodeChild } from 'vue'
 import { provide } from 'vue'
 
 import { X_ELEMENT_IN_TABS, X_TABS_MODEL_UPDATE_HOOK } from '@/constants'
-
-import type { TabsProps } from 'element-plus'
 
 export interface XTabsProps {
   addable?: TabsProps['addable']

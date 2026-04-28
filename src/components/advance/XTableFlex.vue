@@ -1,11 +1,11 @@
 <script setup lang="tsx" generic="D">
+import type { TableColumnCtx } from 'element-plus'
+import type { CSSProperties } from 'vue'
+
 import { useElementSize } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 
 import { XTable, type XTableEvents, type XTableProps } from '@/basic'
-
-import type { TableColumnCtx } from 'element-plus'
-import type { CSSProperties } from 'vue'
 
 export interface XTableFlexProps<D> extends XTableProps<D> {
   cellClassName?:

@@ -1,11 +1,11 @@
 <script setup lang="tsx">
+import type { UploadFile, UploadProps } from 'element-plus'
+import type { VNodeChild } from 'vue'
+
 import { ElUpload } from 'element-plus'
 import { inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION } from '@/constants'
-
-import type { UploadFile, UploadProps } from 'element-plus'
-import type { VNodeChild } from 'vue'
 
 export interface XUploadProps {
   action?: UploadProps['action']

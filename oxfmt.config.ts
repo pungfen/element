@@ -5,13 +5,15 @@ export default defineConfig({
   singleQuote: true,
   trailingComma: 'none',
   sortImports: {
-    order: 'asc',
-    groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'type'],
-    newlinesBetween: true
+    groups: [
+      'type-import',
+      ['value-builtin', 'value-external'],
+      'type-internal',
+      'value-internal',
+      ['type-parent', 'type-sibling', 'type-index'],
+      ['value-parent', 'value-sibling', 'value-index'],
+      'unknown'
+    ]
   },
-  sortTailwindcss: true,
-  sortPackageJson: {
-    sortScripts: true
-  },
-  jsxSingleQuote: true
+  sortTailwindcss: true
 })

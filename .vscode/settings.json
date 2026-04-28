@@ -7,6 +7,8 @@
     "*.css": "tailwindcss"
   },
   "js/ts.tsdk.path": "node_modules/typescript/lib",
+
+  "oxc.fmt.configPath": "oxfmt.config.ts",
   "[vue]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },

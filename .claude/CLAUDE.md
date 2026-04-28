@@ -22,16 +22,16 @@ npm run release  # Build + bump version with bumpp
 
 ### Entry Points (src/)
 
-| File | Purpose |
-|------|---------|
-| `src/index.ts` | Main entry — exports `install`, `ElementConfig` types, version |
-| `src/install.ts` | Plugin `install` function — registers all components + provides global config |
-| `src/basic.ts` | Named exports of all basic X components + their types |
-| `src/advance.ts` | Named exports of all advance X components + their types |
-| `src/locales.ts` | Re-exports locale packages (en, zhCn, ar, th) |
-| `src/resolver.ts` | `unplugin-vue-components` resolver — maps X component names to import paths + Element Plus CSS side effects |
-| `src/types.ts` | Shared types: `ElementConfig`, `Paging`, `TableColumnField`, `OssInfo` |
-| `src/constants/index.ts` | All `InjectionKey`s for provide/inject across components |
+| File                     | Purpose                                                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `src/index.ts`           | Main entry — exports `install`, `ElementConfig` types, version                                              |
+| `src/install.ts`         | Plugin `install` function — registers all components + provides global config                               |
+| `src/basic.ts`           | Named exports of all basic X components + their types                                                       |
+| `src/advance.ts`         | Named exports of all advance X components + their types                                                     |
+| `src/locales.ts`         | Re-exports locale packages (en, zhCn, ar, th)                                                               |
+| `src/resolver.ts`        | `unplugin-vue-components` resolver — maps X component names to import paths + Element Plus CSS side effects |
+| `src/types.ts`           | Shared types: `ElementConfig`, `Paging`, `TableColumnField`, `OssInfo`                                      |
+| `src/constants/index.ts` | All `InjectionKey`s for provide/inject across components                                                    |
 
 ### Components (src/components/)
 

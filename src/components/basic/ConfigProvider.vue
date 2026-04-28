@@ -1,11 +1,11 @@
 <script setup lang="tsx">
+import type { ConfigProviderProps } from 'element-plus'
+
 import { ElConfigProvider } from 'element-plus'
 import { computed, provide } from 'vue'
 
 import { X_LOCALE_CONFIG } from '@/constants'
 import { zhCn } from '@/locales'
-
-import type { ConfigProviderProps } from 'element-plus'
 
 const { locale } = defineProps<XConfigProviderProps>()
 

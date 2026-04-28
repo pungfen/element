@@ -1,11 +1,12 @@
 <script setup lang="tsx" generic="D extends object">
+import type { VNodeChild } from 'vue'
+
 import { ElForm, type FormProps } from 'element-plus'
 import { provide, useTemplateRef } from 'vue'
 
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '@/constants'
 
 import type { XFormItemValidation } from './FormItem.vue'
-import type { VNodeChild } from 'vue'
 
 export interface XFormProps<D> {
   content?: (scope: { data: D }) => VNodeChild

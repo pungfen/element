@@ -1,10 +1,10 @@
 <script setup lang="tsx" generic="D, V, MV extends V | V[]">
+import type { CascaderComponentProps, CascaderNodeValue, CascaderOption } from 'element-plus'
+
 import { ElCascader, useLocale } from 'element-plus'
 import { computed, inject, watchEffect } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
-
-import type { CascaderComponentProps, CascaderNodeValue, CascaderOption } from 'element-plus'
 
 export interface XCascaderOptionProps<D, V> {
   children?: D[]
