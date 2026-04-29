@@ -24,14 +24,14 @@ export interface XFormRequestEvents<PT, QR> {
 }
 
 const {
-  disabled = undefined,
   content,
+  disabled = undefined,
   labelWidth = 'auto',
   request
 } = defineProps<XFormRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XFormRequestEvents<PT, QR>>()
 
-const { data, isFetching, execute, path, url, query } = request()
+const { data, execute, isFetching, path, query, url } = request()
 const _init = JSON.stringify(data.value)
 
 const _disabled = computed(
@@ -57,7 +57,7 @@ const search = useDebounceFn(async () => {
 
 const _content = () => content?.({ data: data.value })
 
-defineExpose({ data, url, search, validate, clearValidate, reset, resetFields })
+defineExpose({ clearValidate, data, reset, resetFields, search, url, validate })
 </script>
 
 <template>

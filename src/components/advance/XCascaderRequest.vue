@@ -29,23 +29,23 @@ export interface XCascaderRequestEvents<PT, QR, V> {
 }
 
 const {
-  request,
   disabled = undefined,
-  props
+  props,
+  request
 } = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XCascaderRequestEvents<PT, QR, V>>()
 
 const model = defineModel<MV>()
 
-const { data, path, url, execute, query } = request()
+const { data, execute, path, query, url } = request()
 
 const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
   execute()
 })
 
-defineExpose({ search, data, path, url, execute, query })
+defineExpose({ data, execute, path, query, search, url })
 </script>
 
 <template>

@@ -21,7 +21,7 @@ export interface XDatePickerProps extends XDateConfig {
   size?: DatePickerProps['size']
 }
 
-const { type = 'date', disabled = undefined } = defineProps<XDatePickerProps>()
+const { disabled = undefined, type = 'date' } = defineProps<XDatePickerProps>()
 
 defineEmits<{
   blur: [e: FocusEvent]

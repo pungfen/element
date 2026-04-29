@@ -6,28 +6,8 @@ import type { ElementConfig } from '@/types'
 
 import * as advances from '@/advance'
 import * as basics from '@/basic'
+import { mergeElementConfig } from '@/composables/useElementConfig'
 import { X_ELEMENT_CONFIG, X_ELEMENT_INSTALLED } from '@/constants'
-
-const defaultElementConfig: ElementConfig = {
-  button: {
-    autoInsertSpace: false
-  },
-  table: {
-    showOverflowTooltip: false
-  },
-  pagination: {
-    layout: 'prev, pager, next, sizes, jumper, ->, total'
-  }
-}
-
-const mergeElementConfig = (config: ElementConfig = {}): ElementConfig => {
-  return {
-    button: { ...defaultElementConfig.button, ...config.button },
-    table: { ...defaultElementConfig.table, ...config.table },
-    pagination: { ...defaultElementConfig.pagination, ...config.pagination },
-    oss: config.oss
-  }
-}
 
 declare module 'vue' {
   export interface App {

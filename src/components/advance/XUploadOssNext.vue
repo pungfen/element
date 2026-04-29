@@ -79,7 +79,7 @@ const fileList = computed(() =>
       if (sid && !isPlausibleMillisTimestamp(sid)) {
         sid = `${genFileId()}`
       }
-      return { name, url, uid: Number(sid) }
+      return { name, uid: Number(sid), url }
     })
 )
 

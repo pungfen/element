@@ -29,20 +29,20 @@ export interface XTableConfigEvents<D> extends XTableFlexEvents<D> {
   rowClick: [row: D]
 }
 
-const { config, fields, data } = defineProps<XTableConfigProps<D>>()
+const { config, data, fields } = defineProps<XTableConfigProps<D>>()
 const emit = defineEmits<XTableConfigEvents<D>>()
 
-const { data: fieldsData, update, loading } = fields()
+const { data: fieldsData, loading, update } = fields()
 const visibleColumns = useArrayFilter(fieldsData, it => it.visible)
 
 const columns = useArrayMap(visibleColumns, (it) => {
   const _config = config[it.code]
   return {
     columnKey: it.code,
+    content: _config?.content,
     label: _config?.label ?? it.label,
-    prop: _config?.prop ?? it.prop,
     minWidth: it.width,
-    content: _config?.content
+    prop: _config?.prop ?? it.prop
   } as XTableColumnProps<D>
 })
 
@@ -84,7 +84,6 @@ const T = () => (
 const S = () => (
   <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
     {{
-      reference: () => <XButton icon={Setting} disabled={false} text class="absolute top-0 right-0 z-1000" />,
       default: () => <div class="flex flex-col gap-2">
         <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
         <ElScrollbar max-height={500}>
@@ -103,7 +102,8 @@ const S = () => (
             )}
           </div>
         </ElScrollbar>
-      </div>
+      </div>,
+      reference: () => <XButton icon={Setting} disabled={false} text class="absolute top-0 right-0 z-1000" />
     }}
   </ElPopover>
 )

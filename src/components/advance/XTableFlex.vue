@@ -27,8 +27,8 @@ export interface XTableFlexEvents<D> extends XTableEvents<D> {}
 
 const props = withDefaults(defineProps<XTableFlexProps<D>>(), {
   border: undefined,
-  showOverflowTooltip: undefined,
-  fit: undefined
+  fit: undefined,
+  showOverflowTooltip: undefined
 })
 defineEmits<XTableFlexEvents<D>>()
 

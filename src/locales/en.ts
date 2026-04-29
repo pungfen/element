@@ -1,6 +1,20 @@
 import en from 'element-plus/es/locale/lang/en'
 
 Object.assign(en.el, {
+  common: {
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    confirmExecute: 'Confirm execution?',
+    query: 'Query',
+    reset: 'Reset',
+    tableConfigTitle: 'Header Settings'
+  },
+  datepicker: {
+    ...en.el.datepicker,
+    endPlaceholder: 'End Date',
+    placeholder: 'Please select',
+    startPlaceholder: 'Start Date'
+  },
   input: {
     placeholder: 'Please input'
   },
@@ -8,33 +22,19 @@ Object.assign(en.el, {
     ...en.el.inputNumber,
     placeholder: 'Please input'
   },
-  datepicker: {
-    ...en.el.datepicker,
-    placeholder: 'Please select',
-    startPlaceholder: 'Start Date',
-    endPlaceholder: 'End Date'
-  },
   select: {
     ...en.el.select
   },
   uploadOss: {
     placeholder: 'Click Upload'
   },
-  common: {
-    query: 'Query',
-    reset: 'Reset',
-    cancel: 'Cancel',
-    confirm: 'Confirm',
-    confirmExecute: 'Confirm execution?',
-    tableConfigTitle: 'Header Settings'
-  },
   validation: {
+    cascader: 'Please select {label}',
+    checkbox: 'Please select {label}',
+    datepicker: 'Please select {label}',
     input: 'Please enter {label}',
     inputNumber: 'Please enter {label}',
-    checkbox: 'Please select {label}',
-    cascader: 'Please select {label}',
     select: 'Please select {label}',
-    datepicker: 'Please select {label}',
     upload: 'Please upload {label}'
   }
 })

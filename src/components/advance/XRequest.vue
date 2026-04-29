@@ -29,7 +29,7 @@ export interface XRequestEvents<PT, QR> {
   prepare: [parameters: { path: PT; query: QR }]
 }
 
-const { request, content } = defineProps<XRequestProps<U, PT, QR, D>>()
+const { content, request } = defineProps<XRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XRequestEvents<PT, QR>>()
 defineSlots<{
   default: (scope: {
@@ -42,7 +42,7 @@ defineSlots<{
   }) => VNodeChild
 }>()
 
-const { data, paging, path, query, isFetching, url, execute } = request()
+const { data, execute, isFetching, paging, path, query, url } = request()
 
 const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
@@ -51,14 +51,14 @@ const search = useDebounceFn(async () => {
 const Content = () =>
   content?.({
     data: data.value,
-    path: path.value,
     isFetching: isFetching.value,
-    query: query.value,
     paging: paging.value,
+    path: path.value,
+    query: query.value,
     search
   })
 
-defineExpose({ data, paging, path, query, isFetching, url, execute, search })
+defineExpose({ data, execute, isFetching, paging, path, query, search, url })
 </script>
 
 <template>
