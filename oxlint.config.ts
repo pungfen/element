@@ -21,5 +21,9 @@ export default defineConfig({
     watchEffect: 'readonly'
   },
   plugins: ['typescript', 'import', 'unicorn', 'vue'],
-  ignorePatterns: ['node_modules', 'dist', '*.config.*']
+  ignorePatterns: ['node_modules', 'dist', '*.config.*'],
+  jsPlugins: ['eslint-plugin-perfectionist'],
+  rules: {
+    'perfectionist/sort-objects': 'error'
+  }
 })

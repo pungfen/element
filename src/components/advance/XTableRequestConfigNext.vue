@@ -48,10 +48,10 @@ export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, config, fields, pagination = true, header, paginationLayout } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { config, fields, header, pagination = true, paginationLayout, request } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
-const { data, execute, path, query, isFetching, url, paging } = request()
+const { data, execute, isFetching, paging, path, query, url } = request()
 
 const init = JSON.stringify(query.value)
 
@@ -64,17 +64,17 @@ const reset = useDebounceFn(async () => {
   search()
 })
 
-const { data: fieldsData, update, loading } = fields()
+const { data: fieldsData, loading, update } = fields()
 const visibleColumns = useArrayFilter(fieldsData, it => it.visible)
 
 const columns = useArrayMap(visibleColumns, (it) => {
   const _config = config[it.code]
   return {
     columnKey: it.code,
+    content: _config?.content,
     label: _config?.label ?? it.label,
-    prop: _config?.prop ?? it.prop,
     minWidth: it.width,
-    content: _config?.content
+    prop: _config?.prop ?? it.prop
   } as XTableColumnProps<D>
 })
 
@@ -160,7 +160,6 @@ const T = () => (
 const S = () => (
   <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
     {{
-      reference: () => <XButton icon={Setting} text disabled={false} class="absolute top-0 right-0 z-1000" />,
       default: () => <div class="flex flex-col gap-2">
         <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
         <ElScrollbar max-height={500}>
@@ -179,7 +178,8 @@ const S = () => (
             )}
           </div>
         </ElScrollbar>
-      </div>
+      </div>,
+      reference: () => <XButton icon={Setting} text disabled={false} class="absolute top-0 right-0 z-1000" />
     }}
   </ElPopover>
 )
@@ -202,7 +202,7 @@ const P = () => (
   />
 )
 
-defineExpose({ search, reset, data, paging, isFetching, url, query, path })
+defineExpose({ data, isFetching, paging, path, query, reset, search, url })
 </script>
 
 <template>

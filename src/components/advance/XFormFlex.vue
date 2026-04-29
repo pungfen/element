@@ -13,7 +13,7 @@ const form = useTemplateRef('form')
 const validate = () => form.value?.validate()
 const clearValidate = () => form.value?.clearValidate()
 
-defineExpose({ validate, clearValidate })
+defineExpose({ clearValidate, validate })
 
 const Content = () => content?.({ data: data ?? {} } as { data: D })
 </script>

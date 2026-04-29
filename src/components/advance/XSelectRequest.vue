@@ -25,17 +25,17 @@ export interface XSelectRequestEvents<PT, QR, V> extends XSelectEvents<V> {
 }
 
 const {
-  request,
-  supplement,
   disabled = undefined,
-  multiple = undefined
+  multiple = undefined,
+  request,
+  supplement
 } = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XSelectRequestEvents<PT, QR, V>>()
 
 const model = defineModel<MV>()
 
-const { data, isFetching, path, url, execute, query } = request()
+const { data, execute, isFetching, path, query, url } = request()
 
 const search = useDebounceFn(async (input?: string) => {
   emit('prepare', { path: path.value, query: query.value }, input)
@@ -43,7 +43,7 @@ const search = useDebounceFn(async (input?: string) => {
 })
 const _supplement = supplement && ((lacks: V[]) => supplement!(lacks, url))
 
-defineExpose({ search, data, path, url, execute, query })
+defineExpose({ data, execute, path, query, search, url })
 </script>
 
 <template>

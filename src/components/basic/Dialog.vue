@@ -17,9 +17,9 @@ export interface XDialogProps {
 }
 
 const {
-  showClose = undefined,
   closeOnClickModal = undefined,
-  closeOnPressEscape = undefined
+  closeOnPressEscape = undefined,
+  showClose = undefined
 } = defineProps<XDialogProps>()
 defineSlots<{
   default?: () => VNodeChild

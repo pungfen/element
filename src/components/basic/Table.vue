@@ -57,7 +57,7 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-const { columns, data, border = undefined, fit = undefined, showOverflowTooltip = undefined, align, headerAlign } = defineProps<XTableProps<D>>()
+const { align, border = undefined, columns, data, fit = undefined, headerAlign, showOverflowTooltip = undefined } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
 const config = inject(X_ELEMENT_CONFIG)
 const tableConfig = config?.table
@@ -66,13 +66,13 @@ const table = useTemplateRef('table')
 
 defineExpose({
   clearSelection: () => table.value?.clearSelection(),
+  doLayout: () => table.value?.doLayout(),
   getSelectionRows: (): D[] => table.value?.getSelectionRows() as D[],
-  toggleAllSelection: () => table.value?.toggleAllSelection(),
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
   setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
   setScrollTop: (top: number) => table.value?.setScrollTop(top),
-  doLayout: () => table.value?.doLayout(),
+  toggleAllSelection: () => table.value?.toggleAllSelection(),
   toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable)
 })
 
@@ -93,7 +93,7 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       align={props.align}
     >
       {{
-        default: ({ row, $index }: { row: D, $index: number }) => props.content?.({ row, index: $index }),
+        default: ({ $index, row }: { row: D, $index: number }) => props.content?.({ index: $index, row }),
         header: () => props.header?.({ column: { ...props } })
       }}
     </ElTableColumn>

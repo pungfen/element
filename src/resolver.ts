@@ -4,12 +4,12 @@ const base = ['element-plus/es/components/base/style/css']
 
 const XBasicResolve: Record<string, string[]> = {
   XButton: [...base, 'element-plus/es/components/button/style/css'],
-  XCascader: [...base, 'element-plus/es/components/cascader/style/css'],
   XButtonPopconfirm: [
     ...base,
     'element-plus/es/components/button/style/css',
     'element-plus/es/components/popconfirm/style/css'
   ],
+  XCascader: [...base, 'element-plus/es/components/cascader/style/css'],
   XCheckbox: [...base, 'element-plus/es/components/checkbox/style/css'],
   XConfigProvider: [],
   XDatePicker: [...base, 'element-plus/es/components/date-picker/style/css'],
@@ -25,8 +25,8 @@ const XBasicResolve: Record<string, string[]> = {
     'element-plus/es/components/table/style/css',
     'element-plus/es/components/table-column/style/css'
   ],
-  XTabs: [...base, 'element-plus/es/components/tabs/style/css'],
   XTabPane: [...base, 'element-plus/es/components/tab-pane/style/css'],
+  XTabs: [...base, 'element-plus/es/components/tabs/style/css'],
   XUpload: [...base, 'element-plus/es/components/upload/style/css']
 }
 
@@ -40,35 +40,35 @@ const XAdvanceResolve: Record<string, string[]> = {
   XSelectRequest: [...XBasicResolve.XSelect],
   XTableConfig: [...XBasicResolve.XSelect],
   XTableFlex: [...XBasicResolve.XTable],
-  XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
   XTableRequestConfigNext: [
     ...XBasicResolve.XTable,
     ...XBasicResolve.XPagination,
     ...XBasicResolve.XForm,
     ...XBasicResolve.XFormItem
   ],
+  XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
   XUploadOssNext: [...XBasicResolve.XUpload]
 }
 
 export default (options?: { advance?: boolean }): ComponentResolver[] => {
   return [
     {
-      type: 'component',
       resolve: (name) => {
         if (name in XBasicResolve) {
           return {
-            name,
             from: '@pungfe/element/basic',
+            name,
             sideEffects: XBasicResolve[name]
           }
         } else if (options?.advance && name in XAdvanceResolve) {
           return {
-            name,
             from: '@pungfe/element/advance',
+            name,
             sideEffects: XAdvanceResolve[name]
           }
         }
-      }
+      },
+      type: 'component'
     }
   ]
 }

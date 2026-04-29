@@ -36,7 +36,7 @@ const resetFields = () => {
   form.value?.resetFields()
 }
 
-defineExpose({ clearValidate, data, validate, resetFields })
+defineExpose({ clearValidate, data, resetFields, validate })
 </script>
 
 <template>

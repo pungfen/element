@@ -35,10 +35,10 @@ export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-const { request, columns, pagination = true, showOverflowTooltip = undefined, fit = undefined, header, footer, cellClassName, cellStyle, rowClassName, rowStyle, paginationLayout } = defineProps<XTableRequestProps<U, PT, QR, D>>()
+const { cellClassName, cellStyle, columns, fit = undefined, footer, header, pagination = true, paginationLayout, request, rowClassName, rowStyle, showOverflowTooltip = undefined } = defineProps<XTableRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
-const { data, execute, path, query, isFetching, url, paging } = request()
+const { data, execute, isFetching, paging, path, query, url } = request()
 
 const init = JSON.stringify(query.value)
 const search = useDebounceFn(async () => {
@@ -50,7 +50,7 @@ const reset = useDebounceFn(async () => {
   search()
 })
 
-defineExpose({ search, reset, data, paging, isFetching, url, query, path })
+defineExpose({ data, isFetching, paging, path, query, reset, search, url })
 
 const H = () => header?.({ query: query.value })
 

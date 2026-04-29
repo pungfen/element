@@ -46,11 +46,10 @@ const error = ref<string | undefined>()
 
 const id = useId()
 const validation: XFormItemValidation = {
-  id,
   clearValidate: () => (error.value = undefined),
+  id,
   label,
   required,
-  validator,
   validate: () => {
     error.value = validation.validator?.() ?? undefined
 
@@ -59,7 +58,8 @@ const validation: XFormItemValidation = {
     }
 
     return !error.value
-  }
+  },
+  validator
 }
 provide(X_FORM_ITEM_VALIDATION, validation)
 

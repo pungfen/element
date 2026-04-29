@@ -103,7 +103,7 @@ watch(
 const localOptions = computed(() =>
   options.value.map((item) => {
     const key = forward(item.value) as V
-    return { disabled: item.disabled, key, label: item.label, value: key, render: item.render }
+    return { disabled: item.disabled, key, label: item.label, render: item.render, value: key }
   })
 )
 

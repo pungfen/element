@@ -24,9 +24,9 @@ export interface XUploadProps {
 
 const {
   multiple,
-  onSuccess,
-  onRemove,
   onPreview,
+  onRemove,
+  onSuccess,
   showFileList = undefined
 } = defineProps<XUploadProps>()
 
