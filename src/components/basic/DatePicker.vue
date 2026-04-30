@@ -61,7 +61,7 @@ if (formItemValidation?.required) {
   formItemValidation.validator = () => {
     if (label && type.includes('range') && (!start.value || !end.value)) {
       return t('el.validation.datepicker', { label })
-    } else if (label && !model.value) {
+    } else if (label && !type.includes('range') && !model.value) {
       return t('el.validation.datepicker', { label })
     }
     return validator?.()
