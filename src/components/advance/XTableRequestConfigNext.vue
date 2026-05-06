@@ -167,7 +167,7 @@ const S = () => (
             {() => fieldsData.value.map(
               it => <div class="flex w-50 items-center gap-2 py-2">
                 <XButton text icon={Rank} disabled={false} type="primary" size="small" class="cursor-grab"/>
-                <ElText class="flex-1 overflow-ellipsis">{it.label}</ElText>
+                <ElText class="flex-1 text-ellipsis">{it.label}</ElText>
                 <ElSwitch size="small" disabled={false} modelValue={it.visible} onUpdate:modelValue={value => {
                   it.visible = value as boolean
                   nextTick(() => {
