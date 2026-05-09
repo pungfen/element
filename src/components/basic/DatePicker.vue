@@ -8,6 +8,7 @@ import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG, X_ELEMENT_CONFIG } from '@/con
 
 export interface XDateConfig {
   valueFormat?: DatePickerProps['valueFormat']
+  teleported?: boolean
 }
 
 export interface XDatePickerProps extends XDateConfig {
@@ -21,7 +22,7 @@ export interface XDatePickerProps extends XDateConfig {
   size?: DatePickerProps['size']
 }
 
-const { disabled = undefined, type = 'date' } = defineProps<XDatePickerProps>()
+const { disabled = undefined, teleported = true, type = 'date' } = defineProps<XDatePickerProps>()
 
 defineEmits<{
   blur: [e: FocusEvent]
@@ -80,7 +81,8 @@ if (formItemValidation?.required) {
       startPlaceholder: startPlaceholder ?? placeholder ?? t('el.datepicker.startPlaceholder'),
       endPlaceholder: endPlaceholder ?? placeholder ?? t('el.datepicker.endPlaceholder'),
       shortcuts,
-      size
+      size,
+      teleported
     }"
     v-model="modelValue"
     @blur="$emit('blur', $event)"
