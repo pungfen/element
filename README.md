@@ -37,6 +37,11 @@ npm i @pungfe/element element-plus vue
 import Element from '@pungfe/element'
 import { createApp } from 'vue'
 import App from './App.vue'
+
+import '.../tailwind.css'
+import '.../cover.css'
+
+// 该组件库的style.css 建议放在tailwind入口css和项目覆盖css之后
 import '@pungfe/element/style.css'
 
 const app = createApp(App)

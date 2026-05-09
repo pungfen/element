@@ -31,7 +31,7 @@ jobs:
 
       - run: npx vitest run
 
-      - run: npx vite build
+      - run: npm run build
 
       # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
       - name: Publish to npm
@@ -44,3 +44,8 @@ jobs:
           else
             npm publish --provenance --access public
           fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
