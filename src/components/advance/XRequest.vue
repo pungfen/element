@@ -5,7 +5,19 @@ import { useDebounceFn } from '@vueuse/core'
 
 import type { Paging } from '@/types'
 
+export interface XRequestEvents<PT, QR> {
+  prepare: [parameters: { path: PT, query: QR }]
+}
+
 export interface XRequestProps<U, PT, QR, D> {
+  content?: (scope: {
+    data: D
+    isFetching: boolean
+    paging: Paging
+    path: PT
+    query: QR
+    search: () => PromiseLike<unknown>
+  }) => VNodeChild
   request: () => {
     data: Ref<D>
     execute: () => PromiseLike<unknown>
@@ -15,18 +27,6 @@ export interface XRequestProps<U, PT, QR, D> {
     query: Ref<QR>
     url: U
   }
-  content?: (scope: {
-    data: D
-    query: QR
-    path: PT
-    isFetching: boolean
-    paging: Paging
-    search: () => PromiseLike<unknown>
-  }) => VNodeChild
-}
-
-export interface XRequestEvents<PT, QR> {
-  prepare: [parameters: { path: PT; query: QR }]
 }
 
 const { content, request } = defineProps<XRequestProps<U, PT, QR, D>>()
@@ -34,11 +34,11 @@ const emit = defineEmits<XRequestEvents<PT, QR>>()
 defineSlots<{
   default: (scope: {
     data: D
-    search: () => PromiseLike<unknown>
     isFetching: boolean
     paging: Paging
     path: PT
     query: QR
+    search: () => PromiseLike<unknown>
   }) => VNodeChild
 }>()
 
@@ -55,7 +55,7 @@ const Content = () =>
     paging: paging.value,
     path: path.value,
     query: query.value,
-    search
+    search,
   })
 
 defineExpose({ data, execute, isFetching, paging, path, query, search, url })

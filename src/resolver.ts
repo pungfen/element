@@ -7,12 +7,16 @@ const XBasicResolve: Record<string, string[]> = {
   XButtonPopconfirm: [
     ...base,
     'element-plus/es/components/button/style/css',
-    'element-plus/es/components/popconfirm/style/css'
+    'element-plus/es/components/popconfirm/style/css',
   ],
   XCascader: [...base, 'element-plus/es/components/cascader/style/css'],
   XCheckbox: [...base, 'element-plus/es/components/checkbox/style/css'],
   XConfigProvider: [],
-  XDatePicker: [...base, 'element-plus/es/components/date-picker/style/css'],
+  XDatePicker: [
+    ...base,
+    'element-plus/es/components/date-picker/style/css',
+    'element-plus/es/components/date-picker-panel/style/css',
+  ],
   XDialog: [...base, 'element-plus/es/components/dialog/style/css'],
   XForm: [...base, 'element-plus/es/components/form/style/css'],
   XFormItem: [...base, 'element-plus/es/components/form-item/style/css'],
@@ -23,11 +27,11 @@ const XBasicResolve: Record<string, string[]> = {
   XTable: [
     ...base,
     'element-plus/es/components/table/style/css',
-    'element-plus/es/components/table-column/style/css'
+    'element-plus/es/components/table-column/style/css',
   ],
   XTabPane: [...base, 'element-plus/es/components/tab-pane/style/css'],
   XTabs: [...base, 'element-plus/es/components/tabs/style/css'],
-  XUpload: [...base, 'element-plus/es/components/upload/style/css']
+  XUpload: [...base, 'element-plus/es/components/upload/style/css'],
 }
 
 const XAdvanceResolve: Record<string, string[]> = {
@@ -44,10 +48,10 @@ const XAdvanceResolve: Record<string, string[]> = {
     ...XBasicResolve.XTable,
     ...XBasicResolve.XPagination,
     ...XBasicResolve.XForm,
-    ...XBasicResolve.XFormItem
+    ...XBasicResolve.XFormItem,
   ],
   XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
-  XUploadOssNext: [...XBasicResolve.XUpload]
+  XUploadOssNext: [...XBasicResolve.XUpload],
 }
 
 export default (options?: { advance?: boolean }): ComponentResolver[] => {
@@ -58,17 +62,18 @@ export default (options?: { advance?: boolean }): ComponentResolver[] => {
           return {
             from: '@pungfe/element/basic',
             name,
-            sideEffects: XBasicResolve[name]
+            sideEffects: XBasicResolve[name],
           }
-        } else if (options?.advance && name in XAdvanceResolve) {
+        }
+        else if (options?.advance && name in XAdvanceResolve) {
           return {
             from: '@pungfe/element/advance',
             name,
-            sideEffects: XAdvanceResolve[name]
+            sideEffects: XAdvanceResolve[name],
           }
         }
       },
-      type: 'component'
-    }
+      type: 'component',
+    },
   ]
 }

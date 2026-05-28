@@ -1,36 +1,36 @@
-import type { XButtonConfig, XTableConfig, XPaginationConfig, XDateConfig } from '@/basic'
+import type { XButtonConfig, XDateConfig, XPaginationConfig, XTableConfig } from '@/basic'
 
 export interface ElementConfig {
   button?: XButtonConfig
   datePicker?: XDateConfig
-  table?: XTableConfig
-  oss?: OssInfo | (() => OssInfo)
+  oss?: (() => OssInfo) | OssInfo
   pagination?: XPaginationConfig
-}
-
-export interface Paging {
-  pageIndex: number
-  pageSize: number
-  itemCount: number
-}
-
-export interface TableColumnField {
-  code: string
-  width?: number
-  visible?: boolean
-  label?: string
-  prop?: string
-  search?: boolean
+  table?: XTableConfig
 }
 
 export interface OssInfo {
   accessId?: string
-  accessSecret?: string
-  host?: string
-  dir?: string
-  policy?: string
-  expire?: number
-  signature?: string
   accessKeyId?: string
   accessKeySecret?: string
+  accessSecret?: string
+  dir?: string
+  expire?: number
+  host?: string
+  policy?: string
+  signature?: string
+}
+
+export interface Paging {
+  itemCount: number
+  pageIndex: number
+  pageSize: number
+}
+
+export interface TableColumnField {
+  code: string
+  label?: string
+  prop?: string
+  search?: boolean
+  visible?: boolean
+  width?: number
 }

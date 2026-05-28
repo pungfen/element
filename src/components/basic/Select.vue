@@ -1,27 +1,33 @@
 <script setup lang="tsx" generic="D, V, MV extends V | V[]">
+import type { SelectProps } from 'element-plus'
+import type { Ref } from 'vue'
+
 import { useArrayMap } from '@vueuse/core'
 import { ElOption, ElSelect, useLocale } from 'element-plus'
-import { computed, inject, ref, watch, type VNodeChild, type FunctionalComponent } from 'vue'
+import { computed, type FunctionalComponent, inject, ref, type VNodeChild, watch } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
-import type { SelectProps } from 'element-plus'
-import type { Ref } from 'vue'
+export interface XSelectEvents<V> {
+  blur: [e: FocusEvent]
+  change: [value: V]
+  focus: [e: FocusEvent]
+}
 
 export interface XSelectOptionProps<V> {
   disabled?: boolean
   label?: number | string
-  value: V
   render?: VNodeChild
+  value: V
 }
 
 export interface XSelectProps<D, V> {
-  collapseTagsTooltip?: SelectProps['collapseTagsTooltip']
-  defaultFirstOption?: SelectProps['defaultFirstOption']
-  clearable?: SelectProps['clearable']
   allowCreate?: SelectProps['allowCreate']
+  clearable?: SelectProps['clearable']
   collapseTags?: SelectProps['collapseTags']
+  collapseTagsTooltip?: SelectProps['collapseTagsTooltip']
   data?: D[]
+  defaultFirstOption?: SelectProps['defaultFirstOption']
   disabled?: SelectProps['disabled']
   factory: (option: D) => XSelectOptionProps<V>
 
@@ -29,19 +35,13 @@ export interface XSelectProps<D, V> {
   identify?: (value: V) => number | string
   loading?: SelectProps['loading']
   multiple?: SelectProps['multiple']
-  remote?: SelectProps['remote']
-
-  remoteMethod?: (query: string) => void
-  size?: SelectProps['size']
-
-  supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
   placeholder?: SelectProps['placeholder']
-}
 
-export interface XSelectEvents<V> {
-  blur: [e: FocusEvent]
-  change: [value: V]
-  focus: [e: FocusEvent]
+  remote?: SelectProps['remote']
+  remoteMethod?: (query: string) => void
+
+  size?: SelectProps['size']
+  supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
 }
 
 const {
@@ -68,15 +68,17 @@ const forward = (value: V) => {
   if (typeof value === 'object') {
     if (identify) {
       return identify(value)
-    } else {
-      throw new Error("`identify` is required when value's type extends `object` or `object[]`")
     }
-  } else {
+    else {
+      throw new Error('`identify` is required when value\'s type extends `object` or `object[]`')
+    }
+  }
+  else {
     return value as number | string
   }
 }
 const backward = (key: number | string) =>
-  options.value.map((item) => item.value).find((item) => forward(item) === key)
+  options.value.map(item => item.value).find(item => forward(item) === key)
 
 let no = 0
 watch(
@@ -86,41 +88,43 @@ watch(
     if (model.value) {
       const lacks = [
         ...([] as V[]),
-        ...(Array.isArray(model.value) ? model.value : [model.value])
-      ].filter((item) => !init.value.map((it) => forward(it.value)).includes(forward(item)))
+        ...(Array.isArray(model.value) ? model.value : [model.value]),
+      ].filter(item => !init.value.map(it => forward(it.value)).includes(forward(item)))
       const _no = no
       const _data = await supplement?.(lacks)
       if (_no === no && _data) {
         supplements.value = _data
       }
-    } else {
+    }
+    else {
       supplements.value = []
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 const localOptions = computed(() =>
   options.value.map((item) => {
     const key = forward(item.value) as V
     return { disabled: item.disabled, key, label: item.label, render: item.render, value: key }
-  })
+  }),
 )
 
 const localModel = computed({
   get: () =>
-    model.value &&
-    (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
+    model.value
+    && (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
   set: (value) => {
     if (Array.isArray(value)) {
-      model.value = value.map((item) => backward(item)!) as MV
-    } else {
-      model.value =
-        value === undefined
+      model.value = value.map(item => backward(item)!) as MV
+    }
+    else {
+      model.value
+        = value === undefined
           ? undefined
           : ((backward(value) ?? (allowCreate ? value : undefined)) as MV)
     }
-  }
+  },
 })
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
@@ -145,11 +149,11 @@ const change = (value: V) => {
   emit('change', value)
 }
 
-const XOption: FunctionalComponent<XSelectOptionProps<V>> = (props) => (
+const XOption: FunctionalComponent<XSelectOptionProps<V>> = props => (
   <ElOption
     disabled={props.disabled}
     label={props.label}
-    value={props.value as string | boolean | object}
+    value={props.value as boolean | object | string}
   >
     {props.render ?? props.label}
   </ElOption>

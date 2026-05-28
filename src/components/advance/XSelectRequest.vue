@@ -5,10 +5,11 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { XSelect, type XSelectEvents, type XSelectProps } from '@/basic'
 
-export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<
-  XSelectProps<D, V>,
-  'supplement'
-> {
+export interface XSelectRequestEvents<PT, QR, V> extends XSelectEvents<V> {
+  prepare: [parameters: { path: PT, query: QR }, input?: string]
+}
+
+export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<XSelectProps<D, V>, 'supplement'> {
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -20,15 +21,11 @@ export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<
   supplement?: (lacks: V[], url: U) => D[] | PromiseLike<D[]>
 }
 
-export interface XSelectRequestEvents<PT, QR, V> extends XSelectEvents<V> {
-  prepare: [parameters: { path: PT; query: QR }, input?: string]
-}
-
 const {
   disabled = undefined,
   multiple = undefined,
   request,
-  supplement
+  supplement,
 } = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XSelectRequestEvents<PT, QR, V>>()
@@ -41,7 +38,7 @@ const search = useDebounceFn(async (input?: string) => {
   emit('prepare', { path: path.value, query: query.value }, input)
   execute()
 })
-const _supplement = supplement && ((lacks: V[]) => supplement!(lacks, url))
+const _supplement = supplement && ((lacks: V[]) => supplement(lacks, url))
 
 defineExpose({ data, execute, path, query, search, url })
 </script>

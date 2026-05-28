@@ -1,8 +1,11 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties, Ref, VNodeChild } from 'vue'
-import type { Paging } from '@/types'
+
 import { useDebounceFn } from '@vueuse/core'
+
+import type { Paging } from '@/types'
+
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
 import { XPagination, type XTableColumnProps } from '@/basic'
 
@@ -10,7 +13,18 @@ export interface XTableRequestColumnsProps<D> extends XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
 }
 
-export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'data' | 'columns'> {
+export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
+  prepare: [parameters: { path: PT, query: QR }]
+}
+
+export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'columns' | 'data'> {
+  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
+  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  columns: XTableRequestColumnsProps<D>[]
+  footer?: (scope: { query: QR }) => VNodeChild
+  header?: (scope: { query: QR }) => VNodeChild
+  pagination?: boolean
+  paginationLayout?: string
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -20,19 +34,8 @@ export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D
     query: Ref<QR>
     url: U
   }
-  pagination?: boolean
-  columns: XTableRequestColumnsProps<D>[]
-  header?: (scope: { query: QR }) => VNodeChild
-  footer?: (scope: { query: QR }) => VNodeChild
-  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
-  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
-  paginationLayout?: string
-}
-
-export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
-  prepare: [parameters: { path: PT, query: QR }]
 }
 
 const { cellClassName, cellStyle, columns, fit = undefined, footer, header, pagination = true, paginationLayout, request, rowClassName, rowStyle, showOverflowTooltip = undefined } = defineProps<XTableRequestProps<U, PT, QR, D>>()
@@ -56,36 +59,36 @@ const H = () => header?.({ query: query.value })
 
 const T = () => (
   <XTableFlex
-    data={data.value}
+    cellClassName={cellClassName}
+    cellStyle={cellStyle}
     columns={columns}
-    showOverflowTooltip={showOverflowTooltip}
+    data={data.value}
     fit={fit}
+    onHeaderDragend={(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)}
     onRowClick={row => emit('rowClick', row)}
     onRowDblclick={row => emit('rowDblclick', row)}
     onSelectionChange={rows => emit('selectionChange', rows)}
-    onHeaderDragend={(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)}
-    cellClassName={cellClassName}
-    cellStyle={cellStyle}
     rowClassName={rowClassName}
     rowStyle={rowStyle}
+    showOverflowTooltip={showOverflowTooltip}
   />
 )
 
 const P = () => (
   <XPagination
-    size="small"
-    layout={paginationLayout}
-    total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
-    pageSize={paging.value.pageSize}
-    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
-    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
+    layout={paginationLayout}
     onCurrentChange={() => execute()}
     onSizeChange={() => {
       const _q = query.value as { pageIndex?: number }
       _q.pageIndex = 1
       execute()
     }}
+    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
+    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
+    pageSize={paging.value.pageSize}
+    size="small"
+    total={paging.value.itemCount}
   />
 )
 
@@ -93,10 +96,16 @@ const F = () => footer?.({ query: query.value })
 </script>
 
 <template>
-  <div v-loading="isFetching" class="flex flex-1 flex-col gap-2 overflow-hidden">
+  <div
+    v-loading="isFetching"
+    class="flex flex-1 flex-col gap-2 overflow-hidden"
+  >
     <H />
     <T />
-    <div v-if="pagination" class="flex justify-end">
+    <div
+      v-if="pagination"
+      class="flex justify-end"
+    >
       <P />
     </div>
     <F />

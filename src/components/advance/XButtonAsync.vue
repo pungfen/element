@@ -14,7 +14,8 @@ const { action, link = undefined, type = 'primary' } = defineProps<XButtonAsyncP
 const click = useDebounceFn(async () => {
   try {
     await action?.()
-  } catch (e) {
+  }
+  catch (e) {
     console.log(e)
   }
 })
@@ -24,7 +25,10 @@ const _link = computed(() => link ?? inTable)
 </script>
 
 <template>
-  <XButton v-bind="{ disabled, icon, type, link: _link, size, text }" @click="click">
-    <slot></slot>
+  <XButton
+    v-bind="{ disabled, icon, type, link: _link, size, text }"
+    @click="click"
+  >
+    <slot />
   </XButton>
 </template>

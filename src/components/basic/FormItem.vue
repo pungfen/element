@@ -10,7 +10,7 @@ import {
   X_FORM_ITEM_VALIDATION,
   X_FORM_VALIDATIONS,
   X_TAB_PANE_NAME,
-  X_TABS_MODEL_UPDATE_HOOK
+  X_TABS_MODEL_UPDATE_HOOK,
 } from '@/constants'
 
 export interface XFormItemProps {
@@ -21,8 +21,8 @@ export interface XFormItemProps {
 }
 
 export interface XFormItemValidation {
-  id?: string
   clearValidate: () => void
+  id?: string
   label?: string
   required?: boolean
   validate: () => boolean
@@ -59,19 +59,19 @@ const validation: XFormItemValidation = {
 
     return !error.value
   },
-  validator
+  validator,
 }
 provide(X_FORM_ITEM_VALIDATION, validation)
 
 onMounted(() => {
-  const exist = validations?.some((it) => it.id === id)
+  const exist = validations?.some(it => it.id === id)
   if (!exist) {
     validations?.push(validation)
   }
 })
 
 onUnmounted(() => {
-  const index = validations?.findIndex((it) => it.id === id)
+  const index = validations?.findIndex(it => it.id === id)
   if (index && index > -1) {
     validations?.splice(index, 1)
   }
@@ -81,12 +81,19 @@ const Content = () => content?.()
 </script>
 
 <template>
-  <ElFormItem :label="label" :required="required" :error="error">
+  <ElFormItem
+    :label="label"
+    :required="required"
+    :error="error"
+  >
     <slot>
       <Content />
     </slot>
-    <template v-if="'label' in $slots" #label>
-      <slot name="label"></slot>
+    <template
+      v-if="'label' in $slots"
+      #label
+    >
+      <slot name="label" />
     </template>
   </ElFormItem>
 </template>

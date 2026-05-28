@@ -31,7 +31,7 @@ export {
   XTable,
   XTabPane,
   XTabs,
-  XUpload
+  XUpload,
 }
 
 export * from '@/components/basic/Button.vue'

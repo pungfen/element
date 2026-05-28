@@ -2,7 +2,7 @@
 import type { CascaderComponentProps, CascaderNodeValue, CascaderOption } from 'element-plus'
 
 import { ElCascader, useLocale } from 'element-plus'
-import { computed, inject, watchEffect } from 'vue'
+import { computed, inject } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
@@ -10,20 +10,20 @@ export interface XCascaderOptionProps<D, V> {
   children?: D[]
   disabled?: boolean
   label?: number | string
-  value: V
   leaf?: boolean
+  value: V
 }
 
 export interface XCascaderProps<D, V> {
-  data?: D[]
-  factory?: (option: D, level: number) => XCascaderOptionProps<D, V>
-
   clearable?: CascaderComponentProps['clearable']
+  data?: D[]
+
   disabled?: CascaderComponentProps['disabled']
+  factory?: (option: D, level: number) => XCascaderOptionProps<D, V>
   filterable?: CascaderComponentProps['filterable']
-  size?: CascaderComponentProps['size']
   placeholder?: CascaderComponentProps['placeholder']
   props?: CascaderComponentProps['props']
+  size?: CascaderComponentProps['size']
 }
 
 const { data, disabled = undefined } = defineProps<XCascaderProps<D, V>>()
@@ -39,7 +39,7 @@ const localModel = computed({
   get: () => model.value as CascaderNodeValue,
   set: (value) => {
     model.value = value as MV
-  }
+  },
 })
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)

@@ -7,28 +7,28 @@ import { useTemplateRef } from 'vue'
 
 import { XTable, type XTableEvents, type XTableProps } from '@/basic'
 
+export type XTableFlexEvents<D> = XTableEvents<D>
+
 export interface XTableFlexProps<D> extends XTableProps<D> {
   cellClassName?:
-    | ((scope: { column: TableColumnCtx; columnIndex: number; row: D; rowIndex: number }) => string)
+    | ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string)
     | string
   cellStyle?:
     | ((scope: {
-        column: TableColumnCtx
-        columnIndex: number
-        row: D
-        rowIndex: number
-      }) => CSSProperties)
+      column: TableColumnCtx
+      columnIndex: number
+      row: D
+      rowIndex: number
+    }) => CSSProperties)
     | CSSProperties
-  rowClassName?: ((scope: { row: D; rowIndex: number }) => string) | string
-  rowStyle?: ((scope: { row: D; rowIndex: number }) => CSSProperties) | CSSProperties
+  rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
+  rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
 }
-
-export interface XTableFlexEvents<D> extends XTableEvents<D> {}
 
 const props = withDefaults(defineProps<XTableFlexProps<D>>(), {
   border: undefined,
   fit: undefined,
-  showOverflowTooltip: undefined
+  showOverflowTooltip: undefined,
 })
 defineEmits<XTableFlexEvents<D>>()
 
@@ -40,18 +40,19 @@ const table = useTemplateRef('table')
 defineExpose({
   clearSelection: () => table.value?.clearSelection(),
   getSelectionRows: () => table.value?.getSelectionRows(),
-  scrollTo: (options: number | ScrollToOptions, yCoord?: number) =>
-    table.value?.scrollTo(options, yCoord),
+  scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
   setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
   setScrollTop: (top: number) => table.value?.setScrollTop(top),
-  toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) =>
-    table.value?.toggleRowSelection(row, selected, ignoreSelectable)
+  toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable),
 })
 </script>
 
 <template>
-  <div ref="container" class="flex-1 overflow-hidden">
+  <div
+    ref="container"
+    class="flex-1 overflow-hidden"
+  >
     <XTable
       ref="table"
       v-bind="{ ...props }"

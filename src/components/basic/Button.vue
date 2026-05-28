@@ -13,11 +13,11 @@ export interface XButtonConfig {
 
 export interface XButtonProps {
   disabled?: ButtonProps['disabled']
+  icon?: ButtonProps['icon']
   link?: ButtonProps['link']
   size?: ButtonProps['size']
   text?: ButtonProps['text']
   type?: ButtonProps['type']
-  icon?: ButtonProps['icon']
 }
 
 const { disabled = undefined, link = undefined } = defineProps<XButtonProps>()
@@ -28,7 +28,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <ElButton v-bind="{ type, text, link, disabled, size, icon }" @click="emit('click', $event)">
+  <ElButton
+    v-bind="{ type, text, link, disabled, size, icon }"
+    @click="emit('click', $event)"
+  >
     <slot />
   </ElButton>
 </template>
