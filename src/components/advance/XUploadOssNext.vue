@@ -10,7 +10,7 @@ import { X_ELEMENT_CONFIG, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XUploadOssProps extends Omit<
   XUploadProps,
-  'action' | 'data' | 'fileList' | 'beforeUpload'
+  'action' | 'beforeUpload' | 'data' | 'fileList'
 > {
   /** oss 接收文件最大 大约为50兆, 超过50兆应采取oss ststoken 分片上传 */
   maxSize?: number
@@ -36,7 +36,7 @@ const data = (file: { name: string }) => {
     ...oss.value,
     key,
     OSSAccessKeyId: oss.value?.accessId,
-    success_action_status: '200'
+    success_action_status: '200',
   }
 }
 
@@ -47,19 +47,18 @@ const beforeUpload: UploadHooks['beforeUpload'] = (rawFile) => {
   return rawFile.size < maxSize
 }
 const remove: UploadHooks['onRemove'] = (_uploadFile, uploadFiles) =>
-  (model.value = (Array.isArray(model.value) ? uploadFiles.map((it) => it.url) : undefined) as MV)
+  (model.value = (Array.isArray(model.value) ? uploadFiles.map(it => it.url) : undefined) as MV)
 const success: UploadHooks['onSuccess'] = () =>
   (model.value = (
-    Array.isArray(model.value) ? model.value.concat(url.value as V) : url.value
+    Array.isArray(model.value) ? model.value.concat(url.value as MV) : url.value
   ) as MV)
-const preview: UploadHooks['onPreview'] = (uploadFile) => window.open(uploadFile.url)
+const preview: UploadHooks['onPreview'] = uploadFile => window.open(uploadFile.url)
 
 const isPlausibleMillisTimestamp = (s: string) => {
   if (!/^\d+$/.test(s)) return false
   const n = Number(s)
   if (!Number.isSafeInteger(n)) return false
   if (s.length < 12 || s.length > 16) return false
-  const t = new Date(n)
   const MIN = Date.UTC(2000, 0, 1)
   const MAX = Date.UTC(2100, 0, 1)
   return n >= MIN && n <= MAX
@@ -80,7 +79,7 @@ const fileList = computed(() =>
         sid = `${genFileId()}`
       }
       return { name, uid: Number(sid), url }
-    })
+    }),
 )
 
 const locale = inject(X_LOCALE_CONFIG, undefined)
@@ -99,13 +98,21 @@ const { t } = useLocale(locale)
       onSuccess: success,
       onPreview: preview
     }"
-    showFileList
+    show-file-list
   >
     <slot>
-      <XButton type="primary" size="small">{{ t('el.uploadOss.placeholder') }}</XButton>
+      <XButton
+        type="primary"
+        size="small"
+      >
+        {{ t('el.uploadOss.placeholder') }}
+      </XButton>
     </slot>
 
-    <template v-if="'tip' in $slots" #tip>
+    <template
+      v-if="'tip' in $slots"
+      #tip
+    >
       <slot name="tip" />
     </template>
   </XUpload>

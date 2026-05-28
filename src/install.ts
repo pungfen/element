@@ -15,7 +15,7 @@ declare module 'vue' {
   }
 }
 
-export const install = (app: App, options: { advance?: boolean; config?: ElementConfig } = {}) => {
+export const install = (app: App, options: { advance?: boolean, config?: ElementConfig } = {}) => {
   if (app[X_ELEMENT_INSTALLED]) return
   app[X_ELEMENT_INSTALLED] = true
 
@@ -25,6 +25,6 @@ export const install = (app: App, options: { advance?: boolean; config?: Element
 
   Object.entries({
     ...basics,
-    ...(options.advance ? advances : {})
+    ...(options.advance ? advances : {}),
   }).forEach(([name, component]) => app.component(name, component as Component))
 }

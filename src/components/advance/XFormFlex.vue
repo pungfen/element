@@ -4,7 +4,7 @@ import { useTemplateRef } from 'vue'
 
 import { XForm, type XFormProps } from '@/basic'
 
-export interface XFormFlexProps<D> extends XFormProps<D> {}
+export type XFormFlexProps<D> = XFormProps<D>
 
 const { content, data } = defineProps<XFormFlexProps<D>>()
 
@@ -15,13 +15,17 @@ const clearValidate = () => form.value?.clearValidate()
 
 defineExpose({ clearValidate, validate })
 
-const Content = () => content?.({ data: data ?? {} } as { data: D })
+const Content = () => content?.({ data: (data ?? {}) as D })
 </script>
 
 <template>
   <div class="flex-1 overflow-hidden">
     <ElScrollbar>
-      <XForm ref="form" v-bind="$props" :content="Content" />
+      <XForm
+        ref="form"
+        v-bind="$props"
+        :content="Content"
+      />
     </ElScrollbar>
   </div>
 </template>

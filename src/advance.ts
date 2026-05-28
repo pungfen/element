@@ -23,7 +23,7 @@ export {
   XTableFlex,
   XTableRequestConfigNext,
   XTableRequestNext,
-  XUploadOssNext
+  XUploadOssNext,
 }
 
 export * from '@/components/advance/XButtonAsync.vue'

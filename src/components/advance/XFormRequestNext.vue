@@ -6,7 +6,13 @@ import { computed, useTemplateRef } from 'vue'
 
 import { XForm, type XFormProps } from '@/basic'
 
-export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'disabled' | 'data'> {
+export interface XFormRequestEvents<PT, QR> {
+  prepare: [parameters: { path: PT, query: QR }]
+}
+
+export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'data' | 'disabled'> {
+  content?: (scope: { data: D }) => VNodeChild
+  disabled?: ((scope: { data: D }) => boolean) | boolean
   request: () => {
     data: Ref<D>
     execute: () => PromiseLike<unknown>
@@ -15,19 +21,13 @@ export interface XFormRequestProps<U, PT, QR, D> extends Omit<XFormProps<D>, 'di
     query: Ref<QR>
     url: U
   }
-  content?: (scope: { data: D }) => VNodeChild
-  disabled?: ((scope: { data: D }) => boolean) | boolean
-}
-
-export interface XFormRequestEvents<PT, QR> {
-  prepare: [parameters: { path: PT; query: QR }]
 }
 
 const {
   content,
   disabled = undefined,
   labelWidth = 'auto',
-  request
+  request,
 } = defineProps<XFormRequestProps<U, PT, QR, D>>()
 const emit = defineEmits<XFormRequestEvents<PT, QR>>()
 
@@ -36,7 +36,7 @@ const _init = JSON.stringify(data.value)
 
 const _disabled = computed(
   () =>
-    isFetching.value || (typeof disabled === 'function' ? disabled({ data: data.value }) : disabled)
+    isFetching.value || (typeof disabled === 'function' ? disabled({ data: data.value }) : disabled),
 )
 
 const form = useTemplateRef('form')

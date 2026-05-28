@@ -6,15 +6,15 @@ import { X_ELEMENT_CONFIG } from '@/constants'
 
 export const defaultElementConfig: ElementConfig = {
   button: {
-    autoInsertSpace: false
+    autoInsertSpace: false,
   },
   datePicker: {},
   pagination: {
-    layout: 'prev, pager, next, sizes, jumper, ->, total'
+    layout: 'prev, pager, next, sizes, jumper, ->, total',
   },
   table: {
-    showOverflowTooltip: false
-  }
+    showOverflowTooltip: false,
+  },
 }
 
 export const mergeElementConfig = (config: ElementConfig = {}): ElementConfig => {
@@ -23,7 +23,7 @@ export const mergeElementConfig = (config: ElementConfig = {}): ElementConfig =>
     datePicker: { ...defaultElementConfig.datePicker, ...config.datePicker },
     oss: config.oss,
     pagination: { ...defaultElementConfig.pagination, ...config.pagination },
-    table: { ...defaultElementConfig.table, ...config.table }
+    table: { ...defaultElementConfig.table, ...config.table },
   }
 }
 

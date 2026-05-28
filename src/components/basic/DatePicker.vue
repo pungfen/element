@@ -4,11 +4,11 @@ import type { DatePickerProps } from 'element-plus'
 import { ElDatePicker, useLocale } from 'element-plus'
 import { computed, inject } from 'vue'
 
-import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG, X_ELEMENT_CONFIG } from '@/constants'
+import { X_ELEMENT_CONFIG, X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XDateConfig {
-  valueFormat?: DatePickerProps['valueFormat']
   teleported?: boolean
+  valueFormat?: DatePickerProps['valueFormat']
 }
 
 export interface XDatePickerProps extends XDateConfig {
@@ -17,9 +17,9 @@ export interface XDatePickerProps extends XDateConfig {
   endPlaceholder?: DatePickerProps['endPlaceholder']
   placeholder?: DatePickerProps['placeholder']
   shortcuts?: DatePickerProps['shortcuts']
+  size?: DatePickerProps['size']
   startPlaceholder?: DatePickerProps['startPlaceholder']
   type?: DatePickerProps['type']
-  size?: DatePickerProps['size']
 }
 
 const { disabled = undefined, teleported = true, type = 'date' } = defineProps<XDatePickerProps>()
@@ -41,19 +41,21 @@ const modelValue = computed({
   get() {
     if (type.includes('range') && start.value && end.value) {
       return [start.value, end.value]
-    } else if (!type.includes('range')) {
+    }
+    else if (!type.includes('range')) {
       return model.value
     }
     return null
   },
   set(value) {
     if (type.includes('range') && Array.isArray(value)) {
-      start.value = value?.[0] as V
-      end.value = value?.[1] as V
-    } else {
+      start.value = value?.[0]
+      end.value = value?.[1]
+    }
+    else {
       model.value = value as V
     }
-  }
+  },
 })
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
@@ -62,7 +64,8 @@ if (formItemValidation?.required) {
   formItemValidation.validator = () => {
     if (label && type.includes('range') && (!start.value || !end.value)) {
       return t('el.validation.datepicker', { label })
-    } else if (label && !type.includes('range') && !model.value) {
+    }
+    else if (label && !type.includes('range') && !model.value) {
       return t('el.validation.datepicker', { label })
     }
     return validator?.()

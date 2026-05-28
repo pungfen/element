@@ -7,47 +7,33 @@ import { defineComponent, inject, provide, useTemplateRef } from 'vue'
 
 import { X_ELEMENT_CONFIG, X_ELEMENT_IN_TABLE } from '@/constants'
 
-export interface XTableConfig {
-  /**
-   * 是否隐藏额外内容并在单元格悬停时使用 Tooltip 显示它们。这将影响全部列的展示
-   * @default false
-   */
-  showOverflowTooltip?: TableProps<any>['showOverflowTooltip']
-  border?: TableProps<any>['border']
-  fit?: TableProps<any>['fit']
-  emptyText?: TableProps<any>['emptyText']
-  headerAlign?: string
-  align?: string
-}
-
+export type DefaultRow = Record<PropertyKey, unknown>
 export interface XTableColumnProps<D> {
+  align?: string
+  columnKey?: string
   content?: (scope: { index: number, row: D }) => VNodeChild
   fixed?: 'left' | 'right'
   header?: (scope: { column: XTableColumnProps<D> }) => VNodeChild
+  headerAlign?: string
   label?: string
+  minWidth?: number
   prop?: string
   selectable?: (row: D, index: number) => boolean
   type?: 'index' | 'selection'
   width?: number
-  minWidth?: number
-  columnKey?: string
-  headerAlign?: string
-  align?: string
 }
 
-export interface XTableProps<D> extends XTableConfig {
-  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
-  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
-  columns?: XTableColumnProps<D>[]
-  data?: D[]
-  height?: TableProps<any>['height']
-  rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
-  rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
-  rowKey?: (scope: { row: D }) => string
-  showSummary?: TableProps<any>['showSummary']
-  size?: TableProps<any>['size']
-  spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
-  summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
+export interface XTableConfig {
+  align?: string
+  border?: TableProps<DefaultRow>['border']
+  emptyText?: TableProps<DefaultRow>['emptyText']
+  fit?: TableProps<DefaultRow>['fit']
+  headerAlign?: string
+  /**
+   * 是否隐藏额外内容并在单元格悬停时使用 Tooltip 显示它们。这将影响全部列的展示
+   * @default false
+   */
+  showOverflowTooltip?: TableProps<DefaultRow>['showOverflowTooltip']
 }
 
 export interface XTableEvents<D> {
@@ -55,6 +41,21 @@ export interface XTableEvents<D> {
   rowClick: [row: D]
   rowDblclick: [row: D]
   selectionChange: [rows: D[]]
+}
+
+export interface XTableProps<D> extends XTableConfig {
+  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
+  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  columns?: XTableColumnProps<D>[]
+  data?: D[]
+  height?: TableProps<DefaultRow>['height']
+  rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
+  rowKey?: (scope: { row: D }) => string
+  rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
+  showSummary?: TableProps<DefaultRow>['showSummary']
+  size?: TableProps<DefaultRow>['size']
+  spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => { colspan: number, rowspan: number } | number[] | undefined
+  summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
 
 const { align, border = undefined, columns, data, fit = undefined, headerAlign, showOverflowTooltip = undefined } = defineProps<XTableProps<D>>()
@@ -73,7 +74,7 @@ defineExpose({
   setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
   setScrollTop: (top: number) => table.value?.setScrollTop(top),
   toggleAllSelection: () => table.value?.toggleAllSelection(),
-  toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable)
+  toggleRowSelection: (row: D, selected?: boolean, ignoreSelectable?: boolean) => table.value?.toggleRowSelection(row, selected, ignoreSelectable),
 })
 
 provide(X_ELEMENT_IN_TABLE, true)
@@ -81,20 +82,20 @@ provide(X_ELEMENT_IN_TABLE, true)
 const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
   return () => (
     <ElTableColumn
+      align={props.align}
+      columnKey={props.columnKey}
       fixed={props.fixed}
+      headerAlign={props.headerAlign}
       label={props.label}
+      minWidth={props.minWidth}
       prop={props.prop}
+      selectable={props.selectable}
       type={props.type}
       width={props.width}
-      minWidth={props.minWidth}
-      columnKey={props.columnKey}
-      selectable={props.selectable}
-      headerAlign={props.headerAlign}
-      align={props.align}
     >
       {{
-        default: ({ $index, row }: { row: D, $index: number }) => props.content?.({ index: $index, row }),
-        header: () => props.header?.({ column: { ...props } })
+        default: ({ $index, row }: { $index: number, row: D }) => props.content?.({ index: $index, row }),
+        header: () => props.header?.({ column: { ...props } }),
       }}
     </ElTableColumn>
   )

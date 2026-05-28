@@ -77,10 +77,16 @@ const blur = (e: FocusEvent) => {
     @blur="blur"
     @focus="focus"
   >
-    <template v-if="'prefix' in $slots" #prefix>
+    <template
+      v-if="'prefix' in $slots"
+      #prefix
+    >
       <slot name="prefix" />
     </template>
-    <template v-if="'suffix' in $slots" #suffix>
+    <template
+      v-if="'suffix' in $slots"
+      #suffix
+    >
       <slot name="suffix" />
     </template>
   </ElInputNumber>

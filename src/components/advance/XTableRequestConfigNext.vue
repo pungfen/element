@@ -1,23 +1,43 @@
 <script setup lang="tsx" generic="U, PT, QR, D">
 import type { Ref, VNodeChild } from 'vue'
-import type { Paging, TableColumnField } from '@/types'
+
 import { Rank, Setting } from '@element-plus/icons-vue'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElFormItem, ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
-import { computed, nextTick, ref, inject } from 'vue'
+import { computed, inject, nextTick, ref } from 'vue'
+
+import type { Paging, TableColumnField } from '@/types'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
 import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
-
 import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableRequestColumnsProps<D>, 'content'> {
-  content?: (scope: { row: D, index: number }) => VNodeChild
+  content?: (scope: { index: number, row: D }) => VNodeChild
   search?: (scope: { query: QR }) => VNodeChild
 }
 
+export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D> {
+  prepare: [parameters: { path: PT, query: QR }]
+}
+
 export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
+  config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
+  fields: () => {
+    data: Ref<TableColumnField[]>
+    loading: Ref<boolean>
+    update: (fields: TableColumnField[]) => PromiseLike<unknown>
+  }
+  header?: (scope: {
+    data: D[]
+    isFetching: boolean
+    paging: Paging
+    path: PT
+    query: QR
+  }) => VNodeChild
+  pagination?: boolean
+  paginationLayout?: string
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -27,25 +47,6 @@ export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexP
     query: Ref<QR>
     url: U
   }
-  fields: () => {
-    data: Ref<TableColumnField[]>
-    update: (fields: TableColumnField[]) => PromiseLike<unknown>
-    loading: Ref<boolean>
-  }
-  header?: (scope: {
-    data: D[]
-    query: QR
-    path: PT
-    isFetching: boolean
-    paging: Paging
-  }) => VNodeChild
-  config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
-  pagination?: boolean
-  paginationLayout?: string
-}
-
-export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D> {
-  prepare: [parameters: { path: PT, query: QR }]
 }
 
 const { config, fields, header, pagination = true, paginationLayout, request } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
@@ -74,7 +75,7 @@ const columns = useArrayMap(visibleColumns, (it) => {
     content: _config?.content,
     label: _config?.label ?? it.label,
     minWidth: it.width,
-    prop: _config?.prop ?? it.prop
+    prop: _config?.prop ?? it.prop,
   } as XTableColumnProps<D>
 })
 
@@ -92,7 +93,7 @@ useSortable(sortable, fieldsData, {
     nextTick(() => {
       update(fieldsData.value)
     })
-  }
+  },
 })
 
 const locale = inject(X_LOCALE_CONFIG, undefined)
@@ -100,9 +101,6 @@ const { t } = useLocale(locale)
 
 const Q = () => (
   <XForm
-    labelPosition={locale?.value.name.toLowerCase() === 'zh-cn' ? 'left' : 'top'}
-    data={query.value as object}
-    disabled={loading.value || isFetching.value}
     content={({ data }) => (
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2">
         {[
@@ -111,29 +109,37 @@ const Q = () => (
               const _config = config[it.code]
               return (
                 <XFormItem
-                  label={_config?.label ?? it.label}
                   content={() => _config?.search?.({ query: data as QR }) ?? <XInput disabled modelValue={it.code} />}
+                  label={_config?.label ?? it.label}
                 />
               )
-            }
+            },
           ),
           <ElFormItem>
             {{
-              default: () => <ElSpace>
-                <XButtonAsync action={() => {
-                  const _q = query.value as { pageIndex?: number; pageSize?: number }
-                  _q.pageIndex = undefined
-                  _q.pageSize = undefined
-                  search()
-                }}>{t('el.common.query')}</XButtonAsync>
-                <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
-              </ElSpace>,
-              label: () => <div style='height: 22px'></div>
+              default: () => (
+                <ElSpace>
+                  <XButtonAsync action={() => {
+                    const _q = query.value as { pageIndex?: number, pageSize?: number }
+                    _q.pageIndex = undefined
+                    _q.pageSize = undefined
+                    search()
+                  }}
+                  >
+                    {t('el.common.query')}
+                  </XButtonAsync>
+                  <XButton onClick={() => reset()}>{t('el.common.reset')}</XButton>
+                </ElSpace>
+              ),
+              label: () => <div style="height: 22px"></div>,
             }}
-          </ElFormItem>
+          </ElFormItem>,
         ]}
       </div>
     )}
+    data={query.value as object}
+    disabled={loading.value || isFetching.value}
+    labelPosition={locale?.value.name.toLowerCase() === 'zh-cn' ? 'left' : 'top'}
   />
 )
 
@@ -141,10 +147,9 @@ const H = () => header?.({ data: data.value, isFetching: isFetching.value, pagin
 
 const T = () => (
   <XTableFlex
-    data={data.value}
-    columns={columns.value}
-    showOverflowTooltip
     border
+    columns={columns.value}
+    data={data.value}
     onHeaderDragend={(newWidth, _oldWidth, column) => {
       const item = fieldsData.value.find(it => it.code === column.columnKey)
       if (item) {
@@ -154,51 +159,61 @@ const T = () => (
         })
       }
     }}
+    showOverflowTooltip
   />
 )
 
 const S = () => (
-  <ElPopover trigger="click" width="auto" popper-class="shadow-xl bg-(--el-bg-color)">
+  <ElPopover popper-class="shadow-xl bg-(--el-bg-color)" trigger="click" width="auto">
     {{
-      default: () => <div class="flex flex-col gap-2">
-        <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
-        <ElScrollbar max-height={500}>
-          <div ref={sortable} class="flex flex-col divide-y divide-[#f2f6fc]">
-            {() => fieldsData.value.map(
-              it => <div class="flex w-50 items-center gap-2 py-2">
-                <XButton text icon={Rank} disabled={false} type="primary" size="small" class="cursor-grab"/>
-                <ElText class="flex-1 text-ellipsis">{it.label}</ElText>
-                <ElSwitch size="small" disabled={false} modelValue={it.visible} onUpdate:modelValue={value => {
-                  it.visible = value as boolean
-                  nextTick(() => {
-                    update(fieldsData.value)
-                  })
-                }}/>
-              </div>
-            )}
-          </div>
-        </ElScrollbar>
-      </div>,
-      reference: () => <XButton icon={Setting} text disabled={false} class="absolute top-0 right-0 z-1000" />
+      default: () => (
+        <div class="flex flex-col gap-2">
+          <ElText size="large">{t('el.common.tableConfigTitle')}</ElText>
+          <ElScrollbar max-height={500}>
+            <div class="flex flex-col divide-y divide-[#f2f6fc]" ref={sortable}>
+              {() => fieldsData.value.map(
+                it => (
+                  <div class="flex w-50 items-center gap-2 py-2">
+                    <XButton class="cursor-grab" disabled={false} icon={Rank} size="small" text type="primary" />
+                    <ElText class="flex-1 text-ellipsis">{it.label}</ElText>
+                    <ElSwitch
+                      disabled={false}
+                      modelValue={it.visible}
+                      onUpdate:modelValue={(value) => {
+                        it.visible = value as boolean
+                        nextTick(() => {
+                          update(fieldsData.value)
+                        })
+                      }}
+                      size="small"
+                    />
+                  </div>
+                ),
+              )}
+            </div>
+          </ElScrollbar>
+        </div>
+      ),
+      reference: () => <XButton class="absolute top-0 right-0 z-1000" disabled={false} icon={Setting} text />,
     }}
   </ElPopover>
 )
 
 const P = () => (
   <XPagination
-    size="small"
-    layout={paginationLayout}
-    total={paging.value.itemCount}
     currentPage={paging.value.pageIndex}
-    pageSize={paging.value.pageSize}
-    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
-    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
+    layout={paginationLayout}
     onCurrentChange={() => execute()}
     onSizeChange={() => {
       const _q = query.value as { pageIndex?: number }
       _q.pageIndex = 1
       execute()
     }}
+    onUpdate:currentPage={value => (query.value as { pageIndex?: number }).pageIndex = value ?? 0}
+    onUpdate:pageSize={value => (query.value as { pageSize?: number }).pageSize = value ?? 0}
+    pageSize={paging.value.pageSize}
+    size="small"
+    total={paging.value.itemCount}
   />
 )
 
@@ -206,7 +221,10 @@ defineExpose({ data, isFetching, paging, path, query, reset, search, url })
 </script>
 
 <template>
-  <Q v-if="queryShow" class="rounded bg-(--el-fill-color-darker) px-2 pt-4" />
+  <Q
+    v-if="queryShow"
+    class="rounded bg-(--el-fill-color-darker) px-2 pt-4"
+  />
 
   <H />
 
@@ -216,7 +234,10 @@ defineExpose({ data, isFetching, paging, path, query, reset, search, url })
   >
     <S />
     <T />
-    <div v-if="pagination" class="flex justify-end">
+    <div
+      v-if="pagination"
+      class="flex justify-end"
+    >
       <P />
     </div>
   </div>

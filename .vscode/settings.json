@@ -1,24 +1,11 @@
 {
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.oxlint": "explicit"
+    "source.fixAll.eslint": "explicit"
   },
+  "eslint.validate": ["javascript", "typescript", "typescriptreact", "json", "vue"],
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "js/ts.tsdk.path": "node_modules/typescript/lib",
-
-  "oxc.fmt.configPath": "oxfmt.config.ts",
-  "[vue]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
-  }
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

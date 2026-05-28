@@ -23,14 +23,14 @@ const { content, data, disabled = undefined } = defineProps<XFormProps<D>>()
 
 const form = useTemplateRef('form')
 
-const Content = () => content?.({ data: data ?? {} } as { data: D })
+const Content = () => content?.({ data: (data ?? {}) as D })
 
 provide(X_ELEMENT_IN_FORM, true)
 
 const validations = [] as XFormItemValidation[]
 provide(X_FORM_VALIDATIONS, validations)
-const validate = () => validations.every((item) => item.validate())
-const clearValidate = () => validations.forEach((it) => it.clearValidate())
+const validate = () => validations.every(item => item.validate())
+const clearValidate = () => validations.forEach(it => it.clearValidate())
 const resetFields = () => {
   clearValidate()
   form.value?.resetFields()

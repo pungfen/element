@@ -7,26 +7,26 @@ Object.assign(ar.el, {
     confirmExecute: 'تأكيد التنفيذ؟',
     query: 'استعلام',
     reset: 'إعادة تعيين',
-    tableConfigTitle: 'إعدادات رؤوس الأعمدة'
+    tableConfigTitle: 'إعدادات رؤوس الأعمدة',
   },
   datepicker: {
     ...ar.el.datepicker,
     endPlaceholder: 'تاريخ الانتهاء',
     placeholder: 'الرجاء اختيار',
-    startPlaceholder: 'تاريخ البدء'
+    startPlaceholder: 'تاريخ البدء',
   },
   input: {
-    placeholder: 'الرجاء إدخال'
+    placeholder: 'الرجاء إدخال',
   },
   inputNumber: {
     ...ar.el.inputNumber,
-    placeholder: 'الرجاء إدخال'
+    placeholder: 'الرجاء إدخال',
   },
   select: {
-    ...ar.el.select
+    ...ar.el.select,
   },
   uploadOss: {
-    placeholder: 'انقر للتحميل'
+    placeholder: 'انقر للتحميل',
   },
   validation: {
     cascader: 'يرجى تحديد{label}',
@@ -35,8 +35,8 @@ Object.assign(ar.el, {
     input: 'يرجى إدخال{label}',
     inputNumber: 'يرجى إدخال{label}',
     select: 'يرجى تحديد{label}',
-    upload: 'يرجى رفع{label}'
-  }
+    upload: 'يرجى رفع{label}',
+  },
 })
 
 export { ar }

@@ -7,26 +7,26 @@ Object.assign(th.el, {
     confirmExecute: 'ยืนยันการดำเนินการ?',
     query: 'ค้นหา',
     reset: 'รีเซ็ต',
-    tableConfigTitle: 'การตั้งค่าส่วนหัว'
+    tableConfigTitle: 'การตั้งค่าส่วนหัว',
   },
   datepicker: {
     ...th.el.datepicker,
     endPlaceholder: 'วันสิ้นสุด',
     placeholder: 'กรุณาเลือก',
-    startPlaceholder: 'วันเริ่มต้น'
+    startPlaceholder: 'วันเริ่มต้น',
   },
   input: {
-    placeholder: 'กรุณาป้อนข้อมูล'
+    placeholder: 'กรุณาป้อนข้อมูล',
   },
   inputNumber: {
     ...th.el.inputNumber,
-    placeholder: 'กรุณาป้อนข้อมูล'
+    placeholder: 'กรุณาป้อนข้อมูล',
   },
   select: {
-    ...th.el.select
+    ...th.el.select,
   },
   uploadOss: {
-    placeholder: 'คลิกอัปโหลด'
+    placeholder: 'คลิกอัปโหลด',
   },
   validation: {
     cascader: 'กรุณาเลือก{label}',
@@ -35,8 +35,8 @@ Object.assign(th.el, {
     input: 'กรุณากรอก{label}',
     inputNumber: 'กรุณากรอก{label}',
     select: 'กรุณาเลือก{label}',
-    upload: 'กรุณาอัปโหลด{label}'
-  }
+    upload: 'กรุณาอัปโหลด{label}',
+  },
 })
 
 export { th }

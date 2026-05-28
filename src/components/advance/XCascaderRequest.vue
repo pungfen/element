@@ -6,10 +6,18 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { XCascader, type XCascaderProps } from '@/basic'
 
+export interface XCascaderRequestEvents<PT, QR, V> {
+  change: [value: V]
+  prepare: [parameters: { path: PT, query: QR }]
+}
+
 export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
   XCascaderProps<D, V>,
   'data' | 'factory'
 > {
+  clearable?: CascaderComponentProps['clearable']
+  disabled?: CascaderComponentProps['disabled']
+  filterable?: CascaderComponentProps['filterable']
   request: () => {
     data: Ref<D[]>
     execute: () => PromiseLike<unknown>
@@ -18,20 +26,12 @@ export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
     query: Ref<QR>
     url: U
   }
-  clearable?: CascaderComponentProps['clearable']
-  disabled?: CascaderComponentProps['disabled']
-  filterable?: CascaderComponentProps['filterable']
-}
-
-export interface XCascaderRequestEvents<PT, QR, V> {
-  prepare: [parameters: { path: PT; query: QR }]
-  change: [value: V]
 }
 
 const {
   disabled = undefined,
   props,
-  request
+  request,
 } = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XCascaderRequestEvents<PT, QR, V>>()
@@ -49,5 +49,8 @@ defineExpose({ data, execute, path, query, search, url })
 </script>
 
 <template>
-  <XCascader v-model="model" v-bind="{ clearable, disabled, filterable, data, props }" />
+  <XCascader
+    v-model="model"
+    v-bind="{ clearable, disabled, filterable, data, props }"
+  />
 </template>

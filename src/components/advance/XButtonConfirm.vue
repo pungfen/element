@@ -41,14 +41,27 @@ const _link = computed(() => link ?? inTable)
           text
         }"
       >
-        <slot></slot>
+        <slot />
       </XButton>
     </template>
     <template #actions="{ confirm, cancel }">
-      <XButton size="small" :disabled="false" @click="cancel">{{ t('el.common.cancel') }}</XButton>
-      <XButton type="danger" :disabled="false" size="small" @click="confirm">{{
-        t('el.common.confirm')
-      }}</XButton>
+      <XButton
+        size="small"
+        :disabled="false"
+        @click="cancel"
+      >
+        {{ t('el.common.cancel') }}
+      </XButton>
+      <XButton
+        type="danger"
+        :disabled="false"
+        size="small"
+        @click="confirm"
+      >
+        {{
+          t('el.common.confirm')
+        }}
+      </XButton>
     </template>
   </ElPopconfirm>
 </template>

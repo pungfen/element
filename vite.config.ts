@@ -11,29 +11,29 @@ import Dts from 'vite-plugin-dts'
 export default defineConfig(({ mode }) => ({
   build: {
     lib: {
+      cssFileName: 'style',
       entry: [
         'src/index.ts',
         'src/advance.ts',
         'src/basic.ts',
         'src/locales.ts',
-        'src/resolver.ts'
+        'src/resolver.ts',
       ],
       formats: ['es', 'cjs'],
-      cssFileName: 'style'
     },
     rolldownOptions: {
       external: ['element-plus', 'vue'],
-      output: { exports: 'named' }
+      output: { exports: 'named' },
     },
-    sourcemap: mode === 'staging'
+    sourcemap: mode === 'staging',
   },
   plugins: [Vue(), VueJsx(), Dts({ tsconfigPath: './tsconfig.app.json' }), Tailwindcss()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   test: {
-    environment: 'jsdom'
-  }
+    environment: 'jsdom',
+  },
 }))

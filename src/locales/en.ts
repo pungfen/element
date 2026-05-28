@@ -7,26 +7,26 @@ Object.assign(en.el, {
     confirmExecute: 'Confirm execution?',
     query: 'Query',
     reset: 'Reset',
-    tableConfigTitle: 'Header Settings'
+    tableConfigTitle: 'Header Settings',
   },
   datepicker: {
     ...en.el.datepicker,
     endPlaceholder: 'End Date',
     placeholder: 'Please select',
-    startPlaceholder: 'Start Date'
+    startPlaceholder: 'Start Date',
   },
   input: {
-    placeholder: 'Please input'
+    placeholder: 'Please input',
   },
   inputNumber: {
     ...en.el.inputNumber,
-    placeholder: 'Please input'
+    placeholder: 'Please input',
   },
   select: {
-    ...en.el.select
+    ...en.el.select,
   },
   uploadOss: {
-    placeholder: 'Click Upload'
+    placeholder: 'Click Upload',
   },
   validation: {
     cascader: 'Please select {label}',
@@ -35,8 +35,8 @@ Object.assign(en.el, {
     input: 'Please enter {label}',
     inputNumber: 'Please enter {label}',
     select: 'Please select {label}',
-    upload: 'Please upload {label}'
-  }
+    upload: 'Please upload {label}',
+  },
 })
 
 export { en }

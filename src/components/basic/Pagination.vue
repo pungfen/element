@@ -4,27 +4,27 @@ import type { PaginationProps } from 'element-plus'
 import { ElPagination, useLocale } from 'element-plus'
 import { inject } from 'vue'
 
-import { X_LOCALE_CONFIG, X_ELEMENT_CONFIG } from '@/constants'
+import { X_ELEMENT_CONFIG, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XPaginationConfig {
   layout?: XPaginationProps['layout']
 }
 
 export interface XPaginationProps {
-  pageSizes?: PaginationProps['pageSizes']
   background?: PaginationProps['background']
-  size?: PaginationProps['size']
-  layout?: PaginationProps['layout']
-  total?: PaginationProps['total']
   defaultPageSize?: PaginationProps['defaultPageSize']
+  layout?: PaginationProps['layout']
+  pageSizes?: PaginationProps['pageSizes']
+  size?: PaginationProps['size']
+  total?: PaginationProps['total']
 }
 
 const config = inject(X_ELEMENT_CONFIG)
 const { defaultPageSize = 20 } = defineProps<XPaginationProps>()
 
 const emit = defineEmits<{
-  sizeChange: [size: number]
   currentChange: [current: number]
+  sizeChange: [size: number]
 }>()
 const currentPage = defineModel<number>('currentPage')
 const pageSize = defineModel<number>('pageSize')

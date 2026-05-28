@@ -20,6 +20,6 @@ provide(X_LOCALE_CONFIG, localLocale)
 
 <template>
   <ElConfigProvider :locale="localLocale">
-    <slot></slot>
+    <slot />
   </ElConfigProvider>
 </template>

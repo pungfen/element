@@ -8,23 +8,23 @@ import { inject } from 'vue'
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XInputProps {
-  clearable?: InputProps['clearable']
-  disabled?: InputProps['disabled']
-  size?: InputProps['size']
-  type?: InputProps['type']
-  showPassword?: InputProps['showPassword']
   autocomplete?: InputProps['autocomplete']
   autosize?: InputProps['autosize']
+  clearable?: InputProps['clearable']
+  disabled?: InputProps['disabled']
   placeholder?: InputProps['placeholder']
   prefixIcon?: InputProps['prefixIcon']
+  showPassword?: InputProps['showPassword']
+  size?: InputProps['size']
   suffixIcon?: InputProps['suffixIcon']
+  type?: InputProps['type']
 }
 
 const { disabled = undefined } = defineProps<XInputProps>()
 const emit = defineEmits<{
   blur: [e: FocusEvent]
-  focus: [e: FocusEvent]
   change: [e: MV]
+  focus: [e: FocusEvent]
 }>()
 defineSlots<{
   append: () => VNode
@@ -81,16 +81,28 @@ const change = (value: string) => {
     @focus="focus"
     @change="change"
   >
-    <template v-if="'append' in $slots" #append>
+    <template
+      v-if="'append' in $slots"
+      #append
+    >
       <slot name="append" />
     </template>
-    <template v-if="'prepend' in $slots" #prepend>
+    <template
+      v-if="'prepend' in $slots"
+      #prepend
+    >
       <slot name="prepend" />
     </template>
-    <template v-if="'prefix' in $slots" #prefix>
+    <template
+      v-if="'prefix' in $slots"
+      #prefix
+    >
       <slot name="prefix" />
     </template>
-    <template v-if="'suffix' in $slots" #suffix>
+    <template
+      v-if="'suffix' in $slots"
+      #suffix
+    >
       <slot name="suffix" />
     </template>
   </ElInput>

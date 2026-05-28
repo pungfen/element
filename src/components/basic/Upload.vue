@@ -8,18 +8,18 @@ import { inject } from 'vue'
 import { X_FORM_ITEM_VALIDATION } from '@/constants'
 
 export interface XUploadProps {
-  action?: UploadProps['action']
   accept?: UploadProps['accept']
+  action?: UploadProps['action']
+  beforeUpload?: UploadProps['beforeUpload']
   data?: UploadProps['data']
   disabled?: UploadProps['disabled']
-  limit?: UploadProps['limit']
-  showFileList?: UploadProps['showFileList']
   fileList?: UploadProps['fileList']
+  limit?: UploadProps['limit']
   multiple?: UploadProps['multiple']
-  beforeUpload?: UploadProps['beforeUpload']
-  onSuccess?: UploadProps['onSuccess']
-  onRemove?: UploadProps['onRemove']
   onPreview?: UploadProps['onPreview']
+  onRemove?: UploadProps['onRemove']
+  onSuccess?: UploadProps['onSuccess']
+  showFileList?: UploadProps['showFileList']
 }
 
 const {
@@ -27,12 +27,12 @@ const {
   onPreview,
   onRemove,
   onSuccess,
-  showFileList = undefined
+  showFileList = undefined,
 } = defineProps<XUploadProps>()
 
 defineSlots<{
   default: () => VNodeChild
-  file: (scope: { file: UploadFile; index: number }) => VNodeChild
+  file: (scope: { file: UploadFile, index: number }) => VNodeChild
   tip: () => VNodeChild
   trigger: () => VNodeChild
 }>()
@@ -77,13 +77,26 @@ const preview: UploadProps['onPreview'] = (uploadFile) => {
   >
     <slot />
 
-    <template v-if="'file' in $slots" #file="{ file, index }">
-      <slot name="file" :file="file" :index="index" />
+    <template
+      v-if="'file' in $slots"
+      #file="{ file, index }"
+    >
+      <slot
+        name="file"
+        :file="file"
+        :index="index"
+      />
     </template>
-    <template v-if="'tip' in $slots" #tip>
+    <template
+      v-if="'tip' in $slots"
+      #tip
+    >
       <slot name="tip" />
     </template>
-    <template v-if="'trigger' in $slots" #trigger>
+    <template
+      v-if="'trigger' in $slots"
+      #trigger
+    >
       <slot name="trigger" />
     </template>
   </ElUpload>

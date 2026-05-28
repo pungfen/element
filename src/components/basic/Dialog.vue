@@ -5,26 +5,26 @@ import type { VNodeChild } from 'vue'
 import { ElDialog } from 'element-plus'
 
 export interface XDialogProps {
-  bodyClass?: DialogProps['bodyClass']
-  width?: DialogProps['width']
-  showClose?: DialogProps['showClose']
-  title?: DialogProps['title']
-  center?: DialogProps['center']
   alignCenter?: DialogProps['alignCenter']
-  draggable?: DialogProps['draggable']
+  bodyClass?: DialogProps['bodyClass']
+  center?: DialogProps['center']
   closeOnClickModal?: DialogProps['closeOnClickModal']
   closeOnPressEscape?: DialogProps['closeOnPressEscape']
+  draggable?: DialogProps['draggable']
+  showClose?: DialogProps['showClose']
+  title?: DialogProps['title']
+  width?: DialogProps['width']
 }
 
 const {
   closeOnClickModal = undefined,
   closeOnPressEscape = undefined,
-  showClose = undefined
+  showClose = undefined,
 } = defineProps<XDialogProps>()
 defineSlots<{
   default?: () => VNodeChild
-  header?: () => VNodeChild
   footer?: () => VNodeChild
+  header?: () => VNodeChild
 }>()
 const visible = defineModel<boolean>()
 </script>
@@ -44,12 +44,18 @@ const visible = defineModel<boolean>()
       closeOnPressEscape
     }"
   >
-    <template v-if="'header' in $slots" #header>
-      <slot name="header"></slot>
+    <template
+      v-if="'header' in $slots"
+      #header
+    >
+      <slot name="header" />
     </template>
-    <slot></slot>
-    <template v-if="'footer' in $slots" #footer>
-      <slot name="footer"></slot>
+    <slot />
+    <template
+      v-if="'footer' in $slots"
+      #footer
+    >
+      <slot name="footer" />
     </template>
   </ElDialog>
 </template>

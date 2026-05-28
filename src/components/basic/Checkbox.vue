@@ -8,10 +8,10 @@ import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
 export interface XCheckboxProps {
   disabled?: boolean
-  size?: CheckboxProps['size']
-  label?: CheckboxProps['label']
-  trueValue?: CheckboxProps['trueValue']
   falseValue?: CheckboxProps['falseValue']
+  label?: CheckboxProps['label']
+  size?: CheckboxProps['size']
+  trueValue?: CheckboxProps['trueValue']
 }
 
 const { disabled = undefined } = defineProps<XCheckboxProps>()
@@ -39,5 +39,8 @@ if (formItemValidation?.required) {
 </script>
 
 <template>
-  <ElCheckbox v-bind="{ disabled }" v-model="model" />
+  <ElCheckbox
+    v-bind="{ disabled }"
+    v-model="model"
+  />
 </template>
