@@ -1,10 +1,10 @@
 <script setup lang="tsx" generic="D, V, MV extends V | V[]">
 import type { SelectProps } from 'element-plus'
-import type { Ref } from 'vue'
+import type { FunctionalComponent, Ref, VNode } from 'vue'
 
 import { useArrayMap } from '@vueuse/core'
 import { ElOption, ElSelect, useLocale } from 'element-plus'
-import { computed, type FunctionalComponent, inject, ref, type VNodeChild, watch } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 
 import { X_FORM_ITEM_VALIDATION, X_LOCALE_CONFIG } from '@/constants'
 
@@ -17,7 +17,7 @@ export interface XSelectEvents<V> {
 export interface XSelectOptionProps<V> {
   disabled?: boolean
   label?: number | string
-  render?: VNodeChild
+  render?: () => VNode
   value: V
 }
 
@@ -155,7 +155,9 @@ const XOption: FunctionalComponent<XSelectOptionProps<V>> = props => (
     label={props.label}
     value={props.value as boolean | object | string}
   >
-    {props.render ?? props.label}
+    {{
+      default: () => props.render?.() ?? props.label,
+    }}
   </ElOption>
 )
 </script>

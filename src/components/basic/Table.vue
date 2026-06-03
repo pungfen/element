@@ -1,4 +1,4 @@
-<script setup lang="tsx" generic="D">
+<script setup lang="tsx" generic="D extends DefaultRow">
 import type { TableColumnCtx, TableProps } from 'element-plus'
 import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
@@ -43,17 +43,17 @@ export interface XTableEvents<D> {
   selectionChange: [rows: D[]]
 }
 
-export interface XTableProps<D> extends XTableConfig {
+export interface XTableProps<D extends DefaultRow> extends XTableConfig {
   cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
   cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   columns?: XTableColumnProps<D>[]
   data?: D[]
-  height?: TableProps<DefaultRow>['height']
+  height?: TableProps<D>['height']
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
-  rowKey?: (scope: { row: D }) => string
+  rowKey?: ((row: D) => string) | string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
-  showSummary?: TableProps<DefaultRow>['showSummary']
-  size?: TableProps<DefaultRow>['size']
+  showSummary?: TableProps<D>['showSummary']
+  size?: TableProps<D>['size']
   spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => { colspan: number, rowspan: number } | number[] | undefined
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
@@ -105,8 +105,8 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
 <template>
   <ElTable
     ref="table"
+    :data="data"
     v-bind="{
-      data,
       height,
       rowClassName,
       rowStyle,
