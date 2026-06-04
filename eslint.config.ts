@@ -1,3 +1,4 @@
+import json from '@eslint/json'
 import stylistic from '@stylistic/eslint-plugin'
 import { configureVueProject, defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import perfectionist from 'eslint-plugin-perfectionist'
@@ -12,6 +13,15 @@ export default defineConfigWithVueTs(
   {
     ignores: ['**/dist/**'],
   },
+  {
+    files: ["**/tsconfig.json", ".vscode/*.json"],
+    plugins: { json },
+    language: "json/jsonc",
+    languageOptions: {
+			allowTrailingCommas: true,
+		},
+    extends: ["json/recommended"]
+  },
   vue.configs['flat/essential'],
   vueTsConfigs.recommended,
   stylistic.configs.recommended,
@@ -20,6 +30,7 @@ export default defineConfigWithVueTs(
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/valid-v-for': 'off',
+      'json/sort-keys': 'error'
     },
   },
 )

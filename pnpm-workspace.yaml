@@ -1,0 +1,6 @@
+packages:
+  - .
+  - play
+  
+allowBuilds:
+  simple-git-hooks: false

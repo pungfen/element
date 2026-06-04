@@ -1,6 +1,3 @@
-/// <reference types="vitest/config" />
-/// <reference types="vite/client" />
-
 import Tailwindcss from '@tailwindcss/vite'
 import VueJsx from '@vitejs/plugin-vue'
 import Vue from '@vitejs/plugin-vue-jsx'
