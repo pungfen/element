@@ -123,10 +123,7 @@ defineExpose({ data })
 </script>
 
 <template>
-  <div
-    v-loading="loading"
-    class="relative flex flex-1 flex-col gap-2 overflow-hidden"
-  >
+  <div v-loading="loading" class="relative flex flex-1 flex-col gap-2 overflow-hidden">
     <S />
     <T />
   </div>

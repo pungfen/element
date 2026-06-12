@@ -40,10 +40,7 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    ref="container"
-    class="flex-1 overflow-hidden"
-  >
+  <div ref="container" class="flex-1 overflow-hidden">
     <XTable
       ref="table"
       v-bind="{ ...props }"
