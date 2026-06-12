@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "include": ["package.json", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
     "composite": true,
 
@@ -19,6 +19,8 @@
     "libReplacement": false,
     // See <https://github.com/vuejs/vue-cli/pull/5688>
     "skipLibCheck": true,
+
+    "noUncheckedSideEffectImports": false,
 
     "paths": {
       "@/*": ["./src/*"]

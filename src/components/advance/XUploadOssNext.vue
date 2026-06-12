@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="V extends string, MV extends V | V[]">
+<script setup lang="tsx" generic="V extends string, MV extends V | V[]">
 import type { UploadHooks } from 'element-plus'
 import type { VNodeChild } from 'vue'
 

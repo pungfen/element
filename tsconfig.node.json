@@ -1,13 +1,13 @@
 {
-    "compilerOptions": {
-        "composite": true,
+  "compilerOptions": {
+    "composite": true,
 
-        "target": "esnext",
-        "module": "esnext",
-        "moduleResolution": "bundler",
-        "strict": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
 
-        "types": ["node"]
-    },
-    "include": ["eslint.config.*"]
+    "types": ["node"]
+  },
+  "include": ["eslint.config.*", "vite.config.ts"]
 }

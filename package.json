@@ -61,15 +61,14 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "pnpm -C packages/play dev",
+    "dev": "pnpm -C play dev",
     "build": "vite build",
     "build:dev": "vite build --mode staging",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
     "release": "npm run build && bumpp",
-    "test:eslint-config": "pnpm -C packages/eslint-config test",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc -p tsconfig.app.json --noEmit"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -87,12 +86,14 @@
     "@types/sortablejs": "^1.15.9",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vitejs/plugin-vue-jsx": "^5.1.5",
+    "@vitest/eslint-plugin": "^1.6.19",
     "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/test-utils": "^2.4.10",
     "bumpp": "^11.1.0",
     "eslint": "^10.4.1",
     "eslint-plugin-perfectionist": "^5.9.0",
     "eslint-plugin-vue": "^10.9.1",
+    "fast-glob": "^3.3.3",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.7",
     "simple-git-hooks": "^2.13.1",

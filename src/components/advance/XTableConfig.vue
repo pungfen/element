@@ -1,4 +1,4 @@
-<script setup lang="tsx" generic="D">
+<script setup lang="tsx" generic="D extends DefaultRow">
 import type { Ref, VNodeChild } from 'vue'
 
 import { Rank, Setting } from '@element-plus/icons-vue'
@@ -10,7 +10,7 @@ import { inject, nextTick, ref } from 'vue'
 import type { TableColumnField } from '@/types'
 
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
-import { XButton, type XTableColumnProps } from '@/basic'
+import { type DefaultRow, XButton, type XTableColumnProps } from '@/basic'
 import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableConfigColumnsProps<D> extends Omit<XTableColumnProps<D>, 'content'> {
@@ -21,7 +21,7 @@ export interface XTableConfigEvents<D> extends XTableFlexEvents<D> {
   rowClick: [row: D]
 }
 
-export interface XTableConfigProps<D> extends Omit<XTableFlexProps<D>, 'columns' | 'data' | 'showOverflowTooltip'> {
+export interface XTableConfigProps<D extends DefaultRow> extends Omit<XTableFlexProps<D>, 'columns' | 'data' | 'showOverflowTooltip'> {
   config: Record<string, XTableConfigColumnsProps<D>>
   data?: D[]
   fields: () => {
@@ -95,7 +95,7 @@ const S = () => (
                 it => (
                   <div class="flex w-50 items-center gap-2 py-2">
                     <XButton class="cursor-grab" disabled={false} icon={Rank} size="small" text type="primary" />
-                    <ElText class="flex-1 overflow-ellipsis">{it.label}</ElText>
+                    <ElText class="flex-1 text-ellipsis">{it.label}</ElText>
                     <ElSwitch
                       disabled={false}
                       modelValue={it.visible}

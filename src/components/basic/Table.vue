@@ -54,7 +54,7 @@ export interface XTableProps<D extends DefaultRow> extends XTableConfig {
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   showSummary?: TableProps<D>['showSummary']
   size?: TableProps<D>['size']
-  spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => { colspan: number, rowspan: number } | number[] | undefined
+  spanMethod?: (scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => number[] | undefined | { colspan: number, rowspan: number }
   summaryMethod?: (scope: { columns: TableColumnCtx[], data: D[] }) => (string | VNode)[]
 }
 

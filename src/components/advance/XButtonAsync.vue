@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { useDebounceFn } from '@vueuse/core'
 import { computed, inject } from 'vue'
 

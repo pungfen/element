@@ -20,7 +20,7 @@ export interface XTabsProps {
   type?: TabsProps['type']
 }
 
-defineProps<XTabsProps>()
+const { addable, editable, tabPosition, type } = defineProps<XTabsProps>()
 defineEmits<XTabsEvents<V>>()
 
 defineSlots<{
