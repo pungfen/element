@@ -1,14 +1,29 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["package.json", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "rootDir": "./src",
+    "composite": true,
+
+    "module": "ESNext",
+
+    "moduleResolution": "bundler",
+
+    // Required in Vue projects
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+
+    "target": "ESNext",
+
+    // Recommended
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "libReplacement": false,
+    // See <https://github.com/vuejs/vue-cli/pull/5688>
+    "skipLibCheck": true,
+
+    "noUncheckedSideEffectImports": false,
+
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.vue"],
-  "exclude": ["node_modules"]
+  }
 }

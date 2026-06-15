@@ -1,4 +1,4 @@
-<script setup lang="tsx" generic="U, PT, QR, D">
+<script setup lang="tsx" generic="U, PT, QR, D extends DefaultRow">
 import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties, Ref, VNodeChild } from 'vue'
 
@@ -7,7 +7,7 @@ import { useDebounceFn } from '@vueuse/core'
 import type { Paging } from '@/types'
 
 import { XTableFlex, type XTableFlexEvents, type XTableFlexProps } from '@/advance'
-import { XPagination, type XTableColumnProps } from '@/basic'
+import { type DefaultRow, XPagination, type XTableColumnProps } from '@/basic'
 
 export interface XTableRequestColumnsProps<D> extends XTableColumnProps<D> {
   content?: (scope: { index: number, row: D }) => VNodeChild
@@ -17,7 +17,7 @@ export interface XTableRequestEvents<PT, QR, D> extends XTableFlexEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XTableRequestProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'columns' | 'data'> {
+export interface XTableRequestProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableFlexProps<D>, 'columns' | 'data'> {
   cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
   cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   columns: XTableRequestColumnsProps<D>[]

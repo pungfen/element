@@ -1,4 +1,4 @@
-<script setup lang="tsx" generic="U, PT, QR, D">
+<script setup lang="tsx" generic="U, PT, QR, D extends DefaultRow">
 import type { Ref, VNodeChild } from 'vue'
 
 import { Rank, Setting } from '@element-plus/icons-vue'
@@ -10,7 +10,7 @@ import { computed, inject, nextTick, ref } from 'vue'
 import type { Paging, TableColumnField } from '@/types'
 
 import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
-import { XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
+import { type DefaultRow, XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
 import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableRequestColumnsProps<D>, 'content'> {
@@ -22,7 +22,7 @@ export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XTableRequestConfigProps<U, PT, QR, D> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
+export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   fields: () => {
     data: Ref<TableColumnField[]>

@@ -51,6 +51,7 @@ defineExpose({ clearValidate, data, resetFields, validate })
       labelSuffix,
       size
     }"
+    @submit.prevent
   >
     <Content />
   </ElForm>

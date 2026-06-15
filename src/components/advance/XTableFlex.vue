@@ -1,26 +1,17 @@
-<script setup lang="tsx" generic="D">
+<script setup lang="tsx" generic="D extends DefaultRow">
 import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties } from 'vue'
 
 import { useElementSize } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 
-import { XTable, type XTableEvents, type XTableProps } from '@/basic'
+import { type DefaultRow, XTable, type XTableEvents, type XTableProps } from '@/basic'
 
 export type XTableFlexEvents<D> = XTableEvents<D>
 
-export interface XTableFlexProps<D> extends XTableProps<D> {
-  cellClassName?:
-    | ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string)
-    | string
-  cellStyle?:
-    | ((scope: {
-      column: TableColumnCtx
-      columnIndex: number
-      row: D
-      rowIndex: number
-    }) => CSSProperties)
-    | CSSProperties
+export interface XTableFlexProps<D extends DefaultRow> extends XTableProps<D> {
+  cellClassName?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => string) | string
+  cellStyle?: ((scope: { column: TableColumnCtx, columnIndex: number, row: D, rowIndex: number }) => CSSProperties) | CSSProperties
   rowClassName?: ((scope: { row: D, rowIndex: number }) => string) | string
   rowStyle?: ((scope: { row: D, rowIndex: number }) => CSSProperties) | CSSProperties
 }
@@ -49,10 +40,7 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    ref="container"
-    class="flex-1 overflow-hidden"
-  >
+  <div ref="container" class="flex-1 overflow-hidden">
     <XTable
       ref="table"
       v-bind="{ ...props }"
@@ -60,9 +48,7 @@ defineExpose({
       @row-click="(row: D) => $emit('rowClick', row)"
       @row-dblclick="(row: D) => $emit('rowDblclick', row)"
       @selection-change="(rows: D[]) => $emit('selectionChange', rows)"
-      @header-dragend="
-        (newWidth, oldWidth, column) => $emit('headerDragend', newWidth, oldWidth, column)
-      "
+      @header-dragend="(newWidth, oldWidth, column) => $emit('headerDragend', newWidth, oldWidth, column)"
     />
   </div>
 </template>

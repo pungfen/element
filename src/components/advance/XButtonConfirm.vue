@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import { ElPopconfirm, useLocale } from 'element-plus'
 import { computed, inject } from 'vue'
 

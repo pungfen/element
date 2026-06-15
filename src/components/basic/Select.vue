@@ -186,6 +186,7 @@ const XOption: FunctionalComponent<XSelectOptionProps<V>> = props => (
   >
     <XOption
       v-for="option of localOptions"
+      :key="option.key"
       :label="option.label"
       :value="option.value"
       :disabled="option.disabled"
