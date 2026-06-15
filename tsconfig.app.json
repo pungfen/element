@@ -22,6 +22,8 @@
 
     "noUncheckedSideEffectImports": false,
 
+    "rootDir": "./src",
+
     "paths": {
       "@/*": ["./src/*"]
     },
