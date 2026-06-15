@@ -10,28 +10,29 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
         with:
           registry-url: https://registry.npmjs.org/
           node-version: lts/*
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install
 
-      - run: npm run lint
+      - run: pnpm lint
 
-      - run: npm run typecheck
+      - run: pnpm typecheck
 
-      - run: npx vitest run
-
-      - run: npm run build
+      - run: pnpm build
 
       # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
       - name: Publish to npm
