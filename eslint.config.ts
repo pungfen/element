@@ -1,4 +1,5 @@
 import stylistic from '@stylistic/eslint-plugin'
+import pluginVitest from '@vitest/eslint-plugin'
 import perfectionist from 'eslint-plugin-perfectionist'
 import vue from 'eslint-plugin-vue'
 import { defineConfig } from 'eslint/config'
@@ -101,4 +102,9 @@ export default defineConfig(
   vueTsConfig,
   stylistic.configs.recommended,
   perfectionist.configs['recommended-natural'],
+
+  {
+    files: ['test/**/*'],
+    ...pluginVitest.configs.recommended,
+  },
 )

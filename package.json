@@ -65,6 +65,7 @@
     "dev": "pnpm -C play dev",
     "build": "vite build",
     "build:dev": "vite build --mode staging",
+    "test": "vitest",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
