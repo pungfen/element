@@ -17,8 +17,8 @@ export default defineConfig({
     Vue(),
     vueJsx(),
     Tailwindcss(),
-    AutoImport({ dirs: ['./src'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver({ importStyle: false }), XElement({ advance: true })] }),
-    Components({ resolvers: [ElementPlusResolver({ importStyle: false }), XElement({ advance: true })] }),
+    AutoImport({ dirs: ['./src'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver(), XElement({ advance: true })] }),
+    Components({ resolvers: [ElementPlusResolver(), XElement({ advance: true })] }),
     VueDevTools(),
   ],
   resolve: {

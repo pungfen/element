@@ -34,22 +34,22 @@
     "./advance": {
       "types": "./dist/advance.d.ts",
       "import": "./dist/advance.js",
-      "require": "./dist/advance.js"
+      "require": "./dist/advance.cjs"
     },
     "./basic": {
       "types": "./dist/basic.d.ts",
       "import": "./dist/basic.js",
-      "require": "./dist/basic.js"
+      "require": "./dist/basic.cjs"
     },
     "./locales": {
       "types": "./dist/locales.d.ts",
       "import": "./dist/locales.js",
-      "require": "./dist/locales.js"
+      "require": "./dist/locales.cjs"
     },
     "./resolver": {
       "types": "./dist/resolver.d.ts",
       "import": "./dist/resolver.js",
-      "require": "./dist/resolver.js"
+      "require": "./dist/resolver.cjs"
     },
     "./style.css": {
       "import": "./dist/style.css",
