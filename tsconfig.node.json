@@ -7,7 +7,7 @@
     "moduleResolution": "bundler",
     "strict": true,
 
-    "types": ["node"]
+    "types": []
   },
-  "include": ["eslint.config.*", "vite.config.ts"]
+  "include": ["eslint.config.*", "vite.config.ts", "vitest.config.ts"]
 }

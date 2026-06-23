@@ -104,7 +104,7 @@ export default defineConfig(
   perfectionist.configs['recommended-natural'],
 
   {
-    files: ['test/**/*'],
+    files: ['__tests__/**/*'],
     ...pluginVitest.configs.recommended,
   },
 )
