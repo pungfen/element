@@ -48,15 +48,14 @@ const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
   execute()
 })
-const Content = () =>
-  content?.({
-    data: data.value,
-    isFetching: isFetching.value,
-    paging: paging.value,
-    path: path.value,
-    query: query.value,
-    search,
-  })
+const Content = () => content?.({
+  data: data.value,
+  isFetching: isFetching.value,
+  paging: paging.value,
+  path: path.value,
+  query: query.value,
+  search,
+})
 
 defineExpose({ data, execute, isFetching, paging, path, query, search, url })
 </script>

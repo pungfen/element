@@ -17,7 +17,6 @@ export interface XCascaderOptionProps<D, V> {
 export interface XCascaderProps<D, V> {
   clearable?: CascaderComponentProps['clearable']
   data?: D[]
-
   disabled?: CascaderComponentProps['disabled']
   factory?: (option: D, level: number) => XCascaderOptionProps<D, V>
   filterable?: CascaderComponentProps['filterable']
@@ -37,9 +36,7 @@ const options = computed(() => (data ?? []) as CascaderOption[])
 
 const localModel = computed({
   get: () => model.value as CascaderNodeValue,
-  set: (value) => {
-    model.value = value as MV
-  },
+  set: value => model.value = value as MV,
 })
 
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)

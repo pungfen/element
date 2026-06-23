@@ -28,11 +28,7 @@ export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
   }
 }
 
-const {
-  disabled = undefined,
-  props,
-  request,
-} = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
+const { disabled = undefined, props, request } = defineProps<XCascaderRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XCascaderRequestEvents<PT, QR, V>>()
 
