@@ -24,13 +24,10 @@ export default defineConfig(({ mode }) => ({
     },
     sourcemap: mode === 'staging',
   },
-  plugins: [Vue(), VueJsx(), Dts({ tsconfigPath: './tsconfig.app.json' }), Tailwindcss()],
+  plugins: [Vue(), VueJsx(), Dts({ tsconfigPath: './tsconfig.src.json' }), Tailwindcss()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-  },
-  test: {
-    environment: 'jsdom',
   },
 }))

@@ -32,9 +32,6 @@ export const provideElementConfig = (config: MaybeRef<ElementConfig>) => {
 }
 
 export const useElementConfig = () => {
-  const config = getCurrentInstance()
-    ? inject(X_ELEMENT_CONFIG, defaultElementConfig)
-    : defaultElementConfig
-
+  const config = getCurrentInstance() ? inject(X_ELEMENT_CONFIG, defaultElementConfig) : defaultElementConfig
   return { config }
 }

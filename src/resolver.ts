@@ -39,19 +39,19 @@ const XAdvanceResolve: Record<string, string[]> = {
   XButtonConfirm: [...XBasicResolve.XButton],
   XCascaderRequest: [...XBasicResolve.XCascader],
   XFormFlex: [...XBasicResolve.XForm],
-  XFormRequestNext: [...XBasicResolve.XForm],
+  XFormRequest: [...XBasicResolve.XForm],
   XRequest: [],
   XSelectRequest: [...XBasicResolve.XSelect],
   XTableConfig: [...XBasicResolve.XSelect],
   XTableFlex: [...XBasicResolve.XTable],
-  XTableRequestConfigNext: [
+  XTableRequest: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
+  XTableRequestConfig: [
     ...XBasicResolve.XTable,
     ...XBasicResolve.XPagination,
     ...XBasicResolve.XForm,
     ...XBasicResolve.XFormItem,
   ],
-  XTableRequestNext: [...XBasicResolve.XTable, ...XBasicResolve.XPagination],
-  XUploadOssNext: [...XBasicResolve.XUpload],
+  XUploadOss: [...XBasicResolve.XUpload],
 }
 
 export default (options?: { advance?: boolean }): ComponentResolver[] => {

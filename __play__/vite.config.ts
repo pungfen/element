@@ -1,4 +1,4 @@
-import XElement from '@pungfe/element/resolver'
+import Element from '@pungfe/element/resolver'
 import Tailwindcss from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -17,8 +17,8 @@ export default defineConfig({
     Vue(),
     vueJsx(),
     Tailwindcss(),
-    AutoImport({ dirs: ['./src'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver(), XElement({ advance: true })] }),
-    Components({ resolvers: [ElementPlusResolver(), XElement({ advance: true })] }),
+    AutoImport({ dirs: ['./src', './src/composables'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver(), Element({ advance: true })] }),
+    Components({ resolvers: [ElementPlusResolver(), Element({ advance: true })] }),
     VueDevTools(),
   ],
   resolve: {

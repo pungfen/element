@@ -17,8 +17,7 @@ export const X_ELEMENT_IN_TABS: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TAB
 export const X_ELEMENT_IN_TAB_PANE: InjectionKey<boolean> = Symbol('X_ELEMENT_IN_TAB_PANE')
 
 export const X_FORM_VALIDATIONS: InjectionKey<XFormItemValidation[]> = Symbol('X_FORM_VALIDATIONS')
-export const X_FORM_ITEM_VALIDATION: InjectionKey<XFormItemValidation>
-  = Symbol('X_FORM_ITEM_VALIDATION')
+export const X_FORM_ITEM_VALIDATION: InjectionKey<XFormItemValidation> = Symbol('X_FORM_ITEM_VALIDATION')
 
 export const X_TAB_PANE_NAME: InjectionKey<number | string | undefined> = Symbol('X_TAB_PANE')
 

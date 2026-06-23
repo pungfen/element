@@ -21,12 +21,7 @@ export interface XSelectRequestProps<U, PT, QR, D, V> extends Omit<XSelectProps<
   supplement?: (lacks: V[], url: U) => D[] | PromiseLike<D[]>
 }
 
-const {
-  disabled = undefined,
-  multiple = undefined,
-  request,
-  supplement,
-} = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
+const { disabled = undefined, multiple = undefined, request, supplement } = defineProps<XSelectRequestProps<U, PT, QR, D, V>>()
 
 const emit = defineEmits<XSelectRequestEvents<PT, QR, V>>()
 
@@ -34,9 +29,15 @@ const model = defineModel<MV>()
 
 const { data, execute, isFetching, path, query, url } = request()
 
+let executeCounter = 0
+let lastInput = ''
 const search = useDebounceFn(async (input?: string) => {
-  emit('prepare', { path: path.value, query: query.value }, input)
-  execute()
+  if (!executeCounter || input !== lastInput) {
+    emit('prepare', { path: path.value, query: query.value }, input)
+    lastInput = input ?? ''
+    executeCounter += 1
+    execute()
+  }
 })
 const _supplement = supplement && ((lacks: V[]) => supplement(lacks, url))
 

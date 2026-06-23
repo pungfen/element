@@ -44,14 +44,7 @@ export interface XSelectProps<D, V> {
   supplement?: (lacks: V[]) => D[] | PromiseLike<D[]>
 }
 
-const {
-  allowCreate,
-  data,
-  disabled = undefined,
-  factory,
-  identify,
-  supplement,
-} = defineProps<XSelectProps<D, V>>()
+const { allowCreate, data, disabled = undefined, factory, identify, supplement } = defineProps<XSelectProps<D, V>>()
 
 const emit = defineEmits<XSelectEvents<V>>()
 
@@ -77,8 +70,7 @@ const forward = (value: V) => {
     return value as number | string
   }
 }
-const backward = (key: number | string) =>
-  options.value.map(item => item.value).find(item => forward(item) === key)
+const backward = (key: number | string) => options.value.map(item => item.value).find(item => forward(item) === key)
 
 let no = 0
 watch(
@@ -103,26 +95,19 @@ watch(
   { immediate: true },
 )
 
-const localOptions = computed(() =>
-  options.value.map((item) => {
-    const key = forward(item.value) as V
-    return { disabled: item.disabled, key, label: item.label, render: item.render, value: key }
-  }),
-)
+const localOptions = computed(() => options.value.map((item) => {
+  const key = forward(item.value) as V
+  return { disabled: item.disabled, key, label: item.label, render: item.render, value: key }
+}))
 
 const localModel = computed({
-  get: () =>
-    model.value
-    && (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
+  get: () => model.value && (Array.isArray(model.value) ? model.value.map(forward) : forward(model.value as V)),
   set: (value) => {
     if (Array.isArray(value)) {
       model.value = value.map(item => backward(item)!) as MV
     }
     else {
-      model.value
-        = value === undefined
-          ? undefined
-          : ((backward(value) ?? (allowCreate ? value : undefined)) as MV)
+      model.value = value === undefined ? undefined : ((backward(value) ?? (allowCreate ? value : undefined)) as MV)
     }
   },
 })
