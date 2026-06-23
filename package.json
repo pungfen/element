@@ -1,6 +1,6 @@
 {
   "name": "@pungfe/element",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "Element Plus Components",
   "keywords": [
     "Element",
@@ -70,7 +70,7 @@
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
     "release": "pnpm build && bumpp",
-    "typecheck": "vue-tsc -p tsconfig.app.json --noEmit"
+    "typecheck": "vue-tsc -p tsconfig.src.json --noEmit"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
