@@ -4,6 +4,8 @@ import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { fileURLToPath, URL } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
@@ -18,7 +20,8 @@ export default defineConfig({
     vueJsx(),
     Tailwindcss(),
     AutoImport({ dirs: ['./src', './src/composables'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver(), Element({ advance: true })] }),
-    Components({ resolvers: [ElementPlusResolver(), Element({ advance: true })] }),
+    Components({ resolvers: [IconsResolver({ enabledCollections: ['ep'] }), ElementPlusResolver(), Element({ advance: true })] }),
+    Icons({ autoInstall: true }),
     VueDevTools(),
   ],
   resolve: {

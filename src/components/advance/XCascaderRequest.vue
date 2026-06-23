@@ -11,10 +11,7 @@ export interface XCascaderRequestEvents<PT, QR, V> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<
-  XCascaderProps<D, V>,
-  'data' | 'factory'
-> {
+export interface XCascaderRequestProps<U, PT, QR, D, V> extends Omit<XCascaderProps<D, V>, 'data' | 'factory'> {
   clearable?: CascaderComponentProps['clearable']
   disabled?: CascaderComponentProps['disabled']
   filterable?: CascaderComponentProps['filterable']
@@ -42,11 +39,9 @@ const search = useDebounceFn(async () => {
 })
 
 defineExpose({ data, execute, path, query, search, url })
+
 </script>
 
 <template>
-  <XCascader
-    v-model="model"
-    v-bind="{ clearable, disabled, filterable, data, props }"
-  />
+  <XCascader v-model="model" v-bind="{ clearable, disabled, filterable, data, props }" />
 </template>

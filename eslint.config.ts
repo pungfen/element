@@ -41,7 +41,7 @@ const vueTsConfig = defineConfig(
     },
     name: 'vue/typescript/setup',
     rules: {
-      'vue/block-lang': ['error', { script: { allowNoLang: false, lang: ['tsx'] } }],
+      'vue/block-lang': ['error', { script: { allowNoLang: false, lang: ['ts', 'tsx'] } }],
     },
   },
   {
@@ -106,5 +106,14 @@ export default defineConfig(
   {
     files: ['__tests__/**/*'],
     ...pluginVitest.configs.recommended,
+  },
+
+  {
+    rules: {
+      // 以下vue规则为个人编码习惯，不代表vue/ts最佳实践
+      'vue/define-macros-order': ['error', { defineExposeLast: false, order: ['defineProps', 'defineSlots', 'defineEmits', 'defineModel'] }],
+      'vue/padding-line-between-blocks': ['error', 'always'],
+      'vue/padding-line-between-tags': ['error', [{ blankLine: 'always', next: '*', prev: '*' }]],
+    },
   },
 )

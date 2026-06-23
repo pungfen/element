@@ -21,25 +21,11 @@ export interface XInputProps {
 }
 
 const { disabled = undefined } = defineProps<XInputProps>()
-const emit = defineEmits<{
-  blur: [e: FocusEvent]
-  change: [e: MV]
-  focus: [e: FocusEvent]
-}>()
-defineSlots<{
-  append: () => VNode
-  prefix: () => VNode
-  prepend: () => VNode
-  suffix: () => VNode
-}>()
+defineSlots<{ append: () => VNode, prefix: () => VNode, prepend: () => VNode, suffix: () => VNode }>()
+const emit = defineEmits<{ blur: [e: FocusEvent], change: [e: MV], focus: [e: FocusEvent] }>()
 const model = defineModel<MV>()
-
-// const inTable = inject(X_ELEMENT_IN_TABLE, false)
-// const inTableColumn = inject(X_ELEMENT_IN_TABLE_COLUMN, false)
-
 const locale = inject(X_LOCALE_CONFIG)
 const { t } = useLocale(locale)
-
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 
 if (formItemValidation?.required) {
@@ -87,18 +73,21 @@ const change = (value: string) => {
     >
       <slot name="append" />
     </template>
+
     <template
       v-if="'prepend' in $slots"
       #prepend
     >
       <slot name="prepend" />
     </template>
+
     <template
       v-if="'prefix' in $slots"
       #prefix
     >
       <slot name="prefix" />
     </template>
+
     <template
       v-if="'suffix' in $slots"
       #suffix

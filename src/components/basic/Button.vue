@@ -25,6 +25,7 @@ const { disabled = undefined, link = undefined } = defineProps<XButtonProps>()
 const emit = defineEmits<{
   click: [e: MouseEvent]
 }>()
+
 </script>
 
 <template>

@@ -27,10 +27,9 @@ export interface XCascaderProps<D, V> {
 
 const { data, disabled = undefined } = defineProps<XCascaderProps<D, V>>()
 
+const model = defineModel<MV>()
 const locale = inject(X_LOCALE_CONFIG)
 const { t } = useLocale(locale)
-
-const model = defineModel<MV>()
 
 const options = computed(() => (data ?? []) as CascaderOption[])
 
@@ -61,7 +60,7 @@ if (formItemValidation?.required) {
       size,
       options,
       props,
-      placeholder: placeholder ?? t('el.select.placeholder')
+      placeholder: placeholder ?? t('el.select.placeholder'),
     }"
   />
 </template>
