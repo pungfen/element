@@ -1,8 +1,8 @@
 {
   "include": ["package.json", "src/**/*", "src/**/*.vue"],
+
   "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo/app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/src.tsbuildinfo",
 
     "module": "ESNext",
 
@@ -23,7 +23,7 @@
 
     "noUncheckedSideEffectImports": false,
 
-    "rootDir": "./src",
+    "types": [],
 
     "paths": {
       "@/*": ["./src/*"]

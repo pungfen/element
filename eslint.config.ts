@@ -6,6 +6,8 @@ import { defineConfig } from 'eslint/config'
 import ts from 'typescript-eslint'
 import vueParser from 'vue-eslint-parser'
 
+// eslint-plugin-vitest
+
 const vueTsConfig = defineConfig(
   // vue/base/setup
   // vue/base/setup-for-vue

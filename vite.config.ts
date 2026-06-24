@@ -1,9 +1,11 @@
+/// <reference types="vitest/config" />
+
 import Tailwindcss from '@tailwindcss/vite'
 import VueJsx from '@vitejs/plugin-vue'
 import Vue from '@vitejs/plugin-vue-jsx'
 import { fileURLToPath, URL } from 'node:url'
+import Dts from 'unplugin-dts/vite'
 import { defineConfig } from 'vite'
-import Dts from 'vite-plugin-dts'
 
 export default defineConfig(({ mode }) => ({
   build: {
@@ -24,10 +26,11 @@ export default defineConfig(({ mode }) => ({
     },
     sourcemap: mode === 'staging',
   },
-  plugins: [Vue(), VueJsx(), Dts({ tsconfigPath: './tsconfig.src.json' }), Tailwindcss()],
+  plugins: [Vue(), VueJsx(), Dts({ entryRoot: 'src', tsconfigPath: './tsconfig.src.json' }), Tailwindcss()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  test: { environment: 'happy-dom' },
 }))

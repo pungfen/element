@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/node.tsbuildinfo",
 
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
 
-    "types": []
+    "types": [],
+
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
-  "include": ["eslint.config.*", "vite.config.ts", "vitest.config.ts"]
+  "include": ["eslint.config.ts", "vite.config.ts"]
 }

@@ -1,15 +1,7 @@
 {
   "extends": "./tsconfig.src.json",
-  "include": ["__tests__"],
+  "include": ["__tests__/**/*"],
   "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": ".tsbuildinfo/vitest.tsbuildinfo",
-
-    "types": [],
-
-    "rootDir": "__tests__"
-  },
-  "references": [
-    { "path": "tsconfig.src.json" }
-  ]
+    "tsBuildInfoFile": "./node_modules/.tmp/vitest.tsbuildinfo",
+  }
 }
