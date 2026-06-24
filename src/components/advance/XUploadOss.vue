@@ -22,9 +22,9 @@ defineSlots<{
   tip: () => VNodeChild
 }>()
 
-const config = inject(X_ELEMENT_CONFIG)
-
 const model = defineModel<MV>()
+
+const config = inject(X_ELEMENT_CONFIG)
 
 const oss = computed(() => (typeof config?.oss === 'function' ? config.oss() : config?.oss))
 

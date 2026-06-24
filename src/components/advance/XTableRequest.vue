@@ -101,13 +101,16 @@ const F = () => footer?.({ query: query.value })
     class="flex flex-1 flex-col gap-2 overflow-hidden"
   >
     <H />
+
     <T />
+
     <div
       v-if="pagination"
       class="flex justify-end"
     >
       <P />
     </div>
+
     <F />
   </div>
 </template>

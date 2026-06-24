@@ -50,7 +50,9 @@ const visible = defineModel<boolean>()
     >
       <slot name="header" />
     </template>
+
     <slot />
+
     <template
       v-if="'footer' in $slots"
       #footer

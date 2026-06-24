@@ -28,7 +28,19 @@ const Content = () => (
         />
         <XFormItem content={() => (
           <ElSpace>
-            <XButton onClick={() => form.value?.validate()} type="primary">表单校验</XButton>
+            <XButton
+              onClick={() => {
+                if (form.value?.validate()) {
+                  ElMessage({ message: '校验通过', type: 'success' })
+                }
+                else {
+                  ElMessage({ message: '校验失败', type: 'error' })
+                }
+              }}
+              type="primary"
+            >
+              表单校验
+            </XButton>
             <XButton onClick={() => form.value?.validate()} type="primary">清除校验</XButton>
             <XButton onClick={() => form.value?.validate()} type="primary">重置表单</XButton>
           </ElSpace>
@@ -37,6 +49,7 @@ const Content = () => (
       </>
     )}
     data={model.value}
+    ref={form}
   />
 )
 </script>

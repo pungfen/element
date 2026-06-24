@@ -21,12 +21,9 @@ export interface XTabsProps {
 }
 
 const { addable, editable, tabPosition, type } = defineProps<XTabsProps>()
-defineEmits<XTabsEvents<V>>()
+defineSlots<{ addIcon: () => VNodeChild, default: () => VNodeChild }>()
 
-defineSlots<{
-  addIcon: () => VNodeChild
-  default: () => VNodeChild
-}>()
+defineEmits<XTabsEvents<V>>()
 
 const model = defineModel<V>()
 provide(X_ELEMENT_IN_TABS, true)

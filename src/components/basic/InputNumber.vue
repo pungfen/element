@@ -23,14 +23,14 @@ export interface XInputNumberProps {
 
 const { disabled = undefined } = defineProps<XInputNumberProps>()
 
-const emit = defineEmits<{
-  blur: [e: FocusEvent]
-  focus: [e: FocusEvent]
-}>()
-
 defineSlots<{
   prefix: () => VNode
   suffix: () => VNode
+}>()
+
+const emit = defineEmits<{
+  blur: [e: FocusEvent]
+  focus: [e: FocusEvent]
 }>()
 
 const model = defineModel<number>()
@@ -83,6 +83,7 @@ const blur = (e: FocusEvent) => {
     >
       <slot name="prefix" />
     </template>
+
     <template
       v-if="'suffix' in $slots"
       #suffix

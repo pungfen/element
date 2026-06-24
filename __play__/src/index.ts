@@ -1,4 +1,5 @@
 import Element from '@pungfe/element'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import '@/assets/tailwind.css'
 import App from '@/app.vue'

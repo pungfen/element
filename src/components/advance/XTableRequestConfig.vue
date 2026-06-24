@@ -233,7 +233,9 @@ defineExpose({ data, isFetching, paging, path, query, reset, search, url })
     class="relative flex flex-1 flex-col gap-2 overflow-hidden"
   >
     <S />
+
     <T />
+
     <div
       v-if="pagination"
       class="flex justify-end"

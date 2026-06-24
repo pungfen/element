@@ -30,7 +30,6 @@ export interface XRequestProps<U, PT, QR, D> {
 }
 
 const { content, request } = defineProps<XRequestProps<U, PT, QR, D>>()
-const emit = defineEmits<XRequestEvents<PT, QR>>()
 defineSlots<{
   default: (scope: {
     data: D
@@ -41,7 +40,7 @@ defineSlots<{
     search: () => PromiseLike<unknown>
   }) => VNodeChild
 }>()
-
+const emit = defineEmits<XRequestEvents<PT, QR>>()
 const { data, execute, isFetching, paging, path, query, url } = request()
 
 const search = useDebounceFn(async () => {

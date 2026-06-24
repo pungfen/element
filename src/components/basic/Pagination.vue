@@ -19,15 +19,11 @@ export interface XPaginationProps {
   total?: PaginationProps['total']
 }
 
-const config = inject(X_ELEMENT_CONFIG)
 const { defaultPageSize = 20 } = defineProps<XPaginationProps>()
-
-const emit = defineEmits<{
-  currentChange: [current: number]
-  sizeChange: [size: number]
-}>()
+const emit = defineEmits<{ currentChange: [value: number], sizeChange: [value: number] }>()
 const currentPage = defineModel<number>('currentPage')
 const pageSize = defineModel<number>('pageSize')
+const config = inject(X_ELEMENT_CONFIG)
 const paginationConfig = config?.pagination
 
 const locale = inject(X_LOCALE_CONFIG)

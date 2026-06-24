@@ -31,10 +31,7 @@ export interface XFormItemValidation {
 
 const { content, label, required, validator } = defineProps<XFormItemProps>()
 
-defineSlots<{
-  default: () => VNodeChild
-  label: () => VNodeChild
-}>()
+defineSlots<{ default: () => VNodeChild, label: () => VNodeChild }>()
 
 const validations = inject(X_FORM_VALIDATIONS, undefined)
 const inTabs = inject(X_ELEMENT_IN_TABS, undefined)
@@ -89,6 +86,7 @@ const Content = () => content?.()
     <slot>
       <Content />
     </slot>
+
     <template
       v-if="'label' in $slots"
       #label

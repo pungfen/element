@@ -87,12 +87,14 @@ const preview: UploadProps['onPreview'] = (uploadFile) => {
         :index="index"
       />
     </template>
+
     <template
       v-if="'tip' in $slots"
       #tip
     >
       <slot name="tip" />
     </template>
+
     <template
       v-if="'trigger' in $slots"
       #trigger

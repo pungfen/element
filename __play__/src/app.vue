@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { en, zhCn } from '@pungfe/element/locales'
 
+const isDark = useDark()
 const language = useStorage('X_ELEMENT_LANGUAGE', 'zh-CN')
 const locale = computed(() => language.value === 'en' ? en : zhCn)
 
@@ -24,6 +25,8 @@ const time = useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss')
               :options="[{ label: '中文', value: 'zh-CN' }, { label: '英文', value: 'en' },]"
               class="w-20!"
             />
+
+            <ElSwitch v-model="isDark" />
 
             <ElText type="info">{{ time }}</ElText>
           </ElSpace>
