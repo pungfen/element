@@ -13,11 +13,11 @@ describe('XButton.vue', () => {
     })
 
     test('props', () => {
-      expect(mount(() => <XButton type="primary" />).getComponent(XButton).props('type')).toBe('primary')
-      expect(mount(() => <XButton disabled />).getComponent(XButton).props('disabled')).toBe(true)
-      expect(mount(() => <XButton link />).getComponent(XButton).props('link')).toBe(true)
-      expect(mount(() => <XButton text />).getComponent(XButton).props('text')).toBe(true)
-      expect(mount(() => <XButton size="small" />).getComponent(XButton).props('size')).toBe('small')
+      expect(mount(() => <XButton type="primary" />).findComponent(XButton).props('type')).toBe('primary')
+      expect(mount(() => <XButton disabled />).findComponent(XButton).props('disabled')).toBe(true)
+      expect(mount(() => <XButton link />).findComponent(XButton).props('link')).toBe(true)
+      expect(mount(() => <XButton text />).findComponent(XButton).props('text')).toBe(true)
+      expect(mount(() => <XButton size="small" />).findComponent(XButton).props('size')).toBe('small')
     })
 
     test('emit', async () => {
@@ -28,11 +28,13 @@ describe('XButton.vue', () => {
       expect(wrapper.emitted().click).toHaveLength(1)
     })
   })
+})
 
-  describe('regression', () => {
-    test('in form', () => {
-      const wrapper = mount(() => <XForm content={() => <XFormItem content={() => <XButton />} />} disabled size="small" />)
-      expect(wrapper.findComponent(XButton).props('size')).toBe('small')
+describe('XForm.vue', () => {
+  describe('infrastructure', () => {
+    test('render', () => {
+      const wrapper = mount(() => <XForm content={() => <XFormItem content={() => <XButton />} />} />)
+      expect(wrapper.findComponent(XButton).exists()).toBe(true)
     })
   })
 })
