@@ -19,7 +19,11 @@ export default defineConfig({
     Vue(),
     vueJsx(),
     Tailwindcss(),
-    AutoImport({ dirs: ['./src', './src/composables'], imports: ['vue', '@vueuse/core', VueRouterAutoImports], resolvers: [ElementPlusResolver(), Element({ advance: true })] }),
+    AutoImport({
+      dirs: ['./src', './src/composables'],
+      imports: ['vue', '@vueuse/core', VueRouterAutoImports, { from: 'vue-component-type-helpers', imports: ['ComponentExposed'], type: true }],
+      resolvers: [ElementPlusResolver(), Element({ advance: true })],
+    }),
     Components({ resolvers: [IconsResolver({ enabledCollections: ['ep'] }), ElementPlusResolver(), Element({ advance: true })] }),
     Icons({ autoInstall: true }),
     VueDevTools(),
