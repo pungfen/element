@@ -7,5 +7,12 @@ import App from '@/app.vue'
 const app = createApp(App)
 
 app.use(router)
-app.use(Element, { advance: true })
+app.use(Element, {
+  advance: true,
+  config: {
+    table: {
+      border: true,
+    },
+  },
+})
 app.mount('#app')

@@ -1,7 +1,12 @@
-export const useRequest = <T extends object>(url: string, method: 'delete' | 'get' | 'post' | 'put', options: { immedidate?: boolean } = {}) => {
+import type { paths } from '../../api'
+
+export const useRequest = <
+  U extends keyof paths,
+  D = ResolveArrayElement<paths[U]['response']['data']>,
+>(url: U, method: 'delete' | 'get' | 'post' | 'put', options: { data?: D, immedidate?: boolean } = {}) => {
   const { immedidate = true } = options
 
-  const data = ref<T[]>([])
+  const data = ref([] as D[])
   const path = ref()
   const query = ref()
   const isFetching = shallowRef(false)
@@ -12,12 +17,15 @@ export const useRequest = <T extends object>(url: string, method: 'delete' | 'ge
     isFetching.value = true
     error.value = null
 
-    const res = await fetch(`http://httpbin.org${url}`, { headers: { 'Content-type': 'application/json' }, method, mode: 'cors' })
+    const response = await fetch(url, { headers: { 'Content-type': 'application/json' }, method })
 
-    res.json().then(
-      ({ slideshow }) => {
-        paging.value = { itemCount: 100, pageIndex: 1, pageSize: 20 }
-        data.value = slideshow.slides.map((it: SlideDto, id: number) => ({ id, ...it }))
+    response.json().then(
+      (res) => {
+        if ('data' in res && res.data) {
+          data.value = res.data
+        }
+        // paging.value = { itemCount: 100, pageIndex: 1, pageSize: 20 }
+        // data.value = slideshow.slides.map((it: SlideDto, id: number) => ({ id, ...it }))
       },
     ).catch(
       (err: Error) => {
@@ -33,5 +41,5 @@ export const useRequest = <T extends object>(url: string, method: 'delete' | 'ge
     void execute()
   }
 
-  return { data, execute, isFetching, path, query, url }
+  return { data, execute, isFetching, paging, path, query, url }
 }

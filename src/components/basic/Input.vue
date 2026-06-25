@@ -24,7 +24,7 @@ const { disabled = undefined } = defineProps<XInputProps>()
 defineSlots<{ append: () => VNode, prefix: () => VNode, prepend: () => VNode, suffix: () => VNode }>()
 const emit = defineEmits<{ blur: [e: FocusEvent], change: [e: MV], focus: [e: FocusEvent] }>()
 const model = defineModel<MV>()
-const locale = inject(X_LOCALE_CONFIG)
+const locale = inject(X_LOCALE_CONFIG, undefined)
 const { t } = useLocale(locale)
 const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 

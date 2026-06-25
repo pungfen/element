@@ -17,9 +17,11 @@
   "devDependencies": {
     "@iconify-json/ep": "^1.2.4",
     "@tailwindcss/vite": "catalog:",
+    "@types/mockjs": "^1.0.10",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
     "@vue/tsconfig": "^0.9.1",
+    "mockjs": "^1.1.0",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "unplugin-auto-import": "^21.0.0",

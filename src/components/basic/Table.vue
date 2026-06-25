@@ -3,10 +3,10 @@ import type { TableColumnCtx, TableProps } from 'element-plus'
 import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
 import { ElTable, ElTableColumn } from 'element-plus'
-import { defineComponent, inject, provide, useTemplateRef } from 'vue'
+import { computed, defineComponent, provide, useTemplateRef } from 'vue'
 
-import { X_ELEMENT_CONFIG, X_ELEMENT_IN_TABLE } from '@/constants'
-
+import { useXConfig } from '@/composables/useXConfig'
+import { X_ELEMENT_IN_TABLE } from '@/constants'
 export type DefaultRow = Record<PropertyKey, unknown>
 export interface XTableColumnProps<D> {
   align?: string
@@ -60,8 +60,6 @@ export interface XTableProps<D extends DefaultRow> extends XTableConfig {
 
 const { align, border = undefined, columns, data, fit = undefined, headerAlign, showOverflowTooltip = undefined } = defineProps<XTableProps<D>>()
 const emit = defineEmits<XTableEvents<D>>()
-const config = inject(X_ELEMENT_CONFIG)
-const tableConfig = config?.table
 
 const table = useTemplateRef('table')
 
@@ -100,6 +98,13 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
     </ElTableColumn>
   )
 }, { props: ['content', 'fixed', 'header', 'label', 'prop', 'selectable', 'type', 'width'] })
+
+const config = useXConfig('table')
+const _align = computed(() => align ?? config.value?.align)
+const _border = computed(() => border ?? config.value?.border)
+const _showOverflowTooltip = computed(() => showOverflowTooltip ?? config.value?.showOverflowTooltip)
+const _fit = computed(() => fit ?? config.value?.fit)
+const _headerAlign = computed(() => headerAlign ?? config.value?.headerAlign)
 </script>
 
 <template>
@@ -117,22 +122,20 @@ const XTableColumn = defineComponent((props: XTableColumnProps<D>) => {
       summaryMethod,
       size,
       rowKey,
-      showOverflowTooltip: showOverflowTooltip ?? tableConfig?.showOverflowTooltip,
-      fit: fit ?? tableConfig?.fit,
-      border: border ?? tableConfig?.border
+      showOverflowTooltip: _showOverflowTooltip,
+      fit: _fit,
+      border: _border
     }"
     @row-click="(row: D) => emit('rowClick', row)"
     @row-dblclick="(row: D) => emit('rowDblclick', row)"
     @selection-change="(rows: D[]) => emit('selectionChange', rows)"
-    @header-dragend="
-      (newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)
-    "
+    @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
   >
     <XTableColumn
       v-for="column of columns"
       v-bind="{
-        align: align ?? tableConfig?.align,
-        headerAlign: headerAlign ?? tableConfig?.headerAlign,
+        align: _align,
+        headerAlign: _headerAlign,
         ...column
       }"
     />

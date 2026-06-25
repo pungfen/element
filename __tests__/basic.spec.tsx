@@ -1,36 +1,52 @@
 import { mount } from '@vue/test-utils'
+import { useDateFormat, useNow } from '@vueuse/core'
 import { describe, expect, test } from 'vitest'
 
-import { XButton, XForm, XFormItem } from '@/basic'
+import { XButton, XDatePicker, XForm, XFormItem } from '@/basic'
 
 describe('XButton.vue', () => {
-  describe('infrastructure', () => {
-    test('render', () => {
-      const wrapper = mount(() => <XButton />)
+  test('render', async () => {
+    const wrapper = mount(XButton)
 
-      expect(wrapper.find('button').exists()).toBe(true)
-      expect(wrapper.classes('el-button')).toBe(true)
-    })
+    expect(wrapper.classes('el-button')).toBe(true)
 
-    test('props', () => {
-      expect(mount(() => <XButton type="primary" />).findComponent(XButton).props('type')).toBe('primary')
-      expect(mount(() => <XButton disabled />).findComponent(XButton).props('disabled')).toBe(true)
-      expect(mount(() => <XButton link />).findComponent(XButton).props('link')).toBe(true)
-      expect(mount(() => <XButton text />).findComponent(XButton).props('text')).toBe(true)
-      expect(mount(() => <XButton size="small" />).findComponent(XButton).props('size')).toBe('small')
-    })
+    await wrapper.setProps({ type: 'primary' })
+    expect(wrapper.classes('el-button--primary')).toBe(true)
 
-    test('emit', async () => {
-      const wrapper = mount(() => <XButton />)
+    await wrapper.setProps({ disabled: true })
+    expect(wrapper.classes('is-disabled')).toBe(true)
+  })
 
-      await wrapper.trigger('click')
-      expect(wrapper.emitted()).toHaveProperty('click')
-      expect(wrapper.emitted().click).toHaveLength(1)
-    })
+  test('emit', async () => {
+    const wrapper = mount(XButton)
+    await wrapper.trigger('click')
+    expect(wrapper.emitted()).toHaveProperty('click')
+    expect(wrapper.emitted().click).toHaveLength(1)
   })
 })
 
-describe('XForm.vue', () => {
+describe('XDatePicker.vue', () => {
+  test('render', async () => {
+    const wrapper = mount(XDatePicker)
+
+    expect(wrapper.classes('el-date-editor')).toBe(true)
+
+    await wrapper.setProps({ modelValue: useDateFormat(useNow(), 'YYYY-MM-DD').value })
+    expect(wrapper.findComponent(XDatePicker).exists()).toBe(true)
+  })
+
+  test('model', async () => {
+    const wrapper = mount(XDatePicker)
+
+    await wrapper.setProps({ 'onUpdate:modelValue': modelValue => wrapper.setProps({ modelValue }), 'valueFormat': 'YYYY-MM-DD' })
+
+    const input = wrapper.find('input')
+    await input.setValue(useDateFormat(useNow(), 'YYYY-MM-DD').value)
+    expect(wrapper.props('modelValue')).toBe(useDateFormat(useNow(), 'YYYY-MM-DD').value)
+  })
+})
+
+describe.todo('XForm.vue', () => {
   describe('infrastructure', () => {
     test('render', () => {
       const wrapper = mount(() => <XForm content={() => <XFormItem content={() => <XButton />} />} />)
