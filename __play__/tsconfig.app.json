@@ -7,7 +7,7 @@
     },
     "types": ["vite/client", "vue-router/auto"]
   },
-  "include": ["auto-imports.d.ts", "components.d.ts", "typed-router.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["api.d.ts", "auto-imports.d.ts", "components.d.ts", "typed-router.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": ["node_modules"],
   "vueCompilerOptions": {
     "plugins": [
