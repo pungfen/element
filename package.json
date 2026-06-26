@@ -70,7 +70,7 @@
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
     "changelog": "conventional-changelog -p angular",
-    "release": "pnpm build && bumpp",
+    "release": "pnpm build && bumpp --execute=\"pnpm changelog\"",
     "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
     "commit": "cz"
   },
