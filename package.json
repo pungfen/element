@@ -81,6 +81,8 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.1.0",
+    "@commitlint/config-conventional": "^21.1.0",
     "@eslint/json": "^2.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/vite": "catalog:",
@@ -92,7 +94,6 @@
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
-    "conventional-changelog": "^7.2.1",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
@@ -118,7 +119,8 @@
     "vue": "catalog:"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpx lint-staged"
+    "pre-commit": "pnpx lint-staged",
+    "commit-msg": "pnpx commitlint --edit \"$1\""
   },
   "lint-staged": {
     "*": "eslint --fix"
