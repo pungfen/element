@@ -40,6 +40,7 @@ export interface XTableEvents<D> {
   headerDragend: [newWidth: number, oldWidth: number, column: TableColumnCtx]
   rowClick: [row: D]
   rowDblclick: [row: D]
+  scroll: [data: { scrollLeft: number, scrollTop: number }]
   selectionChange: [rows: D[]]
 }
 
@@ -126,6 +127,7 @@ const _headerAlign = computed(() => headerAlign ?? config.value?.headerAlign)
       fit: _fit,
       border: _border
     }"
+    @scroll="({ scrollLeft, scrollTop }) => emit('scroll', { scrollLeft, scrollTop })"
     @row-click="(row: D) => emit('rowClick', row)"
     @row-dblclick="(row: D) => emit('rowDblclick', row)"
     @selection-change="(rows: D[]) => emit('selectionChange', rows)"
