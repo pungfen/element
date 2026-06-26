@@ -119,12 +119,13 @@ const Q = () => (
             {{
               default: () => (
                 <ElSpace>
-                  <XButtonAsync action={() => {
-                    const _q = query.value as { pageIndex?: number, pageSize?: number }
-                    _q.pageIndex = undefined
-                    _q.pageSize = undefined
-                    search()
-                  }}
+                  <XButtonAsync
+                    action={() => {
+                      const _q = query.value as { pageIndex?: number, pageSize?: number }
+                      _q.pageIndex = undefined
+                      _q.pageSize = undefined
+                      search()
+                    }}
                   >
                     {t('el.common.query')}
                   </XButtonAsync>

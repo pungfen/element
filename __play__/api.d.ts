@@ -10,7 +10,7 @@ export interface dtos {
     comment?: string
     id?: number
     name?: string
-    preparedDatetime: string
+    preparedDatetime?: string
     sex?: LookupDto
   }
 }

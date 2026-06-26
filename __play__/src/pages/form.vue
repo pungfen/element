@@ -1,12 +1,6 @@
 <script setup lang="tsx">
-interface User {
-  age: number
-  name?: string
-  sex?: LookupDto
-}
-
 const form = ref<ComponentExposed<typeof XForm> | null>()
-const model = ref<User>({ age: 0 })
+const model = ref<dtos['User']>({ age: 0 })
 
 const Content = () => (
   <XForm
@@ -46,9 +40,21 @@ const Content = () => (
           </ElSpace>
         )}
         />
+        <XFormItem content={() => (
+          <ElSpace>
+            <XButtonAsync
+              action={() => ElMessage.info('点击')}
+              type="primary"
+            >
+              XButtonAsync
+            </XButtonAsync>
+          </ElSpace>
+        )}
+        />
       </>
     )}
     data={model.value}
+    disabled
     ref={form}
   />
 )

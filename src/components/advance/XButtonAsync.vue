@@ -9,7 +9,7 @@ export interface XButtonAsyncProps extends XButtonProps {
   action?: () => PromiseLike<unknown> | unknown
 }
 
-const { action, link = undefined, type = 'primary' } = defineProps<XButtonAsyncProps>()
+const { action, disabled = undefined, link = undefined, type = 'primary' } = defineProps<XButtonAsyncProps>()
 
 const click = useDebounceFn(async () => {
   try {

@@ -14,8 +14,6 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
 import VueRouter from 'vue-router/vite'
 
-Mock.setup({ timeout: '2000' })
-
 export default defineConfig({
   plugins: [
     VueRouter(),
