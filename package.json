@@ -69,8 +69,10 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
+    "changelog": "conventional-changelog -p angular",
     "release": "pnpm build && bumpp",
-    "typecheck": "vue-tsc -p tsconfig.src.json --noEmit"
+    "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
+    "commit": "cz"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -83,6 +85,7 @@
   "devDependencies": {
     "@commitlint/cli": "^21.1.0",
     "@commitlint/config-conventional": "^21.1.0",
+    "@commitlint/cz-commitlint": "^21.1.0",
     "@eslint/json": "^2.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/vite": "catalog:",
@@ -94,6 +97,7 @@
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
+    "commitizen": "^4.3.2",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
@@ -120,9 +124,19 @@
   },
   "simple-git-hooks": {
     "pre-commit": "pnpx lint-staged",
-    "commit-msg": "pnpx commitlint --edit \"$1\""
+    "commit-msg": "pnpm commitlint --edit \"$1\""
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   }
 }
