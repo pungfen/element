@@ -1,6 +1,6 @@
 {
   "name": "@pungfe/element",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Element Plus Components",
   "keywords": [
     "Element",
@@ -98,6 +98,7 @@
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
     "commitizen": "^4.3.2",
+    "conventional-changelog": "^7.2.1",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
