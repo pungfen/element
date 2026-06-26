@@ -113,8 +113,8 @@
     "vue-tsc": "catalog:"
   },
   "peerDependencies": {
-    "element-plus": "~2.14.0",
-    "vue": "~3.5.35"
+    "element-plus": "catalog:",
+    "vue": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpx lint-staged"
