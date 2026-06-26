@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -32,18 +32,18 @@ jobs:
 
       - run: pnpm typecheck
 
+      - run: pnpm test
+
       - run: pnpm build
 
       # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
       - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=$(node -p "require('./package.json').version")
           if [[ "$VERSION" == *-* ]]; then
-            pnpm publish --provenance --access public --tag alpha
+            pnpm publish --no-git-checks --access public --tag alpha
           else
-            pnpm publish --provenance --access public
+            pnpm publish --no-git-checks --access public
           fi
 
       - name: Create GitHub Release
