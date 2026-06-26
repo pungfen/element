@@ -84,7 +84,7 @@
     "@eslint/json": "^2.0.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/vite": "catalog:",
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.0.1",
     "@types/sortablejs": "^1.15.9",
     "@vitejs/plugin-vue": "catalog:",
     "@vitejs/plugin-vue-jsx": "catalog:",
@@ -92,6 +92,7 @@
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
+    "conventional-changelog": "^7.2.1",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
@@ -102,7 +103,7 @@
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "^8.61.1",
+    "typescript-eslint": "^8.62.0",
     "unplugin-dts": "catalog:",
     "unplugin-vue": "^7.2.0",
     "unplugin-vue-components": "^32.1.0",
@@ -120,6 +121,6 @@
     "pre-commit": "pnpx lint-staged"
   },
   "lint-staged": {
-    "*": ""
+    "*": "eslint --fix"
   }
 }

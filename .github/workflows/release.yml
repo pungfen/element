@@ -6,24 +6,28 @@ on:
     tags: ['v*']
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yaml
+
   release:
+    needs: [ci]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
+          node-version: 24
           registry-url: https://registry.npmjs.org/
-          node-version: lts/*
           cache: pnpm
 
       - run: pnpm install
@@ -32,11 +36,8 @@ jobs:
 
       - run: pnpm typecheck
 
-      - run: pnpm build
-
       # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
-      - name: Publish to npm
-        run: |
+      - run: |
           VERSION=$(node -p "require('./package.json').version")
           if [[ "$VERSION" == *-* ]]; then
             pnpm publish --no-git-checks --access public --tag alpha
