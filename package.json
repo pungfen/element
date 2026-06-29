@@ -70,7 +70,7 @@
     "lint:fix": "eslint --fix",
     "prepare": "simple-git-hooks",
     "changelog": "conventional-changelog -p angular",
-    "release": "pnpm build && bumpp --execute=\"pnpm changelog\" --commit --push --tag",
+    "release": "bumpp --execute=\"pnpm changelog\" --commit --push --tag",
     "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
     "commit": "cz"
   },
@@ -98,7 +98,7 @@
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
     "commitizen": "^4.3.2",
-    "conventional-changelog": "^7.2.1",
+    "conventional-changelog": "^8.0.0",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
