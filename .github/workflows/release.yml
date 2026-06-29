@@ -1,16 +1,14 @@
 name: Release
 
-# Publish when pushing a semver tag (e.g. v1.2.3). Bump package.json version before tagging.
 on:
   push:
-    tags: ['v*']
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci.yml
-
   release:
-    needs: [ci]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -18,7 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      
+        with:
+          fetch-depth: 0
+
       - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v6
@@ -29,23 +29,20 @@ jobs:
             
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      - run: pnpm test
 
-      # npm 10+：预发布版本（含 -alpha/-beta/-rc 等）必须显式指定 dist-tag，不能默认发到 latest
-      - run: |
-          VERSION=$(node -p "require('./package.json').version")
-          if [[ "$VERSION" == *-* ]]; then
-            pnpm publish --no-git-checks --access public --tag alpha
-          else
-            pnpm publish --no-git-checks --access public
-          fi
+      - run: pnpm build
 
       - uses: changesets/action@v2
         id: changesets
+        with:
+          version: pnpm changeset version
+          commit: 'chore(release): version packages'
+          title: 'chore(release): version packages'
+          publish: pnpm changeset tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - if: steps.changesets.outputs.published == 'true'
         run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
-
-      # - run: pnpx changelogithub
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        

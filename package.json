@@ -68,10 +68,8 @@
     "test": "vitest",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "ci:version": "changeset version",
-    "release": "pnpm build && changeset publish",
     "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
-    "commit": "cz",
+    "commit": "git-cz",
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
@@ -97,8 +95,6 @@
     "@vitest/eslint-plugin": "^1.6.20",
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
-    "bumpp": "^11.1.0",
-    "commitizen": "^4.3.2",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
