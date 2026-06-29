@@ -45,6 +45,7 @@ defineExpose({
       ref="table"
       v-bind="{ ...props }"
       :height="size.height.value"
+      @scroll="({ scrollLeft, scrollTop }) => $emit('scroll', { scrollLeft, scrollTop })"
       @row-click="(row: D) => $emit('rowClick', row)"
       @row-dblclick="(row: D) => $emit('rowDblclick', row)"
       @selection-change="(rows: D[]) => $emit('selectionChange', rows)"

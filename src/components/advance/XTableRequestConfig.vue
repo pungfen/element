@@ -160,6 +160,7 @@ const T = () => (
         })
       }
     }}
+    onScroll={({ scrollLeft, scrollTop }) => emit('scroll', { scrollLeft, scrollTop })}
     showOverflowTooltip
   />
 )

@@ -60,7 +60,7 @@ export interface XTableProps<D extends DefaultRow> extends XTableConfig {
 }
 
 const { align, border = undefined, columns, data, fit = undefined, headerAlign, showOverflowTooltip = undefined } = defineProps<XTableProps<D>>()
-const emit = defineEmits<XTableEvents<D>>()
+defineEmits<XTableEvents<D>>()
 
 const table = useTemplateRef('table')
 
@@ -127,11 +127,11 @@ const _headerAlign = computed(() => headerAlign ?? config.value?.headerAlign)
       fit: _fit,
       border: _border
     }"
-    @scroll="({ scrollLeft, scrollTop }) => emit('scroll', { scrollLeft, scrollTop })"
-    @row-click="(row: D) => emit('rowClick', row)"
-    @row-dblclick="(row: D) => emit('rowDblclick', row)"
-    @selection-change="(rows: D[]) => emit('selectionChange', rows)"
-    @header-dragend="(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)"
+    @scroll="({ scrollLeft, scrollTop }) => $emit('scroll', { scrollLeft, scrollTop })"
+    @row-click="(row: D) => $emit('rowClick', row)"
+    @row-dblclick="(row: D) => $emit('rowDblclick', row)"
+    @selection-change="(rows: D[]) => $emit('selectionChange', rows)"
+    @header-dragend="(newWidth, oldWidth, column) => $emit('headerDragend', newWidth, oldWidth, column)"
   >
     <XTableColumn
       v-for="column of columns"
