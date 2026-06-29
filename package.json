@@ -68,11 +68,11 @@
     "test": "vitest",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "prepare": "simple-git-hooks",
-    "changelog": "conventional-changelog -p angular",
-    "release": "bumpp --execute=\"pnpm changelog\" --commit --push --tag",
+    "ci:version": "changeset version",
+    "release": "pnpm build && changeset publish",
     "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
-    "commit": "cz"
+    "commit": "cz",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -83,6 +83,7 @@
     "vue": "catalog:"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^21.1.0",
     "@commitlint/config-conventional": "^21.1.0",
     "@commitlint/cz-commitlint": "^21.1.0",
@@ -98,7 +99,6 @@
     "@vue/test-utils": "^2.4.11",
     "bumpp": "^11.1.0",
     "commitizen": "^4.3.2",
-    "conventional-changelog": "^8.0.0",
     "eslint": "catalog:",
     "eslint-plugin-perfectionist": "^5.9.1",
     "eslint-plugin-vue": "^10.9.2",
