@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.8.0
+
+### Minor Changes
+
+- 7079ed3: feat(advance): add fit prop passthrough to XTableRequestConfig
+
 ## 0.7.0
 
 ### Minor Changes
