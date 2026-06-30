@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.7.0
+
+### Minor Changes
+
+- ec6099e: Replace XTableFlex with XTable in XTableRequestConfig and use `useElementSize` for dynamic height. Expose `scrollBarRef` (replaces `container`) from XTableFlex and `table` ref from XTableRequestConfig. Add `rowClassName`, `rowStyle` props and `rowClick`, `rowDblclick`, `selectionChange` events.
+
 ## 0.6.9
 
 ### Patch Changes
