@@ -1,5 +1,5 @@
 <script setup lang="tsx" generic="D extends DefaultRow">
-import type { TableColumnCtx, TableProps } from 'element-plus'
+import type { ScrollbarInstance, TableColumnCtx, TableProps } from 'element-plus'
 import type { CSSProperties, VNode, VNodeChild } from 'vue'
 
 import { ElTable, ElTableColumn } from 'element-plus'
@@ -68,6 +68,7 @@ defineExpose({
   clearSelection: () => table.value?.clearSelection(),
   doLayout: () => table.value?.doLayout(),
   getSelectionRows: (): D[] => table.value?.getSelectionRows() as D[],
+  scrollBarRef: computed(() => table.value?.scrollBarRef as ScrollbarInstance | undefined),
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
   setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
@@ -111,8 +112,8 @@ const _headerAlign = computed(() => headerAlign ?? config.value?.headerAlign)
 <template>
   <ElTable
     ref="table"
-    :data="data"
     v-bind="{
+      data,
       height,
       rowClassName,
       rowStyle,
@@ -127,7 +128,7 @@ const _headerAlign = computed(() => headerAlign ?? config.value?.headerAlign)
       fit: _fit,
       border: _border
     }"
-    @scroll="({ scrollLeft, scrollTop }) => $emit('scroll', { scrollLeft, scrollTop })"
+    @scroll="(data) => $emit('scroll', data)"
     @row-click="(row: D) => $emit('rowClick', row)"
     @row-dblclick="(row: D) => $emit('rowDblclick', row)"
     @selection-change="(rows: D[]) => $emit('selectionChange', rows)"

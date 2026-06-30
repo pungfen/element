@@ -160,7 +160,8 @@ const T = () => (
         })
       }
     }}
-    onScroll={({ scrollLeft, scrollTop }) => emit('scroll', { scrollLeft, scrollTop })}
+    onScroll={data => emit('scroll', data)}
+    // 考虑是否去除，由config管理
     showOverflowTooltip
   />
 )
