@@ -1,9 +1,9 @@
 <script setup lang="tsx" generic="D extends DefaultRow">
-import type { TableColumnCtx } from 'element-plus'
+import type { ScrollbarInstance, TableColumnCtx } from 'element-plus'
 import type { CSSProperties } from 'vue'
 
 import { useElementSize } from '@vueuse/core'
-import { useTemplateRef } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import { type DefaultRow, XTable, type XTableEvents, type XTableProps } from '@/basic'
 
@@ -30,8 +30,8 @@ const table = useTemplateRef('table')
 
 defineExpose({
   clearSelection: () => table.value?.clearSelection(),
-  container,
   getSelectionRows: () => table.value?.getSelectionRows(),
+  scrollBarRef: computed(() => table.value?.scrollBarRef as ScrollbarInstance | undefined),
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
   setScrollLeft: (left: number) => table.value?.setScrollLeft(left),
