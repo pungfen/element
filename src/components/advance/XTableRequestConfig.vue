@@ -24,7 +24,7 @@ export interface XTableRequestConfigEvents<PT, QR, D> extends XTableEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableProps<D>, 'columns' | 'showOverflowTooltip'> {
+export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableProps<D>, 'border' | 'columns' | 'showOverflowTooltip'> {
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   fields: () => {
     data: Ref<TableColumnField[]>
@@ -51,7 +51,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> exten
   }
 }
 
-const { config, fields, header, pagination = true, paginationLayout, request, rowClassName, rowStyle } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { config, fields, fit = undefined, header, pagination = true, paginationLayout, request, rowClassName, rowStyle } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, isFetching, paging, path, query, url } = request()
@@ -157,6 +157,7 @@ const T = () => (
     border
     columns={columns.value}
     data={data.value}
+    fit={fit}
     height={size.height.value}
     onHeaderDragend={(newWidth, _oldWidth, column) => {
       const item = fieldsData.value.find(it => it.code === column.columnKey)
