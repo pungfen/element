@@ -30,6 +30,7 @@ const table = useTemplateRef('table')
 
 defineExpose({
   clearSelection: () => table.value?.clearSelection(),
+  container,
   getSelectionRows: () => table.value?.getSelectionRows(),
   scrollTo: (options: number | ScrollToOptions, yCoord?: number) => table.value?.scrollTo(options, yCoord),
   setCurrentRow: (row: D) => table.value?.setCurrentRow(row),
