@@ -67,7 +67,7 @@ const T = () => (
     onHeaderDragend={(newWidth, oldWidth, column) => emit('headerDragend', newWidth, oldWidth, column)}
     onRowClick={row => emit('rowClick', row)}
     onRowDblclick={row => emit('rowDblclick', row)}
-    onScroll={({ scrollLeft, scrollTop }) => emit('scroll', { scrollLeft, scrollTop })}
+    onScroll={data => emit('scroll', data)}
     onSelectionChange={rows => emit('selectionChange', rows)}
     rowClassName={rowClassName}
     rowStyle={rowStyle}

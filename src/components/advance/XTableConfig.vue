@@ -79,6 +79,7 @@ const T = () => (
       }
     }}
     onRowClick={row => emit('rowClick', row)}
+    onScroll={data => emit('scroll', data)}
     showOverflowTooltip
   />
 )
