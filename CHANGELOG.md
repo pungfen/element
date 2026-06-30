@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.6.8
+
+### Patch Changes
+
+- b464fbb: 暴露 XTableFlex 组件的 container 引用
+
 ## 0.6.7
 
 ### Patch Changes
