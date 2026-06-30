@@ -2,15 +2,17 @@
 import type { Ref, VNodeChild } from 'vue'
 
 import { Rank, Setting } from '@element-plus/icons-vue'
+import { useElementSize } from '@vueuse/core'
 import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElFormItem, ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
-import { computed, inject, nextTick, ref } from 'vue'
+import { computed, inject, nextTick, ref, useTemplateRef } from 'vue'
+import { ComponentExposed } from 'vue-component-type-helpers'
 
 import type { Paging, TableColumnField } from '@/types'
 
-import { XButtonAsync, XTableFlex, type XTableFlexEvents, type XTableFlexProps, type XTableRequestColumnsProps } from '@/advance'
-import { type DefaultRow, XButton, XForm, XFormItem, XInput, XPagination, type XTableColumnProps } from '@/basic'
+import { XButtonAsync, type XTableRequestColumnsProps } from '@/advance'
+import { type DefaultRow, XButton, XForm, XFormItem, XInput, XPagination, XTable, type XTableColumnProps, type XTableEvents, type XTableProps } from '@/basic'
 import { X_LOCALE_CONFIG } from '@/constants'
 
 export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableRequestColumnsProps<D>, 'content'> {
@@ -18,11 +20,11 @@ export interface XTableRequestConfigColumnsProps<QR, D> extends Omit<XTableReque
   search?: (scope: { query: QR }) => VNodeChild
 }
 
-export interface XTableRequestConfigEvents<PT, QR, D> extends XTableFlexEvents<D> {
+export interface XTableRequestConfigEvents<PT, QR, D> extends XTableEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableFlexProps<D>, 'columns' | 'showOverflowTooltip'> {
+export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableProps<D>, 'columns' | 'showOverflowTooltip'> {
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   fields: () => {
     data: Ref<TableColumnField[]>
@@ -49,7 +51,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> exten
   }
 }
 
-const { config, fields, header, pagination = true, paginationLayout, request } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { config, fields, header, pagination = true, paginationLayout, request, rowClassName, rowStyle } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, isFetching, paging, path, query, url } = request()
@@ -99,6 +101,10 @@ useSortable(sortable, fieldsData, {
 const locale = inject(X_LOCALE_CONFIG, undefined)
 const { t } = useLocale(locale)
 
+const table = ref<ComponentExposed<typeof XTable> | null>()
+const container = useTemplateRef('container')
+const size = useElementSize(container)
+
 const Q = () => (
   <XForm
     content={({ data }) => (
@@ -147,10 +153,11 @@ const Q = () => (
 const H = () => header?.({ data: data.value, isFetching: isFetching.value, paging: paging.value, path: path.value, query: query.value })
 
 const T = () => (
-  <XTableFlex
+  <XTable
     border
     columns={columns.value}
     data={data.value}
+    height={size.height.value}
     onHeaderDragend={(newWidth, _oldWidth, column) => {
       const item = fieldsData.value.find(it => it.code === column.columnKey)
       if (item) {
@@ -160,8 +167,13 @@ const T = () => (
         })
       }
     }}
+    onRowClick={row => emit('rowClick', row)}
+    onRowDblclick={row => emit('rowDblclick', row)}
     onScroll={data => emit('scroll', data)}
-    // 考虑是否去除，由config管理
+    onSelectionChange={rows => emit('selectionChange', rows)}
+    ref={table}
+    rowClassName={rowClassName}
+    rowStyle={rowStyle}
     showOverflowTooltip
   />
 )
@@ -220,7 +232,7 @@ const P = () => (
   />
 )
 
-defineExpose({ data, isFetching, paging, path, query, reset, search, url })
+defineExpose({ data, isFetching, paging, path, query, reset, search, table, url })
 </script>
 
 <template>
@@ -237,7 +249,9 @@ defineExpose({ data, isFetching, paging, path, query, reset, search, url })
   >
     <S />
 
-    <T />
+    <div ref="container" class="flex-1 overflow-hidden">
+      <T />
+    </div>
 
     <div
       v-if="pagination"
