@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.6.9
+
+### Patch Changes
+
+- 5aed5b2: Expose `scrollBarRef` from XTable and forward full `ScrollbarScrollEvent` in `@scroll` event instead of only `{scrollLeft, scrollTop}`.
+
 ## 0.6.8
 
 ### Patch Changes
