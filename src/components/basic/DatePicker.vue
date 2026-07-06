@@ -25,7 +25,7 @@ export interface XDatePickerProps extends XDateConfig {
 
 const { disabled = undefined, teleported = true, type = 'date', valueFormat } = defineProps<XDatePickerProps>()
 
-defineEmits<{ blur: [e: FocusEvent], focus: [e: FocusEvent] }>()
+defineEmits<{ blur: [e: FocusEvent], clear: [], focus: [e: FocusEvent] }>()
 
 const model = defineModel<V>()
 const start = defineModel<V>('start')
@@ -45,9 +45,9 @@ const modelValue = computed({
     return null
   },
   set(value) {
-    if (type.includes('range') && Array.isArray(value)) {
-      start.value = value[0]
-      end.value = value[1]
+    if (type.includes('range')) {
+      start.value = ((value ?? []) as V[])[0]
+      end.value = ((value ?? []) as V[])[1]
     }
     else {
       model.value = value as V
@@ -90,5 +90,6 @@ const _valueFormat = computed(() => valueFormat ?? config.value?.valueFormat)
     v-model="modelValue"
     @blur="$emit('blur', $event)"
     @focus="$emit('focus', $event)"
+    @clear="$emit('clear')"
   />
 </template>
