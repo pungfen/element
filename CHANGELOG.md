@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.8.1
+
+### Patch Changes
+
+- 56fb1b8: fix(basic): add clear event and fix range value clearing in DatePicker
+
 ## 0.8.0
 
 ### Minor Changes
