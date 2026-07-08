@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.8.2
+
+### Patch Changes
+
+- 3c7f08c: fix(basic): correct InputNumber required validation for zero value
+
 ## 0.8.1
 
 ### Patch Changes
