@@ -42,7 +42,7 @@ const formItemValidation = inject(X_FORM_ITEM_VALIDATION, undefined)
 if (formItemValidation?.required) {
   const { label, validator } = formItemValidation
   formItemValidation.validator = () => {
-    if (label && !model.value) {
+    if (label && (typeof model.value === 'undefined' || model.value === null)) {
       return t('el.validation.inputNumber', { label })
     }
     return validator?.()
