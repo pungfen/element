@@ -3,6 +3,8 @@ import type { TableColumnCtx } from 'element-plus'
 import type { CSSProperties, Ref, VNodeChild } from 'vue'
 
 import { useDebounceFn } from '@vueuse/core'
+import { ref } from 'vue'
+import { ComponentExposed } from 'vue-component-type-helpers'
 
 import type { Paging } from '@/types'
 
@@ -43,6 +45,7 @@ const emit = defineEmits<XTableRequestEvents<PT, QR, D>>()
 
 const { data, execute, isFetching, paging, path, query, url } = request()
 
+const table = ref<ComponentExposed<typeof XTableFlex> | null>()
 const init = JSON.stringify(query.value)
 const search = useDebounceFn(async () => {
   emit('prepare', { path: path.value, query: query.value })
@@ -52,8 +55,9 @@ const reset = useDebounceFn(async () => {
   query.value = JSON.parse(init) as QR
   search()
 })
+const clearSelection = () => table.value?.clearSelection()
 
-defineExpose({ data, isFetching, paging, path, query, reset, search, url })
+defineExpose({ clearSelection, data, isFetching, paging, path, query, reset, search, url })
 
 const H = () => header?.({ query: query.value })
 
@@ -69,6 +73,7 @@ const T = () => (
     onRowDblclick={row => emit('rowDblclick', row)}
     onScroll={data => emit('scroll', data)}
     onSelectionChange={rows => emit('selectionChange', rows)}
+    ref={table}
     rowClassName={rowClassName}
     rowStyle={rowStyle}
     showOverflowTooltip={showOverflowTooltip}
