@@ -14,8 +14,6 @@ npm run fmt      # Format code with oxfmt
 npm run lint     # Type-aware lint with oxlint
 npm run typecheck # TypeScript check with vue-tsc
 npm run test     # Run tests with Vitest (watch mode)
-npm run test:ci  # Run tests once (CI mode)
-npm run release  # Build + bump version with bumpp
 ```
 
 ## Naming Convention

@@ -22,7 +22,7 @@ export interface XInputProps {
 
 const { disabled = undefined } = defineProps<XInputProps>()
 defineSlots<{ append: () => VNode, prefix: () => VNode, prepend: () => VNode, suffix: () => VNode }>()
-const emit = defineEmits<{ blur: [e: FocusEvent], change: [e: MV], focus: [e: FocusEvent] }>()
+const emit = defineEmits<{ blur: [e: FocusEvent], change: [e: MV], focus: [e: FocusEvent], keydown: [e: Event | KeyboardEvent] }>()
 const model = defineModel<MV>()
 const locale = inject(X_LOCALE_CONFIG, undefined)
 const { t } = useLocale(locale)
@@ -48,6 +48,9 @@ const focus = (e: FocusEvent) => {
 const change = (value: string) => {
   emit('change', value as MV)
 }
+const keydown = (e: Event | KeyboardEvent) => {
+  emit('keydown', e)
+}
 </script>
 
 <template>
@@ -66,6 +69,7 @@ const change = (value: string) => {
     @blur="blur"
     @focus="focus"
     @change="change"
+    @keydown="keydown"
   >
     <template
       v-if="'append' in $slots"
