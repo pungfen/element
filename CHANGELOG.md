@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.9.1
+
+### Patch Changes
+
+- 479a1ce: feat(basic): add keydown event passthrough on Input
+
 ## 0.9.0
 
 ### Minor Changes
