@@ -28,6 +28,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - if: github.event_name == 'pull_request'
+        run: pnpm exec changeset status
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test --run
