@@ -149,6 +149,8 @@ pnpm changeset status    # 检查待发布版本
 
 发布 workflow 使用 GitHub Environment `npm-release` 和 npm Trusted Publishing。首次启用前，需要在 npm 包设置中将本仓库的 `main` 分支与 `.github/workflows/release.yml` 配置为 trusted publisher，并在 GitHub 中为 `npm-release` 配置审批规则。
 
+分支约定：`dev` 只用于日常开发，`main` 是唯一发布分支。所有进入 `main` 的改动必须通过 Pull Request，不直接推送或 force-push。版本标签由 Changesets 自动生成，格式为 `@pungfe/element@<version>`，不要手动创建另一套标签。
+
 ### 静态按需导入
 
 未使用 `app.use` 全局注册时，可从子路径具名导入基础或进阶组件（与解析器 `from` 一致）：`@pungfe/element/basic`、`@pungfe/element/advance`。
