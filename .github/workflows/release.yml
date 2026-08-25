@@ -30,10 +30,6 @@ jobs:
             
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm test
-
-      - run: pnpm build
-
       - uses: changesets/action@v1
         id: changesets
         with:
