@@ -151,6 +151,13 @@ pnpm changeset status    # 检查待发布版本
 
 分支约定：`dev` 只用于日常开发，`main` 是唯一发布分支。所有进入 `main` 的改动必须通过 Pull Request，不直接推送或 force-push。版本标签由 Changesets 自动生成，格式为 `@pungfe/element@<version>`，不要手动创建另一套标签。
 
+### 发布失败恢复
+
+- 没有生成 release PR：确认源码改动包含 `.changeset/*.md`，并在 PR 中运行 `pnpm changeset status`。
+- 已生成版本提交但 npm 发布失败：先修复 Actions 报错并重新运行 workflow，不要手动改版本号或重复创建 Changeset。
+- npm 已发布但缺少 Git tag：不要重复发布相同版本，先核对 `package.json`、npm 和对应提交，再补齐 tag 或修复 workflow。
+- `dev` 与 `main` 不一致：先从远程更新分支，通过 Pull Request 合并，不要用 force-push 覆盖远程历史。
+
 ### 静态按需导入
 
 未使用 `app.use` 全局注册时，可从子路径具名导入基础或进阶组件（与解析器 `from` 一致）：`@pungfe/element/basic`、`@pungfe/element/advance`。
