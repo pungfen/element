@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.9.3
+
+### Patch Changes
+
+- 6ae4152: support selectable rows in XTableRequestConfig
+
 ## 0.9.2
 
 ### Patch Changes
