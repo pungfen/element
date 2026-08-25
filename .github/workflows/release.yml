@@ -42,4 +42,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
+
+      - if: steps.changesets.outputs.published == 'true'
+        name: Verify published package
+        run: |
+          version=$(node -p "require('./package.json').version")
+          registry_version=$(npm view "@pungfe/element@$version" version)
+          test "$registry_version" = "$version"
+
+          if git ls-remote --exit-code origin "refs/tags/@pungfe/element@$version" >/dev/null; then
+            echo "Verified tag @pungfe/element@$version"
+          else
+            echo "::warning::Package $version is published, but its remote Git tag was not found"
+          fi
         
