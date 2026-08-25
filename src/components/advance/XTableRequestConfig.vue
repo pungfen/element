@@ -23,7 +23,7 @@ export interface XTableRequestConfigEvents<PT, QR, D> extends XTableEvents<D> {
   prepare: [parameters: { path: PT, query: QR }]
 }
 
-export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableProps<D>, 'border' | 'columns' | 'showOverflowTooltip'> {
+export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> extends Omit<XTableProps<D>, 'border' | 'columns' | 'showOverflowTooltip'>, Pick<XTableColumnProps<D>, 'selectable'> {
   config: Record<string, XTableRequestConfigColumnsProps<QR, D>>
   fields: () => {
     data: Ref<TableColumnField[]>
@@ -51,7 +51,7 @@ export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> exten
   showSelection?: boolean
 }
 
-const { config, fields, fit = undefined, header, pagination = true, paginationLayout, request, rowClassName, rowStyle, showSelection = false } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { config, fields, fit = undefined, header, pagination = true, paginationLayout, request, rowClassName, rowStyle, selectable, showSelection = false } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, isFetching, paging, path, query, url } = request()
@@ -81,7 +81,7 @@ const _visibleColumns = useArrayMap(visibleColumns, (it) => {
   } as XTableColumnProps<D>
 })
 
-const pendingColumns = computed<XTableColumnProps<D>[]>(() => showSelection ? [{ type: 'selection' }] : [])
+const pendingColumns = computed<XTableColumnProps<D>[]>(() => showSelection ? [{ selectable, type: 'selection' }] : [])
 
 const columns = useArrayReduce(_visibleColumns, (s, i) => s.concat(i), pendingColumns)
 

@@ -135,7 +135,6 @@ npm run fmt      # oxfmt 格式化
 npm run lint     # Oxlint（含类型感知）
 npm run typecheck
 npm run test     # Vitest（watch）
-npm run test:ci  # Vitest 单次跑完（与 CI 一致）
 ```
 
 发布流程可通过 `npm run release`（先构建再使用 bumpp 升版）完成；CI 在指向 `main` 的 Push / PR 上会执行 lint、typecheck、test 与 build。
