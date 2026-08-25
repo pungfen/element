@@ -147,6 +147,8 @@ pnpm changeset status    # 检查待发布版本
 
 将源码和 Changeset 一起提交，并通过 Pull Request 合并到 `main`。合并后，GitHub Actions 会执行发布流程，负责生成版本提交、更新 `CHANGELOG.md`、创建版本标签并发布到 npm。不要手动修改 `package.json` 版本号，也不要使用 `bumpp` 或直接推送 `main`。
 
+发布 workflow 使用 GitHub Environment `npm-release` 和 npm Trusted Publishing。首次启用前，需要在 npm 包设置中将本仓库的 `main` 分支与 `.github/workflows/release.yml` 配置为 trusted publisher，并在 GitHub 中为 `npm-release` 配置审批规则。
+
 ### 静态按需导入
 
 未使用 `app.use` 全局注册时，可从子路径具名导入基础或进阶组件（与解析器 `from` 一致）：`@pungfe/element/basic`、`@pungfe/element/advance`。
