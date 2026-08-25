@@ -129,15 +129,34 @@ export default defineConfig({
 ## 本地开发
 
 ```bash
-npm ci
-npm run build    # 输出 dist
-npm run fmt      # oxfmt 格式化
-npm run lint     # Oxlint（含类型感知）
-npm run typecheck
-npm run test     # Vitest（watch）
+pnpm install
+pnpm build       # 输出 dist
+pnpm lint        # ESLint
+pnpm typecheck
+pnpm test        # Vitest（watch）
 ```
 
-发布流程可通过 `npm run release`（先构建再使用 bumpp 升版）完成；CI 在指向 `main` 的 Push / PR 上会执行 lint、typecheck、test 与 build。
+### 发布流程
+
+本项目使用 Changesets 管理版本和发布。功能改动需要同时添加 Changeset：
+
+```bash
+pnpm changeset add       # 选择 patch、minor 或 major，并填写变更说明
+pnpm changeset status    # 检查待发布版本
+```
+
+将源码和 Changeset 一起提交，并通过 Pull Request 合并到 `main`。合并后，GitHub Actions 会执行发布流程，负责生成版本提交、更新 `CHANGELOG.md`、创建版本标签并发布到 npm。不要手动修改 `package.json` 版本号，也不要使用 `bumpp` 或直接推送 `main`。
+
+发布 workflow 使用 npm Trusted Publishing。首次启用前，需要在 npm 包设置中将本仓库的 `main` 分支与 `.github/workflows/release.yml` 配置为 trusted publisher。
+
+分支约定：`dev` 只用于日常开发，`main` 是唯一发布分支。所有进入 `main` 的改动必须通过 Pull Request，不直接推送或 force-push。版本标签由 Changesets 自动生成，格式为 `@pungfe/element@<version>`，不要手动创建另一套标签。
+
+### 发布失败恢复
+
+- 没有生成 release PR：确认源码改动包含 `.changeset/*.md`，并在 PR 中运行 `pnpm changeset status`。
+- 已生成版本提交但 npm 发布失败：先修复 Actions 报错并重新运行 workflow，不要手动改版本号或重复创建 Changeset。
+- npm 已发布但缺少 Git tag：不要重复发布相同版本，先核对 `package.json`、npm 和对应提交，再补齐 tag 或修复 workflow。
+- `dev` 与 `main` 不一致：先从远程更新分支，通过 Pull Request 合并，不要用 force-push 覆盖远程历史。
 
 ### 静态按需导入
 
