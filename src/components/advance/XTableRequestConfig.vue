@@ -2,8 +2,7 @@
 import type { Ref, VNodeChild } from 'vue'
 
 import { Rank, Setting } from '@element-plus/icons-vue'
-import { useElementSize } from '@vueuse/core'
-import { useArrayFilter, useArrayMap, useDebounceFn } from '@vueuse/core'
+import { useArrayFilter, useArrayMap, useArrayReduce, useDebounceFn, useElementSize } from '@vueuse/core'
 import { moveArrayElement, useSortable } from '@vueuse/integrations/useSortable'
 import { ElFormItem, ElPopover, ElScrollbar, ElSpace, ElSwitch, ElText, useLocale } from 'element-plus'
 import { computed, inject, nextTick, ref, useTemplateRef } from 'vue'
@@ -49,9 +48,10 @@ export interface XTableRequestConfigProps<U, PT, QR, D extends DefaultRow> exten
     query: Ref<QR>
     url: U
   }
+  showSelection?: boolean
 }
 
-const { config, fields, fit = undefined, header, pagination = true, paginationLayout, request, rowClassName, rowStyle } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
+const { config, fields, fit = undefined, header, pagination = true, paginationLayout, request, rowClassName, rowStyle, showSelection = false } = defineProps<XTableRequestConfigProps<U, PT, QR, D>>()
 const emit = defineEmits<XTableRequestConfigEvents<PT, QR, D>>()
 
 const { data, execute, isFetching, paging, path, query, url } = request()
@@ -70,7 +70,7 @@ const reset = useDebounceFn(async () => {
 const { data: fieldsData, loading, update } = fields()
 const visibleColumns = useArrayFilter(fieldsData, it => it.visible)
 
-const columns = useArrayMap(visibleColumns, (it) => {
+const _visibleColumns = useArrayMap(visibleColumns, (it) => {
   const _config = config[it.code]
   return {
     columnKey: it.code,
@@ -81,9 +81,13 @@ const columns = useArrayMap(visibleColumns, (it) => {
   } as XTableColumnProps<D>
 })
 
-const items = useArrayFilter(visibleColumns, it => it.search)
+const pendingColumns = computed<XTableColumnProps<D>[]>(() => showSelection ? [{ type: 'selection' }] : [])
 
-const queryShow = computed(() => !!items.value.length)
+const columns = useArrayReduce(_visibleColumns, (s, i) => s.concat(i), pendingColumns)
+
+const searchColumns = useArrayFilter(visibleColumns, it => it.search)
+
+const searchShow = computed(() => !!searchColumns.value.length)
 
 const sortable = ref<HTMLDivElement | null>()
 useSortable(sortable, fieldsData, {
@@ -110,7 +114,7 @@ const Q = () => (
     content={({ data }) => (
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2">
         {[
-          ...items.value.map(
+          ...searchColumns.value.map(
             (it) => {
               const _config = config[it.code]
               return (
@@ -238,7 +242,7 @@ defineExpose({ data, isFetching, paging, path, query, reset, search, table, url 
 
 <template>
   <Q
-    v-if="queryShow"
+    v-if="searchShow"
     class="rounded bg-(--el-fill-color-darker) px-2 pt-4"
   />
 
