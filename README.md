@@ -129,15 +129,23 @@ export default defineConfig({
 ## 本地开发
 
 ```bash
-npm ci
-npm run build    # 输出 dist
-npm run fmt      # oxfmt 格式化
-npm run lint     # Oxlint（含类型感知）
-npm run typecheck
-npm run test     # Vitest（watch）
+pnpm install
+pnpm build       # 输出 dist
+pnpm lint        # ESLint
+pnpm typecheck
+pnpm test        # Vitest（watch）
 ```
 
-发布流程可通过 `npm run release`（先构建再使用 bumpp 升版）完成；CI 在指向 `main` 的 Push / PR 上会执行 lint、typecheck、test 与 build。
+### 发布流程
+
+本项目使用 Changesets 管理版本和发布。功能改动需要同时添加 Changeset：
+
+```bash
+pnpm changeset add       # 选择 patch、minor 或 major，并填写变更说明
+pnpm changeset status    # 检查待发布版本
+```
+
+将源码和 Changeset 一起提交，并通过 Pull Request 合并到 `main`。合并后，GitHub Actions 会执行发布流程，负责生成版本提交、更新 `CHANGELOG.md`、创建版本标签并发布到 npm。不要手动修改 `package.json` 版本号，也不要使用 `bumpp` 或直接推送 `main`。
 
 ### 静态按需导入
 
