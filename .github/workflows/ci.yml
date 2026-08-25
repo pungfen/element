@@ -19,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v6
 
@@ -29,7 +31,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - if: github.event_name == 'pull_request'
-        run: pnpm exec changeset status
+        name: Check changeset for package changes
+        run: |
+          if git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -Eq '^(src/|package.json$|pnpm-workspace.yaml$)'; then
+            pnpm exec changeset status
+          else
+            echo "No package changes detected; skipping Changesets check"
+          fi
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test --run
