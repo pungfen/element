@@ -20,8 +20,8 @@
 
 | 包             | 版本      |
 | -------------- | --------- |
-| `vue`          | `~3.5.41` |
-| `element-plus` | `~2.14.5` |
+| `vue`          | `~3.5.45` |
+| `element-plus` | `~2.14.8` |
 
 ## 安装
 
@@ -53,7 +53,7 @@ app.use(Element)
 
 ### 注册进阶组件
 
-进阶组件包含如 `XTableRequestNext`、`XFormRequestNext`、`XUploadOssNext` 等，需显式开启：
+进阶组件包含如 `XTableRequest`、`XFormRequest`、`XUploadOss` 等，需显式开启：
 
 ```ts
 app.use(Element, { advance: true })
@@ -124,7 +124,7 @@ export default defineConfig({
 
 **基础**：`XButton`、`XCascader`、`XCheckbox`、`XConfigProvider`、`XDatePicker`、`XDialog`、`XForm`、`XFormItem`、`XInput`、`XInputNumber`、`XPagination`、`XSelect`、`XTable`、`XTabs`、`XTabPane`、`XUpload`。
 
-**进阶**（`advance: true`）：`XButtonAsync`、`XButtonConfirm`、`XCascaderRequest`、`XFormFlex`、`XFormRequestNext`、`XRequest`、`XSelectRequest`、`XTableFlex`、`XTableRequestNext`、`XTableRequestConfigNext`、`XUploadOssNext`。
+**进阶**（`advance: true`）：`XButtonAsync`、`XButtonConfirm`、`XCascaderRequest`、`XFormFlex`、`XFormRequest`、`XRequest`、`XSelectRequest`、`XTableConfig`、`XTableFlex`、`XTableRequest`、`XTableRequestConfig`、`XUploadOss`。
 
 ## 本地开发
 
