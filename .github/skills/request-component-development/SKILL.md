@@ -117,4 +117,3 @@ Use refs and a fake executor to verify:
 - exposed references remain reactive.
 
 Keep API transport details in Playground utilities rather than package tests.
-
