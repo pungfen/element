@@ -54,4 +54,27 @@ jobs:
           else
             echo "::warning::Package $version is published, but its remote Git tag was not found"
           fi
+
+      - if: steps.changesets.outputs.published == 'true'
+        name: Create GitHub releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+        run: |
+          echo "$PUBLISHED_PACKAGES" | jq -c '.[]' | while read -r package; do
+            name=$(echo "$package" | jq -r '.name')
+            version=$(echo "$package" | jq -r '.version')
+            tag="$name@$version"
+
+            if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              echo "GitHub release $tag already exists"
+            else
+              gh release create "$tag" \
+                --repo "$GITHUB_REPOSITORY" \
+                --target "$GITHUB_SHA" \
+                --title "$tag" \
+                --generate-notes
+              echo "Created GitHub release $tag"
+            fi
+          done
         
