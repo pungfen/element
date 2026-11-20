@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.9.5
+
+### Patch Changes
+
+- f79c23b: Expose and forward Element Plus props in the button, dialog, and form components.
+
 ## 0.9.4
 
 ### Patch Changes
