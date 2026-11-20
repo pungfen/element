@@ -11,23 +11,29 @@ export interface XButtonConfig {
   autoInsertSpace?: boolean
 }
 
-export interface XButtonProps {
-  disabled?: ButtonProps['disabled']
-  icon?: ButtonProps['icon']
-  link?: ButtonProps['link']
-  size?: ButtonProps['size']
-  text?: ButtonProps['text']
-  type?: ButtonProps['type']
-}
+export type XButtonProps = ButtonProps
 
-const { disabled = undefined, link = undefined } = defineProps<XButtonProps>()
+const props = withDefaults(defineProps<XButtonProps>(), {
+  autofocus: undefined,
+  autoInsertSpace: undefined,
+  bg: undefined,
+  circle: undefined,
+  dark: undefined,
+  dashed: undefined,
+  disabled: undefined,
+  link: undefined,
+  loading: undefined,
+  plain: undefined,
+  round: undefined,
+  text: undefined,
+})
 
 defineEmits<{ click: [e: MouseEvent] }>()
 </script>
 
 <template>
   <ElButton
-    v-bind="{ type, text, link, disabled, size, icon }"
+    v-bind="props"
     @click="$emit('click', $event)"
   >
     <slot />

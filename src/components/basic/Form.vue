@@ -2,28 +2,36 @@
 import type { VNodeChild } from 'vue'
 
 import { ElForm, type FormProps } from 'element-plus'
-import { provide, useTemplateRef } from 'vue'
+import { computed, provide, useTemplateRef } from 'vue'
 
 import { X_ELEMENT_IN_FORM, X_FORM_VALIDATIONS } from '@/constants'
 
 import type { XFormItemValidation } from './FormItem.vue'
 
-export interface XFormProps<D> {
+export interface XFormProps<D> extends FormProps {
   content?: (scope: { data: D }) => VNodeChild
   data?: D
-  disabled?: boolean
-  inline?: boolean
-  labelPosition?: 'left' | 'right' | 'top'
-  labelSuffix?: string
-  labelWidth?: number | string
-  size?: FormProps['size']
 }
 
-const { content, data, disabled = undefined } = defineProps<XFormProps<D>>()
+const props = withDefaults(defineProps<XFormProps<D>>(), {
+  disabled: undefined,
+  hideRequiredAsterisk: undefined,
+  inline: undefined,
+  inlineMessage: undefined,
+  scrollIntoViewOptions: undefined,
+  scrollToError: undefined,
+  showMessage: undefined,
+  statusIcon: undefined,
+  validateOnRuleChange: undefined,
+})
+
+const formProps = computed(() => Object.fromEntries(
+  Object.entries(props).filter(([key]) => key !== 'content' && key !== 'data' && key !== 'model'),
+))
 
 const form = useTemplateRef('form')
 
-const Content = () => content?.({ data: (data ?? {}) as D })
+const Content = () => props.content?.({ data: (props.data ?? {}) as D })
 
 provide(X_ELEMENT_IN_FORM, true)
 
@@ -36,21 +44,14 @@ const resetFields = () => {
   form.value?.resetFields()
 }
 
-defineExpose({ clearValidate, data, resetFields, validate })
+defineExpose({ clearValidate, data: computed(() => props.data), resetFields, validate })
 </script>
 
 <template>
   <ElForm
     ref="form"
-    v-bind="{
-      model: data,
-      disabled,
-      inline,
-      labelPosition,
-      labelWidth,
-      labelSuffix,
-      size
-    }"
+    v-bind="formProps"
+    :model="props.data"
     @submit.prevent
   >
     <Content />

@@ -4,45 +4,38 @@ import type { VNodeChild } from 'vue'
 
 import { ElDialog } from 'element-plus'
 
-export interface XDialogProps {
-  alignCenter?: DialogProps['alignCenter']
-  bodyClass?: DialogProps['bodyClass']
-  center?: DialogProps['center']
-  closeOnClickModal?: DialogProps['closeOnClickModal']
-  closeOnPressEscape?: DialogProps['closeOnPressEscape']
-  draggable?: DialogProps['draggable']
-  showClose?: DialogProps['showClose']
-  title?: DialogProps['title']
-  width?: DialogProps['width']
-}
+export type XDialogProps = DialogProps
 
-const {
-  closeOnClickModal = undefined,
-  closeOnPressEscape = undefined,
-  showClose = undefined,
-} = defineProps<XDialogProps>()
+const props = withDefaults(defineProps<XDialogProps>(), {
+  alignCenter: undefined,
+  appendToBody: undefined,
+  center: undefined,
+  closeOnClickModal: undefined,
+  closeOnPressEscape: undefined,
+  destroyOnClose: undefined,
+  draggable: undefined,
+  fullscreen: undefined,
+  lockScroll: undefined,
+  modal: undefined,
+  modalPenetrable: undefined,
+  overflow: undefined,
+  showClose: undefined,
+  trapFocus: undefined,
+})
+
 defineSlots<{
   default?: () => VNodeChild
   footer?: () => VNodeChild
   header?: () => VNodeChild
 }>()
+
 const visible = defineModel<boolean>()
 </script>
 
 <template>
   <ElDialog
+    v-bind="props"
     v-model="visible"
-    v-bind="{
-      bodyClass,
-      width,
-      showClose,
-      title,
-      center,
-      alignCenter,
-      draggable,
-      closeOnClickModal,
-      closeOnPressEscape
-    }"
   >
     <template
       v-if="'header' in $slots"
