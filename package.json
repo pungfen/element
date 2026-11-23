@@ -57,7 +57,7 @@
     },
     "./package.json": "./package.json"
   },
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@12.21.0",
   "publishConfig": {
     "access": "public"
   },
@@ -70,7 +70,8 @@
     "lint:fix": "eslint --fix",
     "typecheck": "vue-tsc -p tsconfig.src.json --noEmit",
     "commit": "git-cz",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
