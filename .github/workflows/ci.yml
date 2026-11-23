@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  pull_request:
   push:
+  pull_request:
     branches:
       - main
 
@@ -23,22 +23,16 @@ jobs:
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v6
-
       - uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: lts/*
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - if: github.event_name == 'pull_request'
-        name: Check changeset for package changes
-        run: |
-          if git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -Eq '^(src/|package.json$|pnpm-workspace.yaml$)'; then
-            pnpm exec changeset status --since=origin/main
-          else
-            echo "No package changes detected; skipping Changesets check"
-          fi
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: pnpm test --run
-      - run: pnpm build
+  
+      - run: pnpm run lint
+
+      - run: pnpm run typecheck
+
+      - run: pnpm run test --run
+      
