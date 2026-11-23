@@ -1,5 +1,11 @@
 ## [0.6.6](https://github.com/pungfen/element/compare/v0.6.5...v0.6.6) (2026-06-26)
 
+## 0.9.6
+
+### Patch Changes
+
+- b73b97e: Update the minimum supported Vue version to 3.5.46 and upgrade the pnpm tooling.
+
 ## 0.9.5
 
 ### Patch Changes
