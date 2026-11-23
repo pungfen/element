@@ -20,7 +20,7 @@
 
 | 包             | 版本      |
 | -------------- | --------- |
-| `vue`          | `~3.5.45` |
+| `vue`          | `~3.5.46` |
 | `element-plus` | `~2.14.8` |
 
 ## 安装
@@ -145,9 +145,9 @@ pnpm changeset add       # 选择 patch、minor 或 major，并填写变更说�
 pnpm changeset status    # 检查待发布版本
 ```
 
-将源码和 Changeset 一起提交，并通过 Pull Request 合并到 `main`。合并后，GitHub Actions 会执行发布流程，负责生成版本提交、更新 `CHANGELOG.md`、创建版本标签并发布到 npm。不要手动修改 `package.json` 版本号，也不要使用 `bumpp` 或直接推送 `main`。
+将源码和 Changeset 一起提交，并通过 Pull Request 合并到 `main`。合并后，GitHub Actions 会创建或更新版本 PR，包含版本提交和 `CHANGELOG.md`。审核并合并版本 PR 后，工作流会构建并发布到 npm，创建版本标签和 GitHub Release。不要手动修改 `package.json` 版本号，也不要使用 `bumpp` 或直接推送 `main`。
 
-发布 workflow 使用 npm Trusted Publishing。首次启用前，需要在 npm 包设置中将本仓库的 `main` 分支与 `.github/workflows/release.yml` 配置为 trusted publisher。
+发布 workflow 使用 npm Trusted Publishing。首次启用前，需要在 npm 包设置中将本仓库与 `release.yml` 配置为 trusted publisher，并允许直接发布。还需在 GitHub 仓库的 Actions 设置中允许 Actions 创建 Pull Request。
 
 分支约定：`dev` 只用于日常开发，`main` 是唯一发布分支。所有进入 `main` 的改动必须通过 Pull Request，不直接推送或 force-push。版本标签由 Changesets 自动生成，格式为 `@pungfe/element@<version>`，不要手动创建另一套标签。
 
